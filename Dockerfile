@@ -50,7 +50,8 @@ EXPOSE 8000
 # 3. Add the virtual environment to PATH.
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000 \
-    PATH="/opt/venv/bin:$PATH"
+    PATH="/opt/venv/bin:$PATH" \
+    DJANGO_SETTINGS_MODULE=dimatlas_portal.settings.production
 
 
 
@@ -71,16 +72,12 @@ COPY --chown=wagtail:wagtail . .
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
 
-# Collect static files.
-RUN python manage.py collectstatic --noinput --clear
-
-# Runtime command that executes when "docker run" is called, it does the
-# following:
-#   1. Migrate the database.
-#   2. Start the application server.
-# WARNING:
-#   Migrating database at the same time as starting the server IS NOT THE BEST
-#   PRACTICE. The database should be migrated manually or using the release
-#   phase facilities of your hosting platform. This is used only so the
-#   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; python manage.py migrate --noinput; gunicorn dimatlas_portal.wsgi:application
+# collectstatic NE tourne PAS au build : les settings de production exigent les
+# variables d'env (SECRET_KEY, DB…) qui ne sont injectées qu'au runtime.
+# migrate + collectstatic sont donc faits au démarrage (voir CMD).
+# WhiteNoise sert les statiques (CompressedManifestStaticFilesStorage).
+CMD set -xe; \
+    python manage.py migrate --noinput; \
+    python manage.py collectstatic --noinput --clear; \
+    gunicorn dimatlas_portal.wsgi:application \
+        --bind 0.0.0.0:8000 --workers 3 --threads 4 --timeout 120

@@ -1,0 +1,21 @@
+# Override de DÉVELOPPEMENT local (HTTP, sans TLS) — auto-chargé par `docker compose up`.
+# Pour la prod réelle : `docker compose -f docker-compose.yml up -d --build`.
+#
+#   - web exposé directement sur :8000 (pas de nginx requis pour tester)
+#   - cookies non-Secure + pas de redirect HTTPS (sinon boucle en HTTP)
+services:
+
+  web:
+    ports:
+      - "8000:8000"
+    environment:
+      SECURE_SSL_REDIRECT: "False"
+      SECURE_HSTS_SECONDS: "0"
+      SESSION_COOKIE_SECURE: "False"
+      CSRF_COOKIE_SECURE: "False"
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+      CSRF_TRUSTED_ORIGINS: "http://localhost:8000,http://127.0.0.1:8000"
+
+  # Pas de TLS en dev : on neutralise nginx (on tape web:8000 directement).
+  nginx:
+    profiles: ["disabled"]

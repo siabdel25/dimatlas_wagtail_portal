@@ -1,0 +1,63 @@
+# =============================================================================
+# dimatlas_portal — stack de production autonome
+#   db    : PostgreSQL 16
+#   web   : Django/Wagtail + gunicorn (statiques via WhiteNoise)
+#   nginx : terminaison TLS + sert /media/ + reverse-proxy vers web
+#
+#   cp .env.example .env   # renseigner SECRET_KEY, DB_PASSWORD, ALLOWED_HOSTS…
+#   docker compose up -d --build
+#   docker compose exec web python manage.py createsuperuser
+#   docker compose exec web python manage.py seed_portal
+# =============================================================================
+services:
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-dimatlas_portal}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD requis}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-dimatlas_portal}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: dimatlas_portal.settings.production
+      DB_HOST: db
+    volumes:
+      - media_data:/app/media
+      - static_data:/app/static          # STATIC_ROOT (collectstatic)
+    expose:
+      - "8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro     # déposer fullchain.pem + privkey.pem
+      - media_data:/srv/media:ro
+      - static_data:/srv/static:ro
+    depends_on:
+      - web
+
+volumes:
+  pg_data:
+  media_data:
+  static_data:
