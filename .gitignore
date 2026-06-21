@@ -7,6 +7,7 @@ build/
 dist/
 
 # Django / Wagtail
+logs/
 *.log
 db.sqlite3
 db.sqlite3-journal
