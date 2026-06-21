@@ -1,0 +1,20 @@
+<section class="block">
+  <div class="container-x">
+    {% if value.heading or value.intro %}
+    <div class="section-head reveal">
+      <span class="eyebrow">Pourquoi DimaAtlas</span>
+      {% if value.heading %}<h2>{{ value.heading }}</h2>{% endif %}
+      {% if value.intro %}<p>{{ value.intro }}</p>{% endif %}
+    </div>
+    {% endif %}
+    <div class="feature-grid">
+      {% for f in value.features %}
+        <div class="feature-card reveal">
+          {% if f.icon %}<div class="ic">{{ f.icon }}</div>{% endif %}
+          <h3>{{ f.title }}</h3>
+          {% if f.text %}<p>{{ f.text }}</p>{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

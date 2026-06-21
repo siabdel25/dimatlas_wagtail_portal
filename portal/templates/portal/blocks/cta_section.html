@@ -1,0 +1,15 @@
+<section class="block">
+  <div class="container-x">
+    <div class="cta-band reveal">
+      <h2>{{ value.heading }}</h2>
+      {% if value.text %}<p>{{ value.text }}</p>{% endif %}
+      {% if value.ctas %}
+        <div class="hero-cta" style="justify-content:center">
+          {% for cta in value.ctas %}
+            <a class="btn-x {% if cta.style == 'ghost' %}btn-ghost{% else %}btn-primary{% endif %}" href="{{ cta.url }}">{{ cta.label }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

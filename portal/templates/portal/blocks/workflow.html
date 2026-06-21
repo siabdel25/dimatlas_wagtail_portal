@@ -1,0 +1,17 @@
+<section class="block wf" id="workflow">
+  <div class="container-x">
+    <div class="section-head reveal">
+      <span class="eyebrow">De l'idée au sommet</span>
+      <h2>{{ value.heading }}</h2>
+      {% if value.intro %}<p>{{ value.intro }}</p>{% endif %}
+    </div>
+    <div class="wf-steps">
+      {% for step in value.steps %}
+        <div class="wf-step reveal">
+          <h3>{{ step.title }}</h3>
+          {% if step.text %}<p>{{ step.text }}</p>{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

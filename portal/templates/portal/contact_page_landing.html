@@ -1,0 +1,16 @@
+{% extends "portal/base.html" %}
+{% load wagtailcore_tags %}
+{% block content %}
+<section class="hero">
+  <svg class="contour-svg" aria-hidden="true"></svg>
+  <div class="container-x" style="text-align:center;padding-bottom:4rem">
+    <span class="eyebrow" style="justify-content:center">Message reçu</span>
+    <h1>Merci !</h1>
+    <div class="lead" style="margin-inline:auto">{{ page.thank_you_text|richtext }}</div>
+    <div class="hero-cta" style="justify-content:center">
+      <a class="btn-x btn-primary" href="/">Retour à l'accueil</a>
+      <a class="btn-x btn-ghost" href="/solutions/">Voir nos solutions</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

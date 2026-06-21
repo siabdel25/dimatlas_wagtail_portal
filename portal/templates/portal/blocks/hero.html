@@ -1,0 +1,33 @@
+{% load wagtailcore_tags %}
+<section class="hero">
+  <svg class="contour-svg" aria-hidden="true"></svg>
+  <div class="container-x">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        {% if value.eyebrow %}<span class="eyebrow">{{ value.eyebrow }}</span>{% endif %}
+        <h1>{{ value.heading }}</h1>
+        {% if value.subheading %}<p class="lead">{{ value.subheading }}</p>{% endif %}
+        {% if value.tagline_ar %}<p class="tagline-ar">{{ value.tagline_ar }}</p>{% endif %}
+        {% if value.ctas %}
+          <div class="hero-cta">
+            {% for cta in value.ctas %}
+              <a class="btn-x {% if cta.style == 'ghost' %}btn-ghost{% else %}btn-primary{% endif %}" href="{{ cta.url }}">{{ cta.label }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if value.stats %}
+          <div class="altitude-scale">
+            {% for s in value.stats %}
+              <div class="cell">
+                <div class="val"><span data-counter data-value="{{ s.value }}">{{ s.value }}</span>{% if s.unit %}<span class="unit">{{ s.unit }}</span>{% endif %}</div>
+                <div class="lbl">{{ s.label }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="hero-visual" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="hero-mask"></div>
+</section>

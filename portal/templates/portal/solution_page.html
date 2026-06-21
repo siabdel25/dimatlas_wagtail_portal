@@ -1,0 +1,32 @@
+{% extends "portal/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}
+<section class="hero" style="padding-bottom:0">
+  <svg class="contour-svg" aria-hidden="true"></svg>
+  <div class="container-x">
+    {% if page.sector %}<span class="eyebrow">{{ page.sector }}</span>{% endif %}
+    <h1 style="max-width:20ch">{{ page.title }}</h1>
+    {% if page.summary %}<p class="lead">{{ page.summary }}</p>{% endif %}
+    <div class="hero-cta">
+      {% if page.demo_url %}<a class="btn-x btn-primary" href="{{ page.demo_url }}">Voir la démo live</a>{% endif %}
+      <a class="btn-x btn-ghost" href="/contact/">Demander une démo</a>
+    </div>
+  </div>
+  <div class="hero-mask"></div>
+</section>
+{% for block in page.body %}
+  {% include_block block %}
+{% endfor %}
+<section class="block">
+  <div class="container-x">
+    <div class="cta-band reveal">
+      <h2>Ce vertical correspond à votre métier ?</h2>
+      <p>Parlons de votre cas d'usage et planifions une démonstration adaptée.</p>
+      <div class="hero-cta" style="justify-content:center">
+        <a class="btn-x btn-primary" href="/contact/">Parler de votre projet</a>
+        <a class="btn-x btn-ghost" href="/solutions/">Voir les autres solutions</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

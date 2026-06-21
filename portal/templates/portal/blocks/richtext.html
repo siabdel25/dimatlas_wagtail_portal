@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+<section class="block">
+  <div class="container-x">
+    <div class="rich reveal">
+      {% if value.heading %}<h2>{{ value.heading }}</h2>{% endif %}
+      {{ value.body|richtext }}
+    </div>
+  </div>
+</section>

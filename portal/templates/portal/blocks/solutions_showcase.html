@@ -1,0 +1,25 @@
+{% load wagtailimages_tags %}
+<section class="block" id="solutions">
+  <div class="container-x">
+    <div class="section-head reveal">
+      <span class="eyebrow">Business verticaux</span>
+      <h2>{{ value.heading }}</h2>
+      {% if value.intro %}<p>{{ value.intro }}</p>{% endif %}
+    </div>
+    <div class="sol-grid">
+      {% for sol in value.solutions %}
+        {% if sol.url %}<a class="sol-card reveal" href="{{ sol.url }}">{% else %}<div class="sol-card reveal">{% endif %}
+          <div class="thumb">
+            {% if sol.image %}{% image sol.image fill-640x400 %}{% endif %}
+            {% if sol.sector %}<span class="sector">{{ sol.sector }}</span>{% endif %}
+          </div>
+          <div class="body">
+            <h3>{{ sol.title }}</h3>
+            {% if sol.text %}<p>{{ sol.text }}</p>{% endif %}
+            {% if sol.url %}<span class="more">Découvrir →</span>{% endif %}
+          </div>
+        {% if sol.url %}</a>{% else %}</div>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

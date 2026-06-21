@@ -1,0 +1,80 @@
+{% load static wagtailcore_tags portal_tags %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ page.title }}{% endblock %} · {{ settings.portal.BrandSettings.brand_name }}</title>
+  <meta name="description" content="{% block meta_description %}{{ page.search_description|default:settings.portal.BrandSettings.tagline }}{% endblock %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Kufi+Arabic:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'portal/css/portal.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  {% with brand=settings.portal.BrandSettings %}
+  <header class="portal-nav">
+    <div class="container-x">
+      <a class="brand" href="/">
+        <svg class="peak" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21 L9 7 L13 14 L16 9 L22 21 Z" fill="none" stroke="#E8A33D" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span>DimaAtlas<small>SOLUTIONS · AI TECH</small></span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <nav class="nav-links">
+        {% main_menu as menu %}
+        {% for item in menu %}
+          {% if item.cta %}
+            <a class="btn-x btn-primary" href="{{ item.url }}">{{ item.label }}</a>
+          {% else %}
+            <a href="{{ item.url }}">{{ item.label }}</a>
+          {% endif %}
+        {% empty %}
+          <a href="/solutions/">Solutions</a>
+          <a href="/workflow/">Workflow</a>
+          <a href="/blog/">Veille</a>
+          <a class="btn-x btn-primary" href="/contact/">Parler de votre projet</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </header>
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="portal-foot">
+    <div class="container-x">
+      <div class="foot-grid">
+        <div>
+          <a class="brand" href="/" style="margin-bottom:1rem">
+            <svg class="peak" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21 L9 7 L13 14 L16 9 L22 21 Z" fill="none" stroke="#E8A33D" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            <span>DimaAtlas</span>
+          </a>
+          <p style="max-width:34ch">{{ brand.footer_text }}</p>
+          <p class="tagline-ar" style="font-family:var(--font-ar);color:var(--majorelle-lt)">{{ brand.tagline_ar }}</p>
+        </div>
+        <div>
+          <h4>Solutions</h4>
+          <a href="/solutions/">Toutes les solutions</a>
+          <a href="/workflow/">Notre workflow</a>
+          <a href="/blog/">Veille & articles</a>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          {% if brand.email %}<a href="mailto:{{ brand.email }}">{{ brand.email }}</a>{% endif %}
+          {% if brand.phone %}<a href="tel:{{ brand.phone }}">{{ brand.phone }}</a>{% endif %}
+          <span style="display:block;padding:.25rem 0">{{ brand.address }}</span>
+          {% if brand.linkedin %}<a href="{{ brand.linkedin }}">LinkedIn</a>{% endif %}
+          {% if brand.instagram %}<a href="{{ brand.instagram }}">Instagram</a>{% endif %}
+        </div>
+      </div>
+      <div class="foot-bar">
+        <span>© {% now "Y" %} {{ brand.brand_name }}</span>
+        <span>{{ brand.tagline }}</span>
+      </div>
+    </div>
+  </footer>
+  {% endwith %}
+
+  <script src="{% static 'portal/js/portal.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

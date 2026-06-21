@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Django / Wagtail
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media/
+/static/            # STATIC_ROOT (collectstatic) — les sources sont dans portal/static/
+/staticfiles/
+
+# Environnements
+.venv/
+venv/
+venv_vitrine/
+.env
+*.env
+!.env.example
+
+# Outils / éditeurs
+.idea/
+.vscode/
+.DS_Store
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Node (si fronts Vue ajoutés plus tard)
+node_modules/

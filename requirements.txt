@@ -1,0 +1,10 @@
+# Portail vitrine DimaAtlas — stack autonome (libérée de la contrainte LTS du monorepo)
+Django>=5.2,<5.3
+wagtail>=7.4,<7.5
+
+# Production
+psycopg[binary]>=3.2        # PostgreSQL
+python-decouple>=3.8        # lecture .env
+gunicorn>=23.0
+whitenoise>=6.7             # service des statiques sans nginx (option simple)
+Pillow>=10.4                # images Wagtail

@@ -1,0 +1,29 @@
+{% extends "portal/base.html" %}
+{% load wagtailcore_tags %}
+{% block content %}
+<section class="hero" style="padding-bottom:0">
+  <svg class="contour-svg" aria-hidden="true"></svg>
+  <div class="container-x">
+    <span class="eyebrow">Démarrons</span>
+    <h1>{{ page.title }}</h1>
+    {% if page.intro %}<div class="lead">{{ page.intro|richtext }}</div>{% endif %}
+  </div>
+  <div class="hero-mask"></div>
+</section>
+<section class="block">
+  <div class="container-x" style="max-width:680px">
+    <form class="form-x" action="{% pageurl page %}" method="POST">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="field">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}<small style="color:var(--muted)">{{ field.help_text }}</small>{% endif %}
+          {% for error in field.errors %}<div style="color:var(--terra);font-size:.85rem">{{ error }}</div>{% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn-x btn-primary">Envoyer le message</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

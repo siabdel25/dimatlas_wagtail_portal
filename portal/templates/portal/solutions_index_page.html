@@ -1,0 +1,32 @@
+{% extends "portal/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}
+<section class="hero" style="padding-bottom:0">
+  <svg class="contour-svg" aria-hidden="true"></svg>
+  <div class="container-x">
+    <span class="eyebrow">Nos verticaux métier</span>
+    <h1 style="max-width:18ch">{{ page.title }}</h1>
+    {% if page.intro %}<div class="lead">{{ page.intro|richtext }}</div>{% endif %}
+  </div>
+  <div class="hero-mask"></div>
+</section>
+<section class="block">
+  <div class="container-x">
+    <div class="sol-grid">
+      {% for sol in solutions %}
+        <a class="sol-card reveal" href="{% pageurl sol %}">
+          <div class="thumb">
+            {% if sol.hero_image %}{% image sol.hero_image fill-640x400 %}{% endif %}
+            {% if sol.sector %}<span class="sector">{{ sol.sector }}</span>{% endif %}
+          </div>
+          <div class="body">
+            <h3>{{ sol.title }}</h3>
+            {% if sol.summary %}<p>{{ sol.summary }}</p>{% endif %}
+            <span class="more">Découvrir →</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
