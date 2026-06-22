@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIMA Solutions AI Tech — Plaquettes Sectorielles</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Syne:wght@400;700;800&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  background:#1c1c20;
+  font-family:'Syne',sans-serif;
+  display:flex;flex-direction:column;align-items:center;
+  gap:60px;padding:50px 20px;
+}
+
+/* ── NAV SELECTOR ── */
+.nav-selector{
+  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+  position:sticky;top:16px;z-index:100;
+  background:rgba(28,28,32,.92);backdrop-filter:blur(16px);
+  padding:10px 16px;border-radius:50px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.nav-btn{
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:8px 18px;border-radius:50px;border:none;cursor:pointer;
+  transition:all .25s;color:rgba(255,255,255,.4);background:transparent;
+}
+.nav-btn:hover{color:white;background:rgba(255,255,255,.08)}
+.nav-btn.r{color:#c9813a}.nav-btn.r:hover,.nav-btn.r.act{background:rgba(201,129,58,.15);color:#e8a55a}
+.nav-btn.c{color:#2d9e6b}.nav-btn.c:hover,.nav-btn.c.act{background:rgba(45,158,107,.15);color:#4dcf93}
+.nav-btn.t{color:#5b8dd9}.nav-btn.t:hover,.nav-btn.t.act{background:rgba(91,141,217,.15);color:#7aaef0}
+
+/* ── A4 PAGE WRAPPER ── */
+.brochure{
+  width:210mm;
+  display:flex;flex-direction:column;gap:0;
+  box-shadow:0 60px 160px rgba(0,0,0,.8);
+  border-radius:2px;
+  overflow:hidden;
+}
+
+/* ─────────────────────────────────────
+   PLAQUETTE 1 — RESTAURATION & HÔTELLERIE
+   Palette : Terre brûlée · Crème chaude · Or cuivré
+───────────────────────────────────────*/
+
+/* PAGE 1 COUVERTURE RESTO */
+.r-cover{
+  width:210mm;height:297mm;
+  background:#1a0f0a;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  font-family:'Syne',sans-serif;
+  page-break-after:always;
+}
+.r-cover-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(201,129,58,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(139,67,27,.15) 0%, transparent 70%);
+}
+
+/* PAGE 2 ACCROCHE RESTO */
+.r-accroche{
+  width:210mm;min-height:297mm;
+  background:#f5ede3;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  page-break-after:always;
+}
+
+/* PAGE 3 SOLUTIONS RESTO */
+.r-solutions{
+  width:210mm;min-height:297mm;
+  background:#f5ede3;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+
+/* ─────────────────────────────────────
+   PLAQUETTE 2 — COMMERCE & RETAIL
+   Palette : Ardoise · Blanc cassé · Vert jade
+───────────────────────────────────────*/
+.c-cover{
+  width:210mm;height:297mm;
+  background:#0b1512;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  page-break-after:always;
+}
+.c-accroche{
+  width:210mm;min-height:297mm;
+  background:#f2f6f3;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  page-break-after:always;
+}
+.c-solutions{
+  width:210mm;min-height:297mm;
+  background:#f2f6f3;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+
+/* ─────────────────────────────────────
+   PLAQUETTE 3 — TOURISME & PATRIMOINE
+   Palette : Nuit bleue · Sable · Azur
+───────────────────────────────────────*/
+.t-cover{
+  width:210mm;height:297mm;
+  background:#080e1a;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  page-break-after:always;
+}
+.t-accroche{
+  width:210mm;min-height:297mm;
+  background:#f0f4f8;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  page-break-after:always;
+}
+.t-solutions{
+  width:210mm;min-height:297mm;
+  background:#f0f4f8;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+
+/* ── SHARED UTILITIES ── */
+.page-inner{position:relative;z-index:2;flex:1;display:flex;flex-direction:column}
+
+.dima-logo-lockup{display:flex;flex-direction:column;gap:2px}
+.dima-wordmark{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;letter-spacing:.06em}
+.dima-sub{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;opacity:.45}
+
+.sector-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  padding:7px 14px;border-radius:4px;align-self:flex-start;
+}
+
+.cover-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px;line-height:1.02;letter-spacing:-.02em;
+}
+.cover-body{
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:400;
+  line-height:1.75;opacity:.65;max-width:340px;
+}
+
+.accroche-q{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:36px;line-height:1.2;letter-spacing:-.01em;
+}
+
+.sol-card{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 18px;border-radius:8px;
+  margin-bottom:10px;
+}
+.sol-num{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;
+  opacity:.4;min-width:24px;margin-top:2px;
+}
+.sol-title{font-weight:700;font-size:13px;margin-bottom:4px}
+.sol-text{font-size:11.5px;line-height:1.6;opacity:.65;font-weight:400}
+
+.footnote{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;opacity:.3;
+  margin-top:auto;padding-top:16px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+}
+
+@media print{
+  body{background:white;padding:0;gap:0}
+  .nav-selector{display:none}
+  .brochure{box-shadow:none}
+}
+@media screen and (max-width:900px){
+  .brochure,.r-cover,.r-accroche,.r-solutions,
+  .c-cover,.c-accroche,.c-solutions,
+  .t-cover,.t-accroche,.t-solutions{width:100%}
+  .r-cover,.c-cover,.t-cover{height:auto;min-height:100vw}
+  .cover-headline{font-size:40px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-selector">
+  <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.2);text-transform:uppercase;display:flex;align-items:center">DIMA PLAQUETTES</span>
+  <button class="nav-btn r act" onclick="scroll('brochure-r')">🍽️ Restauration</button>
+  <button class="nav-btn c"     onclick="scroll('brochure-c')">🛍️ Commerce</button>
+  <button class="nav-btn t"     onclick="scroll('brochure-t')">🏛️ Tourisme</button>
+  <button class="nav-btn" onclick="window.print()" style="color:rgba(255,255,255,.3)">🖨️ Imprimer</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PLAQUETTE 1 — RESTAURATION & HÔTELLERIE
+═══════════════════════════════════════════════════ -->
+<div class="brochure" id="brochure-r">
+
+  <!-- PAGE 1 : COUVERTURE -->
+  <div class="r-cover">
+    <div class="r-cover-bg"></div>
+
+    <!-- Decorative SVG background -->
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <!-- Grid dots -->
+      <g opacity=".04">
+        <circle cx="66" cy="66" r="2" fill="white"/>
+        <circle cx="198" cy="66" r="2" fill="white"/>
+        <circle cx="330" cy="66" r="2" fill="white"/>
+        <circle cx="462" cy="66" r="2" fill="white"/>
+        <circle cx="594" cy="66" r="2" fill="white"/>
+        <circle cx="726" cy="66" r="2" fill="white"/>
+        <circle cx="66" cy="198" r="2" fill="white"/>
+        <circle cx="198" cy="198" r="2" fill="white"/>
+        <circle cx="330" cy="198" r="2" fill="white"/>
+        <circle cx="462" cy="198" r="2" fill="white"/>
+        <circle cx="594" cy="198" r="2" fill="white"/>
+        <circle cx="726" cy="198" r="2" fill="white"/>
+        <circle cx="66" cy="330" r="2" fill="white"/>
+        <circle cx="198" cy="330" r="2" fill="white"/>
+        <circle cx="330" cy="330" r="2" fill="white"/>
+        <circle cx="462" cy="330" r="2" fill="white"/>
+        <circle cx="594" cy="330" r="2" fill="white"/>
+        <circle cx="726" cy="330" r="2" fill="white"/>
+        <circle cx="66" cy="900" r="2" fill="white"/>
+        <circle cx="198" cy="900" r="2" fill="white"/>
+        <circle cx="330" cy="900" r="2" fill="white"/>
+      </g>
+      <!-- Large decorative arc -->
+      <circle cx="794" cy="200" r="360" fill="none" stroke="#c9813a" stroke-width="1" opacity=".1"/>
+      <circle cx="794" cy="200" r="260" fill="none" stroke="#c9813a" stroke-width="0.5" opacity=".08"/>
+      <!-- Diagonal rule -->
+      <line x1="0" y1="700" x2="794" y2="900" stroke="#c9813a" stroke-width="0.5" opacity=".15"/>
+      <!-- Bottom fill shape -->
+      <polygon points="0,1123 794,1123 794,820 0,940" fill="rgba(201,129,58,.06)"/>
+      <!-- QR decorative large -->
+      <g transform="translate(480,520)" opacity=".12">
+        <rect width="200" height="200" rx="14" fill="none" stroke="white" stroke-width="1.5"/>
+        <rect x="14" y="14" width="56" height="56" rx="5" fill="white"/>
+        <rect x="20" y="20" width="44" height="44" rx="3" fill="#1a0f0a"/>
+        <rect x="28" y="28" width="28" height="28" rx="2" fill="white"/>
+        <rect x="130" y="14" width="56" height="56" rx="5" fill="white"/>
+        <rect x="136" y="20" width="44" height="44" rx="3" fill="#1a0f0a"/>
+        <rect x="144" y="28" width="28" height="28" rx="2" fill="white"/>
+        <rect x="14" y="130" width="56" height="56" rx="5" fill="white"/>
+        <rect x="20" y="136" width="44" height="44" rx="3" fill="#1a0f0a"/>
+        <rect x="28" y="144" width="28" height="28" rx="2" fill="white"/>
+        <rect x="84" y="14" width="10" height="10" rx="2" fill="white"/>
+        <rect x="100" y="14" width="10" height="10" rx="2" fill="white"/>
+        <rect x="84" y="30" width="10" height="10" rx="2" fill="white"/>
+        <rect x="14" y="84" width="10" height="10" rx="2" fill="white"/>
+        <rect x="14" y="100" width="10" height="10" rx="2" fill="white"/>
+        <rect x="100" y="100" width="10" height="10" rx="2" fill="white"/>
+        <rect x="130" y="100" width="10" height="10" rx="2" fill="white"/>
+        <rect x="160" y="100" width="10" height="10" rx="2" fill="white"/>
+        <rect x="100" y="130" width="10" height="10" rx="2" fill="white"/>
+        <rect x="130" y="130" width="10" height="10" rx="2" fill="white"/>
+        <rect x="160" y="160" width="10" height="10" rx="2" fill="white"/>
+        <rect x="84" y="160" width="10" height="10" rx="2" fill="white"/>
+        <rect x="100" y="160" width="10" height="10" rx="2" fill="white"/>
+      </g>
+      <!-- Section icon -->
+      <text x="480" y="510" font-size="120" opacity=".06">🍽️</text>
+    </svg>
+
+    <div class="page-inner" style="padding:48px 52px">
+      <!-- Header -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="dima-logo-lockup">
+          <div class="dima-wordmark" style="color:white">DIMA<span style="color:#c9813a">.</span></div>
+          <div class="dima-sub" style="color:white">Solutions AI Tech</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.2em;color:rgba(255,255,255,.25);text-transform:uppercase">Plaquette Sectorielle</div>
+          <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.18em;color:rgba(255,255,255,.2);text-transform:uppercase;margin-top:3px">N° 01 · 2025</div>
+        </div>
+      </div>
+
+      <!-- Sector tag -->
+      <div style="margin-top:52px">
+        <div class="sector-tag" style="background:rgba(201,129,58,.15);border:1px solid rgba(201,129,58,.3);color:#e8a55a">
+          <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="#e8a55a" stroke-width="1.2"/><circle cx="5" cy="5" r="2" fill="#e8a55a"/></svg>
+          Restauration &amp; Hôtellerie
+        </div>
+      </div>
+
+      <!-- Main headline -->
+      <div style="margin-top:36px;flex:1">
+        <div class="cover-headline" style="color:white">
+          L'expérience<br>
+          client<br>
+          <span style="color:#c9813a;font-style:italic">réinventée</span><br>
+          par le QR
+        </div>
+
+        <div style="width:60px;height:2px;background:#c9813a;margin:32px 0"></div>
+
+        <div class="cover-body" style="color:white">
+          Menu digital, fidélité automatique, check-in sans contact, 
+          commande à table — une technologie accessible qui transforme 
+          chaque scan en moment de valeur pour votre client et en donnée 
+          exploitable pour votre gestion.
+        </div>
+
+        <!-- Key numbers -->
+        <div style="display:flex;gap:0;margin-top:48px">
+          <div style="flex:1;border-right:1px solid rgba(255,255,255,.08);padding-right:24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:#c9813a;line-height:1">-70%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Coûts impression</div>
+          </div>
+          <div style="flex:1;border-right:1px solid rgba(255,255,255,.08);padding:0 24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:white;line-height:1">3 s</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Temps de scan</div>
+          </div>
+          <div style="flex:1;padding-left:24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:#c9813a;line-height:1">24h</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Mise en prod</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footnote" style="color:white;border-top:1px solid rgba(255,255,255,.06);margin-top:32px;padding-top:20px">
+        <span>dima-solutions.io · contact@dima-solutions.io</span>
+        <span>🇫🇷 France · 🇲🇦 Maroc · 2025</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 : ACCROCHE -->
+  <div class="r-accroche">
+    <!-- BG SVG décoration -->
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="794" cy="0" r="300" fill="rgba(201,129,58,.07)"/>
+      <line x1="52" y1="0" x2="52" y2="1123" stroke="#c9813a" stroke-width="0.5" opacity=".12"/>
+      <polygon points="0,900 794,1123 0,1123" fill="rgba(201,129,58,.05)"/>
+    </svg>
+
+    <div class="page-inner" style="padding:52px 52px 44px 52px">
+      <!-- mini logo -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid rgba(26,15,10,.08)">
+        <div class="dima-wordmark" style="color:#1a0f0a;font-size:20px">DIMA<span style="color:#c9813a">.</span></div>
+        <div class="sector-tag" style="background:rgba(201,129,58,.1);border:1px solid rgba(201,129,58,.2);color:#c9813a">
+          🍽️ Restauration &amp; Hôtellerie
+        </div>
+      </div>
+
+      <!-- Page label -->
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#c9813a;margin-top:36px;margin-bottom:20px">● Le constat</div>
+
+      <!-- Big question -->
+      <div class="accroche-q" style="color:#1a0f0a">
+        Vos clients consultent votre menu, <span style="color:#c9813a">attendent un serveur</span>, paient en caisse… Mais savez-vous vraiment ce qu'ils ont aimé, quand ils reviendront, et pourquoi ils ne laissent pas d'avis ?
+      </div>
+
+      <div style="width:48px;height:2px;background:#c9813a;margin:28px 0"></div>
+
+      <div style="font-size:13.5px;line-height:1.8;color:#3a2518;font-weight:400;max-width:520px">
+        Dans la restauration et l'hôtellerie, la relation client se joue à chaque instant — 
+        mais sans outils digitaux, chaque opportunité de fidéliser, d'upseller ou 
+        de collecter un avis disparaît avec l'addition.<br><br>
+        <strong style="font-weight:700">Le QR Code change la donne</strong> : sans application à télécharger, 
+        votre client accède instantanément à votre menu, commande, paie et laisse un avis 
+        en 3 secondes. Vous, vous voyez tout en temps réel depuis votre tableau de bord.
+      </div>
+
+      <!-- 2-col insight boxes -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px">
+        <div style="background:rgba(201,129,58,.08);border:1px solid rgba(201,129,58,.18);border-radius:10px;padding:20px">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#c9813a;margin-bottom:10px">Pour le Manager</div>
+          <ul style="list-style:none;font-size:11.5px;color:#3a2518;line-height:1.9">
+            <li>→ Modifier le menu en 1 clic</li>
+            <li>→ Voir les plats les plus scannés</li>
+            <li>→ Gérer les ruptures en temps réel</li>
+            <li>→ Collecter des avis automatiquement</li>
+            <li>→ Fidéliser sans carte papier</li>
+          </ul>
+        </div>
+        <div style="background:rgba(26,15,10,.04);border:1px solid rgba(26,15,10,.08);border-radius:10px;padding:20px">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8b4a1b;margin-bottom:10px">Pour le Client</div>
+          <ul style="list-style:none;font-size:11.5px;color:#3a2518;line-height:1.9">
+            <li>→ Menu toujours à jour, avec photos</li>
+            <li>→ Commander sans attendre</li>
+            <li>→ Payer en 1 scan</li>
+            <li>→ Check-in hôtel sans queue</li>
+            <li>→ WiFi automatique à l'arrivée</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Morocco highlight -->
+      <div style="margin-top:20px;background:#1a0f0a;border-radius:10px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start">
+        <div style="font-size:20px;margin-top:2px">🇲🇦</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#c9813a;margin-bottom:5px">Opportunité Maroc</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,.65);line-height:1.7">
+            Marrakech, Fès, Agadir — le secteur hôtelier & restauration marocain est en pleine digitalisation. 
+            Les solutions clés-en-main manquent cruellement. <strong style="color:#e8a55a;font-weight:700">Dima est prêt.</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:#1a0f0a;border-top:1px solid rgba(26,15,10,.08);margin-top:24px;padding-top:16px">
+        <span>DIMA Solutions AI Tech · Plaquette 01</span>
+        <span style="font-size:9px">Page 2 / 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3 : SOLUTIONS -->
+  <div class="r-solutions">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,0 794,0 794,80 0,0" fill="rgba(201,129,58,.05)"/>
+      <polygon points="0,1000 794,1123 0,1123" fill="rgba(201,129,58,.06)"/>
+      <line x1="742" y1="0" x2="742" y2="1123" stroke="#c9813a" stroke-width="0.5" opacity=".1"/>
+    </svg>
+
+    <div class="page-inner" style="padding:44px 52px">
+      <!-- header -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid rgba(26,15,10,.08)">
+        <div class="dima-wordmark" style="color:#1a0f0a;font-size:20px">DIMA<span style="color:#c9813a">.</span></div>
+        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#c9813a">Nos Solutions · Restauration</div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#c9813a;margin-top:30px;margin-bottom:6px">● Ce que nous déployons pour vous</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#1a0f0a;margin-bottom:24px;line-height:1.15">5 solutions QR Code, opérationnelles sous 24h</div>
+
+      <!-- Solution cards -->
+      <div class="sol-card" style="background:rgba(201,129,58,.08);border:1px solid rgba(201,129,58,.18);border-radius:10px">
+        <div class="sol-num" style="color:#c9813a">01</div>
+        <div>
+          <div class="sol-title" style="color:#1a0f0a">Menu Digital QR — Gestion Temps Réel</div>
+          <div class="sol-text" style="color:#3a2518">Votre carte en ligne, toujours à jour. Changez un prix, signalez une rupture ou ajoutez un plat du jour depuis votre tableau de bord — sans réimprimer quoi que ce soit. Photos, allergènes, filtres (halal, végétarien) inclus.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(26,15,10,.03);border:1px solid rgba(26,15,10,.07);border-radius:10px">
+        <div class="sol-num" style="color:#c9813a">02</div>
+        <div>
+          <div class="sol-title" style="color:#1a0f0a">Carte de Fidélité QR Automatique</div>
+          <div class="sol-text" style="color:#3a2518">Chaque scan à la table ou au comptoir cumule des points automatiquement, sans carte plastique ni application. Le client fidèle revient — et vous le savez avant lui.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(201,129,58,.08);border:1px solid rgba(201,129,58,.18);border-radius:10px">
+        <div class="sol-num" style="color:#c9813a">03</div>
+        <div>
+          <div class="sol-title" style="color:#1a0f0a">Commande &amp; Paiement à Table via QR</div>
+          <div class="sol-text" style="color:#3a2518">Le client scanne, commande, paie — sans mobiliser un serveur. Réduction du temps de rotation des tables, augmentation du ticket moyen, zéro erreur de commande.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(26,15,10,.03);border:1px solid rgba(26,15,10,.07);border-radius:10px">
+        <div class="sol-num" style="color:#c9813a">04</div>
+        <div>
+          <div class="sol-title" style="color:#1a0f0a">Check-in Hôtel Sans Réception · Accès Chambre QR</div>
+          <div class="sol-text" style="color:#3a2518">Le client reçoit son QR par e-mail avant l'arrivée. Il scanne à l'entrée — la porte s'ouvre. Pas de queue, pas de clé physique perdue, une expérience premium immédiate. Idéal pour les riads et boutique-hôtels.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(201,129,58,.08);border:1px solid rgba(201,129,58,.18);border-radius:10px">
+        <div class="sol-num" style="color:#c9813a">05</div>
+        <div>
+          <div class="sol-title" style="color:#1a0f0a">Avis Google Automatique au Scan</div>
+          <div class="sol-text" style="color:#3a2518">Un QR placé sur l'addition ou la chambre redirige directement vers votre fiche Google. Le bon moment, la bonne action. Multipliez vos avis 5 étoiles sans sollicitation manuelle.</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="margin-top:18px;background:#1a0f0a;border-radius:10px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c9813a;margin-bottom:5px">Premier mois offert · Sans engagement</div>
+          <div style="font-size:13px;font-weight:700;color:white">Demandez votre démo en 30 minutes</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#e8a55a;letter-spacing:.06em">contact@dima-solutions.io</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.3);margin-top:3px">dima-solutions.io</div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:#1a0f0a;border-top:1px solid rgba(26,15,10,.08);margin-top:16px;padding-top:14px">
+        <span>DIMA Solutions AI Tech · Plaquette Restauration &amp; Hôtellerie</span>
+        <span>Page 3 / 3</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /brochure-r -->
+
+
+<!-- ═══════════════════════════════════════════════════
+     PLAQUETTE 2 — COMMERCE & RETAIL
+═══════════════════════════════════════════════════ -->
+<div class="brochure" id="brochure-c">
+
+  <!-- PAGE 1 : COUVERTURE -->
+  <div class="c-cover">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="cg1" cx="20%" cy="80%">
+          <stop offset="0%" stop-color="#2d9e6b" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#2d9e6b" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="cg2" cx="80%" cy="20%">
+          <stop offset="0%" stop-color="#1a5e38" stop-opacity=".15"/>
+          <stop offset="100%" stop-color="#1a5e38" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="794" height="1123" fill="url(#cg1)"/>
+      <rect width="794" height="1123" fill="url(#cg2)"/>
+      <!-- Geometric grid -->
+      <g opacity=".05" stroke="white" stroke-width="0.6">
+        <rect x="52" y="52" width="690" height="1019" fill="none"/>
+        <rect x="104" y="104" width="586" height="915" fill="none"/>
+        <line x1="397" y1="52" x2="397" y2="1071"/>
+        <line x1="52" y1="561" x2="742" y2="561"/>
+      </g>
+      <!-- Diagonal bars -->
+      <polygon points="0,0 200,0 0,300" fill="rgba(45,158,107,.08)"/>
+      <polygon points="794,1123 594,1123 794,823" fill="rgba(45,158,107,.08)"/>
+      <!-- Barcode decorative -->
+      <g transform="translate(500,600)" opacity=".08">
+        <rect x="0" y="0" width="8" height="120" fill="white"/>
+        <rect x="14" y="0" width="4" height="120" fill="white"/>
+        <rect x="24" y="0" width="12" height="120" fill="white"/>
+        <rect x="42" y="0" width="6" height="120" fill="white"/>
+        <rect x="54" y="0" width="10" height="120" fill="white"/>
+        <rect x="70" y="0" width="4" height="120" fill="white"/>
+        <rect x="80" y="0" width="8" height="120" fill="white"/>
+        <rect x="94" y="0" width="14" height="120" fill="white"/>
+        <rect x="114" y="0" width="6" height="120" fill="white"/>
+        <rect x="126" y="0" width="8" height="120" fill="white"/>
+        <rect x="140" y="0" width="4" height="120" fill="white"/>
+        <rect x="150" y="0" width="10" height="120" fill="white"/>
+        <rect x="166" y="0" width="6" height="120" fill="white"/>
+        <rect x="178" y="0" width="12" height="120" fill="white"/>
+      </g>
+      <text x="440" y="590" font-size="140" opacity=".05">🛍️</text>
+    </svg>
+
+    <div class="page-inner" style="padding:48px 52px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="dima-logo-lockup">
+          <div class="dima-wordmark" style="color:white">DIMA<span style="color:#2d9e6b">.</span></div>
+          <div class="dima-sub" style="color:white">Solutions AI Tech</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.2em;color:rgba(255,255,255,.25);text-transform:uppercase">Plaquette Sectorielle</div>
+          <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.18em;color:rgba(255,255,255,.2);text-transform:uppercase;margin-top:3px">N° 02 · 2025</div>
+        </div>
+      </div>
+
+      <div style="margin-top:52px">
+        <div class="sector-tag" style="background:rgba(45,158,107,.15);border:1px solid rgba(45,158,107,.3);color:#4dcf93">
+          <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="#4dcf93" stroke-width="1.2"/><circle cx="5" cy="5" r="2" fill="#4dcf93"/></svg>
+          Commerce &amp; Retail
+        </div>
+      </div>
+
+      <div style="margin-top:36px;flex:1">
+        <div class="cover-headline" style="color:white">
+          Chaque<br>
+          produit<br>
+          <span style="color:#2d9e6b;font-style:italic">raconte</span><br>
+          son histoire
+        </div>
+
+        <div style="width:60px;height:2px;background:#2d9e6b;margin:32px 0"></div>
+
+        <div class="cover-body" style="color:white">
+          Étiquettes enrichies, catalogue digital, fidélité sans app, 
+          traçabilité produit — transformez chaque emballage en 
+          point de contact digital avec votre client, et chaque 
+          grossiste en partenaire connecté.
+        </div>
+
+        <div style="display:flex;gap:0;margin-top:48px">
+          <div style="flex:1;border-right:1px solid rgba(255,255,255,.08);padding-right:24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:#2d9e6b;line-height:1">×3</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Temps d'engagement</div>
+          </div>
+          <div style="flex:1;border-right:1px solid rgba(255,255,255,.08);padding:0 24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:white;line-height:1">0 app</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">À télécharger</div>
+          </div>
+          <div style="flex:1;padding-left:24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:#2d9e6b;line-height:1">+28%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Taux fidélité</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:white;border-top:1px solid rgba(255,255,255,.06);margin-top:32px;padding-top:20px">
+        <span>dima-solutions.io · contact@dima-solutions.io</span>
+        <span>🇫🇷 France · 🇲🇦 Maroc · 2025</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 : ACCROCHE -->
+  <div class="c-accroche">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="0" cy="0" r="250" fill="rgba(45,158,107,.06)"/>
+      <line x1="52" y1="0" x2="52" y2="1123" stroke="#2d9e6b" stroke-width="0.5" opacity=".12"/>
+      <polygon points="794,800 794,1123 400,1123" fill="rgba(45,158,107,.05)"/>
+    </svg>
+
+    <div class="page-inner" style="padding:52px 52px 44px 52px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid rgba(11,21,18,.08)">
+        <div class="dima-wordmark" style="color:#0b1512;font-size:20px">DIMA<span style="color:#2d9e6b">.</span></div>
+        <div class="sector-tag" style="background:rgba(45,158,107,.1);border:1px solid rgba(45,158,107,.2);color:#2d9e6b">
+          🛍️ Commerce &amp; Retail
+        </div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#2d9e6b;margin-top:36px;margin-bottom:20px">● Le constat</div>
+
+      <div class="accroche-q" style="color:#0b1512">
+        Votre produit est en rayon — mais votre client sait-il vraiment <span style="color:#2d9e6b">d'où il vient, comment l'utiliser</span>, et pourquoi il devrait revenir l'acheter chez vous plutôt qu'en ligne ?
+      </div>
+
+      <div style="width:48px;height:2px;background:#2d9e6b;margin:28px 0"></div>
+
+      <div style="font-size:13.5px;line-height:1.8;color:#1a3028;font-weight:400;max-width:520px">
+        Dans le commerce physique, le produit parle rarement pour lui-même. 
+        L'emballage est limité, le vendeur pas toujours disponible, et la fiche 
+        produit en ligne reste inconnue du client en magasin.<br><br>
+        <strong style="font-weight:700">Un QR Code sur l'étiquette ou l'emballage</strong> ouvre un monde 
+        d'informations — vidéo démo, certifications halal/bio, recettes, 
+        catalogue complet — sans aucune application à télécharger.
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px">
+        <div style="background:rgba(45,158,107,.08);border:1px solid rgba(45,158,107,.18);border-radius:10px;padding:20px">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#2d9e6b;margin-bottom:10px">Pour le Commerçant</div>
+          <ul style="list-style:none;font-size:11.5px;color:#1a3028;line-height:1.9">
+            <li>→ Catalogue digital B2B grossistes</li>
+            <li>→ Analytics produit (scans, dwell time)</li>
+            <li>→ Fidélisation sans carte physique</li>
+            <li>→ Mise à jour prix &amp; stock en direct</li>
+            <li>→ Certifications authentifiées</li>
+          </ul>
+        </div>
+        <div style="background:rgba(11,21,18,.04);border:1px solid rgba(11,21,18,.08);border-radius:10px;padding:20px">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#1a5e38;margin-bottom:10px">Pour le Client Final</div>
+          <ul style="list-style:none;font-size:11.5px;color:#1a3028;line-height:1.9">
+            <li>→ Fiche produit complète au scan</li>
+            <li>→ Vidéo démo &amp; tutoriel usage</li>
+            <li>→ Avis clients vérifiés</li>
+            <li>→ Origine &amp; traçabilité produit</li>
+            <li>→ Recettes &amp; suggestions associées</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:#0b1512;border-radius:10px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start">
+        <div style="font-size:20px;margin-top:2px">📦</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#2d9e6b;margin-bottom:5px">Cas d'usage B2B</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,.65);line-height:1.7">
+            Pour les grossistes et distributeurs : un QR Code sur chaque référence remplace un catalogue papier de 200 pages. 
+            Le client revendeur accède aux fiches techniques, prix et disponibilités en temps réel. 
+            <strong style="color:#4dcf93;font-weight:700">Zéro impression. Zéro délai.</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:#0b1512;border-top:1px solid rgba(11,21,18,.08);margin-top:24px;padding-top:16px">
+        <span>DIMA Solutions AI Tech · Plaquette 02</span>
+        <span style="font-size:9px">Page 2 / 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3 : SOLUTIONS -->
+  <div class="c-solutions">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,0 794,0 794,80 0,0" fill="rgba(45,158,107,.05)"/>
+      <polygon points="0,1000 794,1123 0,1123" fill="rgba(45,158,107,.06)"/>
+      <line x1="742" y1="0" x2="742" y2="1123" stroke="#2d9e6b" stroke-width="0.5" opacity=".1"/>
+    </svg>
+
+    <div class="page-inner" style="padding:44px 52px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid rgba(11,21,18,.08)">
+        <div class="dima-wordmark" style="color:#0b1512;font-size:20px">DIMA<span style="color:#2d9e6b">.</span></div>
+        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#2d9e6b">Nos Solutions · Commerce &amp; Retail</div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#2d9e6b;margin-top:30px;margin-bottom:6px">● Ce que nous déployons pour vous</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#0b1512;margin-bottom:24px;line-height:1.15">4 solutions QR Code, opérationnelles sous 24h</div>
+
+      <div class="sol-card" style="background:rgba(45,158,107,.08);border:1px solid rgba(45,158,107,.18);border-radius:10px">
+        <div class="sol-num" style="color:#2d9e6b">01</div>
+        <div>
+          <div class="sol-title" style="color:#0b1512">Étiquettes Produit Enrichies</div>
+          <div class="sol-text" style="color:#1a3028">Un QR Code sur chaque produit ou emballage ouvre une fiche complète : photos haute définition, vidéo démo, avis clients vérifiés, caractéristiques techniques. Le vendeur virtuel qui ne prend jamais de congé.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(11,21,18,.03);border:1px solid rgba(11,21,18,.07);border-radius:10px">
+        <div class="sol-num" style="color:#2d9e6b">02</div>
+        <div>
+          <div class="sol-title" style="color:#0b1512">Carte de Fidélité Digitale — Sans App</div>
+          <div class="sol-text" style="color:#1a3028">Le client scanne en caisse, cumule des points, consulte ses avantages. Aucune carte physique, aucune application. Juste son téléphone. Vous, vous voyez chaque visite, chaque achat, chaque préférence.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(45,158,107,.08);border:1px solid rgba(45,158,107,.18);border-radius:10px">
+        <div class="sol-num" style="color:#2d9e6b">03</div>
+        <div>
+          <div class="sol-title" style="color:#0b1512">QR sur Emballage — Traçabilité &amp; Certifications</div>
+          <div class="sol-text" style="color:#1a3028">Origine produit, certifications halal ou bio, recettes d'utilisation, conseils de conservation — tout ce que l'emballage ne peut pas contenir. Différenciez-vous sur les marchés exigeants et exportez en confiance.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(11,21,18,.03);border:1px solid rgba(11,21,18,.07);border-radius:10px">
+        <div class="sol-num" style="color:#2d9e6b">04</div>
+        <div>
+          <div class="sol-title" style="color:#0b1512">Catalogue Digital B2B pour Grossistes</div>
+          <div class="sol-text" style="color:#1a3028">Un QR Code remplace 200 pages de catalogue papier. Vos revendeurs et grossistes accèdent aux références, prix, disponibilités et fiches techniques en temps réel, depuis n'importe où, sur n'importe quel appareil.</div>
+        </div>
+      </div>
+
+      <!-- pricing hint -->
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:rgba(45,158,107,.06);border:1px solid rgba(45,158,107,.14);border-radius:8px;padding:14px 16px">
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#2d9e6b;margin-bottom:6px">🇲🇦 Maroc — dès</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#0b1512">299 MAD <span style="font-size:14px;color:#6b8a7a">/mois</span></div>
+        </div>
+        <div style="background:rgba(45,158,107,.06);border:1px solid rgba(45,158,107,.14);border-radius:8px;padding:14px 16px">
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#2d9e6b;margin-bottom:6px">🇫🇷 France — dès</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#0b1512">39€ <span style="font-size:14px;color:#6b8a7a">/mois</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;background:#0b1512;border-radius:10px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#2d9e6b;margin-bottom:5px">Premier mois offert · Sans engagement</div>
+          <div style="font-size:13px;font-weight:700;color:white">Demandez votre démo en 30 minutes</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#4dcf93;letter-spacing:.06em">contact@dima-solutions.io</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.3);margin-top:3px">dima-solutions.io</div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:#0b1512;border-top:1px solid rgba(11,21,18,.08);margin-top:16px;padding-top:14px">
+        <span>DIMA Solutions AI Tech · Plaquette Commerce &amp; Retail</span>
+        <span>Page 3 / 3</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /brochure-c -->
+
+
+<!-- ═══════════════════════════════════════════════════
+     PLAQUETTE 3 — TOURISME & PATRIMOINE
+═══════════════════════════════════════════════════ -->
+<div class="brochure" id="brochure-t">
+
+  <!-- PAGE 1 : COUVERTURE -->
+  <div class="t-cover">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="tg1" cx="70%" cy="30%">
+          <stop offset="0%" stop-color="#5b8dd9" stop-opacity=".2"/>
+          <stop offset="100%" stop-color="#5b8dd9" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="tg2" cx="30%" cy="70%">
+          <stop offset="0%" stop-color="#d4a853" stop-opacity=".14"/>
+          <stop offset="100%" stop-color="#d4a853" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="794" height="1123" fill="url(#tg1)"/>
+      <rect width="794" height="1123" fill="url(#tg2)"/>
+      <!-- Star field -->
+      <g opacity=".25" fill="white">
+        <circle cx="120" cy="80" r="1"/><circle cx="300" cy="50" r="0.7"/>
+        <circle cx="500" cy="90" r="1.2"/><circle cx="680" cy="60" r="0.8"/>
+        <circle cx="200" cy="150" r="0.6"/><circle cx="650" cy="130" r="1"/>
+        <circle cx="750" cy="200" r="0.8"/><circle cx="80" cy="220" r="1.1"/>
+        <circle cx="420" cy="40" r="0.9"/><circle cx="560" cy="170" r="0.7"/>
+      </g>
+      <!-- Mosque silhouette decorative -->
+      <g transform="translate(400,650)" opacity=".06" fill="white">
+        <!-- Minaret -->
+        <rect x="-10" y="-200" width="20" height="160"/>
+        <polygon points="-14,-200 14,-200 0,-240"/>
+        <rect x="-6" y="-170" width="12" height="6"/>
+        <rect x="-6" y="-150" width="12" height="6"/>
+        <!-- Dome -->
+        <ellipse cx="0" cy="-50" rx="60" ry="40"/>
+        <rect x="-60" y="-50" width="120" height="50"/>
+        <!-- Arches -->
+        <rect x="-90" y="0" width="180" height="40"/>
+      </g>
+      <!-- Compass rose -->
+      <g transform="translate(650,780)" opacity=".06" stroke="white" fill="none">
+        <circle cx="0" cy="0" r="60" stroke-width="0.5"/>
+        <circle cx="0" cy="0" r="40" stroke-width="0.5"/>
+        <line x1="0" y1="-60" x2="0" y2="60" stroke-width="0.5"/>
+        <line x1="-60" y1="0" x2="60" y2="0" stroke-width="0.5"/>
+        <polygon points="0,-60 -6,-20 6,-20" fill="white" opacity=".3"/>
+      </g>
+      <polygon points="0,950 794,1123 0,1123" fill="rgba(91,141,217,.05)"/>
+      <text x="440" y="590" font-size="140" opacity=".04">🏛️</text>
+    </svg>
+
+    <div class="page-inner" style="padding:48px 52px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="dima-logo-lockup">
+          <div class="dima-wordmark" style="color:white">DIMA<span style="color:#5b8dd9">.</span></div>
+          <div class="dima-sub" style="color:white">Solutions AI Tech</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.2em;color:rgba(255,255,255,.25);text-transform:uppercase">Plaquette Sectorielle</div>
+          <div style="font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.18em;color:rgba(255,255,255,.2);text-transform:uppercase;margin-top:3px">N° 03 · 2025</div>
+        </div>
+      </div>
+
+      <div style="margin-top:52px">
+        <div class="sector-tag" style="background:rgba(91,141,217,.15);border:1px solid rgba(91,141,217,.3);color:#7aaef0">
+          <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="none" stroke="#7aaef0" stroke-width="1.2"/><circle cx="5" cy="5" r="2" fill="#7aaef0"/></svg>
+          Tourisme &amp; Patrimoine
+        </div>
+      </div>
+
+      <div style="margin-top:36px;flex:1">
+        <div class="cover-headline" style="color:white">
+          Le patrimoine<br>
+          prend<br>
+          <span style="color:#5b8dd9;font-style:italic">vie</span><br>
+          au scan
+        </div>
+
+        <div style="width:60px;height:2px;background:#5b8dd9;margin:32px 0"></div>
+
+        <div class="cover-body" style="color:white">
+          Visites guidées autonomes, city pass digital, cartels 
+          interactifs, carte touristique connectée — offrez à 
+          chaque visiteur une expérience immersive et mémorable, 
+          sans guide, sans brochure papier, sans application.
+        </div>
+
+        <div style="display:flex;gap:0;margin-top:48px">
+          <div style="flex:1;border-right:1px solid rgba(255,255,255,.08);padding-right:24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:#5b8dd9;line-height:1">13M</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Touristes Maroc/an</div>
+          </div>
+          <div style="flex:1;border-right:1px solid rgba(255,255,255,.08);padding:0 24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:white;line-height:1">0 app</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Requise</div>
+          </div>
+          <div style="flex:1;padding-left:24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:#d4a853;line-height:1">∞</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:4px">Langues disponibles</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:white;border-top:1px solid rgba(255,255,255,.06);margin-top:32px;padding-top:20px">
+        <span>dima-solutions.io · contact@dima-solutions.io</span>
+        <span>🇫🇷 France · 🇲🇦 Maroc · 2025</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 : ACCROCHE -->
+  <div class="t-accroche">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="794" cy="300" r="300" fill="rgba(91,141,217,.06)"/>
+      <line x1="52" y1="0" x2="52" y2="1123" stroke="#5b8dd9" stroke-width="0.5" opacity=".12"/>
+      <polygon points="794,900 794,1123 300,1123" fill="rgba(212,168,83,.04)"/>
+    </svg>
+
+    <div class="page-inner" style="padding:52px 52px 44px 52px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid rgba(8,14,26,.08)">
+        <div class="dima-wordmark" style="color:#080e1a;font-size:20px">DIMA<span style="color:#5b8dd9">.</span></div>
+        <div class="sector-tag" style="background:rgba(91,141,217,.1);border:1px solid rgba(91,141,217,.2);color:#5b8dd9">
+          🏛️ Tourisme &amp; Patrimoine
+        </div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#5b8dd9;margin-top:36px;margin-bottom:20px">● Le constat</div>
+
+      <div class="accroche-q" style="color:#080e1a">
+        Vos visiteurs se trouvent devant un monument exceptionnel — mais ils ne savent pas <span style="color:#5b8dd9">ce qu'il cache, ce qu'il a vécu</span>, ni ce qu'il y a à voir autour.
+      </div>
+
+      <div style="width:48px;height:2px;background:#5b8dd9;margin:28px 0"></div>
+
+      <div style="font-size:13.5px;line-height:1.8;color:#1a2535;font-weight:400;max-width:520px">
+        Le tourisme culturel souffre d'un paradoxe : des patrimoines exceptionnels, 
+        des visiteurs motivés, mais une médiation pauvre — panneaux illisibles, 
+        brochures dépassées, guides trop chers ou indisponibles.<br><br>
+        <strong style="font-weight:700">Le QR Code renverse cette logique</strong> : chaque monument, chaque 
+        artefact, chaque ruelle devient un point de départ vers une expérience 
+        audio-visuelle multilingue, disponible 24h/24, sans infrastructure lourde.
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px">
+        <div style="background:rgba(91,141,217,.08);border:1px solid rgba(91,141,217,.18);border-radius:10px;padding:20px">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#5b8dd9;margin-bottom:10px">Pour les Institutions</div>
+          <ul style="list-style:none;font-size:11.5px;color:#1a2535;line-height:1.9">
+            <li>→ Remplacement cartels papier</li>
+            <li>→ Statistiques de visite en temps réel</li>
+            <li>→ Mise à jour contenu sans travaux</li>
+            <li>→ Gestion city pass digitale</li>
+            <li>→ Monétisation via QR billetterie</li>
+          </ul>
+        </div>
+        <div style="background:rgba(8,14,26,.04);border:1px solid rgba(8,14,26,.08);border-radius:10px;padding:20px">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#2d5a8e;margin-bottom:10px">Pour le Visiteur</div>
+          <ul style="list-style:none;font-size:11.5px;color:#1a2535;line-height:1.9">
+            <li>→ Audio-guide multilingue au scan</li>
+            <li>→ Vidéo reconstitution historique</li>
+            <li>→ City pass tout-en-un</li>
+            <li>→ Carte interactive offline</li>
+            <li>→ Bons plans restaurants &amp; hôtels</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:#080e1a;border-radius:10px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start">
+        <div style="font-size:20px;margin-top:2px">🇲🇦</div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#5b8dd9;margin-bottom:5px">Opportunité Maroc — Marché Vierge</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,.65);line-height:1.7">
+            Marrakech, Fès, Essaouira, Volubilis — des sites de renommée mondiale sans médiation digitale. 
+            13 millions de touristes par an, sans guide numérique. 
+            <strong style="color:#7aaef0;font-weight:700">Dima est le premier à ce créneau.</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:#080e1a;border-top:1px solid rgba(8,14,26,.08);margin-top:24px;padding-top:16px">
+        <span>DIMA Solutions AI Tech · Plaquette 03</span>
+        <span style="font-size:9px">Page 2 / 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3 : SOLUTIONS -->
+  <div class="t-solutions">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 794 1123" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,0 794,0 794,80 0,0" fill="rgba(91,141,217,.05)"/>
+      <polygon points="0,1000 794,1123 0,1123" fill="rgba(212,168,83,.05)"/>
+      <line x1="742" y1="0" x2="742" y2="1123" stroke="#5b8dd9" stroke-width="0.5" opacity=".1"/>
+    </svg>
+
+    <div class="page-inner" style="padding:44px 52px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid rgba(8,14,26,.08)">
+        <div class="dima-wordmark" style="color:#080e1a;font-size:20px">DIMA<span style="color:#5b8dd9">.</span></div>
+        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#5b8dd9">Nos Solutions · Tourisme &amp; Patrimoine</div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#5b8dd9;margin-top:30px;margin-bottom:6px">● Ce que nous déployons pour vous</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#080e1a;margin-bottom:24px;line-height:1.15">4 solutions QR Code pour valoriser chaque site</div>
+
+      <div class="sol-card" style="background:rgba(91,141,217,.08);border:1px solid rgba(91,141,217,.18);border-radius:10px">
+        <div class="sol-num" style="color:#5b8dd9">01</div>
+        <div>
+          <div class="sol-title" style="color:#080e1a">Visite Guidée Autonome — Audio &amp; Vidéo Multilingue</div>
+          <div class="sol-text" style="color:#1a2535">Un QR Code sur chaque monument, stèle ou cartel ouvre un audio-guide professionnel, une vidéo de reconstitution ou un texte enrichi — en français, arabe, anglais, espagnol. Le visiteur explore à son rythme, sans guide, sans application.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(8,14,26,.03);border:1px solid rgba(8,14,26,.07);border-radius:10px">
+        <div class="sol-num" style="color:#5b8dd9">02</div>
+        <div>
+          <div class="sol-title" style="color:#080e1a">City Pass Digital QR — Transport, Musées, Réductions</div>
+          <div class="sol-text" style="color:#1a2535">Un QR Code unique donne accès à l'ensemble d'une destination : transports en commun, entrées musées, réductions partenaires restaurants et hôtels. Vendu en ligne avant l'arrivée. Zéro file d'attente. Zéro papier.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(91,141,217,.08);border:1px solid rgba(91,141,217,.18);border-radius:10px">
+        <div class="sol-num" style="color:#5b8dd9">03</div>
+        <div>
+          <div class="sol-title" style="color:#080e1a">Carte Touristique Interactive</div>
+          <div class="sol-text" style="color:#1a2535">Une carte géolocalisée, accessible par QR sur les panneaux d'entrée de ville ou offices du tourisme. Chaque point d'intérêt est cliquable : horaires, tarifs, route optimale, avis visiteurs. Mise à jour en temps réel par la ville ou l'institution.</div>
+        </div>
+      </div>
+
+      <div class="sol-card" style="background:rgba(8,14,26,.03);border:1px solid rgba(8,14,26,.07);border-radius:10px">
+        <div class="sol-num" style="color:#5b8dd9">04</div>
+        <div>
+          <div class="sol-title" style="color:#080e1a">Remplacement des Cartels Papier — Musées</div>
+          <div class="sol-text" style="color:#1a2535">Fini les cartels jaunis, illisibles ou trop courts. Un petit QR discret à côté de chaque œuvre ouvre une fiche complète : histoire, contexte, œuvres liées, audio de médiation. Économie d'impression, expérience enrichie, mise à jour instantanée.</div>
+        </div>
+      </div>
+
+      <!-- pricing -->
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:rgba(91,141,217,.06);border:1px solid rgba(91,141,217,.14);border-radius:8px;padding:14px 16px">
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#5b8dd9;margin-bottom:6px">🇲🇦 Maroc — dès</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#080e1a">1 500 MAD <span style="font-size:14px;color:#6b7a8d">/site</span></div>
+        </div>
+        <div style="background:rgba(91,141,217,.06);border:1px solid rgba(91,141,217,.14);border-radius:8px;padding:14px 16px">
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#5b8dd9;margin-bottom:6px">🇫🇷 France — dès</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#080e1a">199€ <span style="font-size:14px;color:#6b7a8d">/event</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;background:#080e1a;border-radius:10px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#5b8dd9;margin-bottom:5px">Démo sur site · Étude personnalisée</div>
+          <div style="font-size:13px;font-weight:700;color:white">Contactez-nous pour votre projet patrimonial</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:#7aaef0;letter-spacing:.06em">contact@dima-solutions.io</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.3);margin-top:3px">dima-solutions.io</div>
+        </div>
+      </div>
+
+      <div class="footnote" style="color:#080e1a;border-top:1px solid rgba(8,14,26,.08);margin-top:16px;padding-top:14px">
+        <span>DIMA Solutions AI Tech · Plaquette Tourisme &amp; Patrimoine</span>
+        <span>Page 3 / 3</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /brochure-t -->
+
+<script>
+function scroll(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('act'));
+  if(id==='brochure-r') document.querySelector('.nav-btn.r').classList.add('act');
+  if(id==='brochure-c') document.querySelector('.nav-btn.c').classList.add('act');
+  if(id==='brochure-t') document.querySelector('.nav-btn.t').classList.add('act');
+}
+// highlight active on scroll
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const m=e.target.id.match(/brochure-(\w)/);
+      if(m){
+        document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('act'));
+        const btn=document.querySelector('.nav-btn.'+m[1]);
+        if(btn)btn.classList.add('act');
+      }
+    }
+  });
+},{threshold:.2});
+document.querySelectorAll('.brochure').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

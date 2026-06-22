@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIMA Solutions — Flyer A4 Hôtel & Riad</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #1C1C28;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  padding: 50px 20px;
+}
+
+/* ─── A4 BASE ─── */
+.flyer-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+  box-shadow: 0 60px 120px rgba(0,0,0,0.6);
+}
+
+/* ══════════════════════════════════════════
+   VERSION HÔTEL
+   Palette : Or/Nuit — luxe premium
+══════════════════════════════════════════ */
+.hotel {
+  background: #0A0A14;
+  font-family: 'Outfit', sans-serif;
+  color: #F0EDE6;
+}
+
+/* ─── HEADER HÔTEL ─── */
+.h-header {
+  background: #0A0A14;
+  padding: 28px 32px 0;
+  position: relative;
+  overflow: hidden;
+}
+.h-header-arc {
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.12);
+}
+.h-header-arc2 {
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.2);
+}
+
+.h-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+  position: relative;
+  z-index: 1;
+}
+.h-brand-left {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.h-brand-dot {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #D4AF37, #F0D060);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.h-brand-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #F0EDE6;
+  letter-spacing: 0.3px;
+}
+.h-brand-name span { color: #D4AF37; }
+.h-brand-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(212,175,55,0.7);
+  border: 1px solid rgba(212,175,55,0.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ─── HERO HÔTEL ─── */
+.h-hero {
+  padding: 0 32px 28px;
+  position: relative;
+  z-index: 1;
+}
+.h-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.h-eye-line {
+  width: 28px; height: 1px;
+  background: linear-gradient(90deg, #D4AF37, transparent);
+}
+.h-eye-text {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #D4AF37;
+}
+
+.h-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1.05;
+  color: #F0EDE6;
+  margin-bottom: 14px;
+}
+.h-headline .gold { color: #D4AF37; }
+.h-headline .outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #D4AF37;
+}
+
+.h-sub {
+  font-size: 13.5px;
+  color: rgba(240,237,230,0.6);
+  line-height: 1.75;
+  max-width: 500px;
+  font-weight: 300;
+}
+
+/* ─── TRANSFORM BAND ─── */
+.h-transform {
+  background: linear-gradient(90deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%);
+  padding: 13px 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.h-transform-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.h-transform-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0A0A14;
+  letter-spacing: 0.3px;
+}
+.h-transform-sub {
+  font-size: 10.5px;
+  color: rgba(10,10,20,0.65);
+  margin-top: 1px;
+}
+
+/* ─── WORKFLOW HÔTEL ─── */
+.h-workflow {
+  padding: 22px 32px;
+  background: #0D0D1C;
+}
+.h-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.6);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.h-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(212,175,55,0.15);
+}
+
+.h-flow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+}
+.h-flow-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  padding: 0 6px;
+}
+.h-flow-step::after {
+  content: '→';
+  position: absolute;
+  right: -10px; top: 12px;
+  color: rgba(212,175,55,0.4);
+  font-size: 14px;
+}
+.h-flow-step:last-child::after { display: none; }
+
+.h-flow-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.35);
+  color: #D4AF37;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 7px;
+}
+.h-flow-label {
+  font-size: 10px;
+  color: rgba(240,237,230,0.7);
+  line-height: 1.45;
+  font-weight: 400;
+}
+.h-flow-label strong {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #F0EDE6;
+  margin-bottom: 2px;
+}
+
+/* ─── FEATURES GRID HÔTEL ─── */
+.h-features {
+  padding: 20px 32px;
+  background: #0A0A14;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  flex: 1;
+}
+.h-feat {
+  background: rgba(212,175,55,0.05);
+  border: 1px solid rgba(212,175,55,0.12);
+  border-radius: 10px;
+  padding: 14px 14px;
+  position: relative;
+  overflow: hidden;
+}
+.h-feat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, #D4AF37, transparent);
+}
+.h-feat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.h-feat-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.h-feat-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #F0EDE6;
+  line-height: 1.25;
+}
+.h-feat-body {
+  font-size: 10.5px;
+  color: rgba(240,237,230,0.5);
+  line-height: 1.6;
+  padding-right: 4px;
+}
+.h-feat-badge {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #D4AF37;
+  background: rgba(212,175,55,0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ─── WIN WIN HÔTEL ─── */
+.h-winwin {
+  padding: 18px 32px;
+  background: #0D0D1C;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.h-win-col {
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 10px;
+  padding: 14px;
+}
+.h-win-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #D4AF37;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.h-win-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-bottom: 7px;
+  font-size: 10.5px;
+  color: rgba(240,237,230,0.75);
+  line-height: 1.5;
+}
+.h-win-item::before {
+  content: '✓';
+  color: #D4AF37;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── STATS HÔTEL ─── */
+.h-stats {
+  background: linear-gradient(90deg, rgba(212,175,55,0.08), rgba(212,175,55,0.04));
+  border-top: 1px solid rgba(212,175,55,0.15);
+  border-bottom: 1px solid rgba(212,175,55,0.15);
+  display: flex;
+  padding: 14px 32px;
+}
+.h-stat {
+  flex: 1;
+  text-align: center;
+}
+.h-stat + .h-stat {
+  border-left: 1px solid rgba(212,175,55,0.15);
+}
+.h-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #D4AF37;
+  display: block;
+  line-height: 1;
+}
+.h-stat-lbl {
+  font-size: 9px;
+  color: rgba(240,237,230,0.45);
+  display: block;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+}
+
+/* ─── CTA HÔTEL ─── */
+.h-cta {
+  background: #0A0A14;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-top: 1px solid rgba(212,175,55,0.1);
+}
+.h-cta-left strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: #F0EDE6;
+  display: block;
+  margin-bottom: 3px;
+}
+.h-cta-left span {
+  font-size: 10.5px;
+  color: rgba(240,237,230,0.5);
+  line-height: 1.5;
+}
+.h-cta-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.h-cta-pill {
+  background: linear-gradient(90deg, #D4AF37, #F0D060);
+  color: #0A0A14;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 7px;
+  white-space: nowrap;
+}
+.h-cta-qr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.h-cta-qr-box {
+  width: 44px; height: 44px;
+  background: #fff;
+  border-radius: 5px;
+  padding: 3px;
+}
+.h-cta-qr-text {
+  font-size: 9px;
+  color: rgba(240,237,230,0.4);
+  line-height: 1.5;
+  text-align: right;
+}
+
+/* ─── FOOTER HÔTEL ─── */
+.h-footer {
+  background: #060610;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.h-footer-left {
+  font-size: 9px;
+  color: rgba(240,237,230,0.25);
+  line-height: 1.5;
+}
+.h-footer-right {
+  font-size: 9px;
+  color: rgba(212,175,55,0.5);
+  letter-spacing: 1px;
+}
+
+/* PRINT LABEL */
+.print-label {
+  color: rgba(255,255,255,0.25);
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════
+   VERSION RIAD
+   Palette : Grenat/Turquoise/Sable — âme marocaine
+══════════════════════════════════════════ */
+.riad {
+  background: #FAF6F0;
+  font-family: 'Outfit', sans-serif;
+  color: #1A1208;
+}
+
+/* ─── HEADER RIAD ─── */
+.r-header {
+  background: #1A1208;
+  padding: 24px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.r-geo {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image:
+    repeating-linear-gradient(60deg, transparent, transparent 20px, #C8932A 20px, #C8932A 21px),
+    repeating-linear-gradient(-60deg, transparent, transparent 20px, #C8932A 20px, #C8932A 21px);
+}
+.r-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+.r-brand-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #FAF6F0;
+  letter-spacing: 0.3px;
+}
+.r-brand-name em {
+  color: #C8932A;
+  font-style: normal;
+}
+.r-brand-pill {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: rgba(200,147,42,0.85);
+  border: 1px solid rgba(200,147,42,0.3);
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.r-hero-row {
+  position: relative;
+  z-index: 1;
+}
+.r-eyebrow {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(200,147,42,0.7);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.r-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #FAF6F0;
+  line-height: 1.08;
+  margin-bottom: 10px;
+}
+.r-headline .amber { color: #C8932A; }
+.r-headline .teal { color: #3DBAAD; }
+.r-sub {
+  font-size: 12.5px;
+  color: rgba(250,246,240,0.55);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 480px;
+}
+
+/* ─── ORNAMENT BAND RIAD ─── */
+.r-ornament {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #C8932A 0px, #C8932A 14px,
+    #3DBAAD 14px, #3DBAAD 28px,
+    #8B1A2F 28px, #8B1A2F 42px,
+    #3DBAAD 42px, #3DBAAD 56px,
+    #C8932A 56px, #C8932A 70px
+  );
+}
+
+/* ─── MAIN CONTENT RIAD ─── */
+.r-main {
+  padding: 22px 32px;
+  background: #FAF6F0;
+  flex: 1;
+}
+
+/* Feature cards */
+.r-feat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.r-feat {
+  background: #fff;
+  border: 1px solid rgba(26,18,8,0.08);
+  border-radius: 10px;
+  padding: 13px 13px;
+  position: relative;
+  overflow: hidden;
+}
+.r-feat-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.r-feat-icon {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.rfi-amber { background: rgba(200,147,42,0.1); }
+.rfi-teal  { background: rgba(61,186,173,0.1); }
+.rfi-garnet{ background: rgba(139,26,47,0.08); }
+.rfi-green { background: rgba(52,168,83,0.1); }
+
+.r-feat-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1A1208;
+  line-height: 1.25;
+}
+.r-feat-body {
+  font-size: 10.5px;
+  color: rgba(26,18,8,0.55);
+  line-height: 1.6;
+}
+.r-feat-tag {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.rft-amber { background: rgba(200,147,42,0.12); color: #8B5E10; }
+.rft-teal  { background: rgba(61,186,173,0.12); color: #1A6E67; }
+.rft-garnet{ background: rgba(139,26,47,0.1); color: #6B1225; }
+.rft-green { background: rgba(52,168,83,0.12); color: #1B6B36; }
+
+/* ─── WIN WIN RIAD ─── */
+.r-winwin {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.r-win {
+  border-radius: 10px;
+  padding: 13px 14px;
+}
+.r-win-hotel {
+  background: #1A1208;
+  color: #FAF6F0;
+}
+.r-win-client {
+  background: #3DBAAD;
+  color: #fff;
+}
+.r-win-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+  opacity: 0.8;
+}
+.r-win-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-bottom: 6px;
+  font-size: 10.5px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+.r-win-item::before {
+  content: '✓';
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.r-win-hotel .r-win-item::before { color: #C8932A; }
+.r-win-client .r-win-item::before { color: rgba(255,255,255,0.9); }
+
+/* ─── WORKFLOW RIAD ─── */
+.r-workflow {
+  background: #fff;
+  border: 1px solid rgba(26,18,8,0.07);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.r-wf-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(200,147,42,0.75);
+  margin-bottom: 10px;
+}
+.r-wf-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.r-wf-step {
+  flex: 1;
+  text-align: center;
+}
+.r-wf-circle {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: rgba(200,147,42,0.1);
+  border: 1.5px solid #C8932A;
+  color: #8B5E10;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 5px;
+}
+.r-wf-step-label {
+  font-size: 9.5px;
+  color: rgba(26,18,8,0.6);
+  line-height: 1.4;
+}
+.r-wf-step-label strong {
+  display: block;
+  font-weight: 600;
+  color: #1A1208;
+  font-size: 10px;
+  margin-bottom: 1px;
+}
+.r-wf-arrow {
+  font-size: 13px;
+  color: rgba(200,147,42,0.4);
+  flex-shrink: 0;
+  padding-bottom: 20px;
+}
+
+/* ─── STATS RIAD ─── */
+.r-stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 0;
+}
+.r-stat {
+  flex: 1;
+  background: #1A1208;
+  border-radius: 8px;
+  padding: 11px 10px;
+  text-align: center;
+}
+.r-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #C8932A;
+  display: block;
+  line-height: 1;
+}
+.r-stat-lbl {
+  font-size: 8.5px;
+  color: rgba(250,246,240,0.4);
+  display: block;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+/* ─── FOOTER RIAD ─── */
+.r-footer {
+  background: #1A1208;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.r-footer-cta strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FAF6F0;
+  display: block;
+  margin-bottom: 3px;
+}
+.r-footer-cta span {
+  font-size: 10px;
+  color: rgba(250,246,240,0.45);
+  line-height: 1.5;
+}
+.r-footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.r-footer-btn {
+  background: linear-gradient(90deg, #C8932A, #E0AA40);
+  color: #1A1208;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.r-footer-wa {
+  background: #25D366;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 5px;
+}
+
+/* ─── ORNAMENT BOTTOM ─── */
+.r-bottom-ornament {
+  height: 5px;
+  background: repeating-linear-gradient(
+    90deg,
+    #8B1A2F 0, #8B1A2F 14px,
+    #C8932A 14px, #C8932A 28px,
+    #3DBAAD 28px, #3DBAAD 42px,
+    #C8932A 42px, #C8932A 56px,
+    #8B1A2F 56px, #8B1A2F 70px
+  );
+}
+
+/* QR SVG inline */
+.qr-mini {
+  width: 40px; height: 40px;
+  background: #fff;
+  border-radius: 4px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+@media print {
+  body { background: white; padding: 0; gap: 0; }
+  .print-label { display: none; }
+  .flyer-a4 { box-shadow: none; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+
+<p class="print-label">▲ FLYER A4 — VERSION HÔTEL</p>
+
+<!-- ════════════════════════════════════
+  FLYER HÔTEL
+════════════════════════════════════ -->
+<div class="flyer-a4 hotel">
+
+  <!-- HEADER -->
+  <div class="h-header">
+    <div class="h-header-arc"></div>
+    <div class="h-header-arc2"></div>
+
+    <div class="h-brand">
+      <div class="h-brand-left">
+        <div class="h-brand-dot">🚀</div>
+        <div class="h-brand-name">DIMA Solutions <span>AI Tech</span></div>
+      </div>
+      <div class="h-brand-tag">Hôtellerie</div>
+    </div>
+
+    <div class="h-hero">
+      <div class="h-eyebrow">
+        <div class="h-eye-line"></div>
+        <span class="h-eye-text">Transformez chaque scan en opportunité</span>
+      </div>
+      <h1 class="h-headline">
+        Votre hôtel,<br>
+        <span class="gold">intelligent.</span><br>
+        <span class="outline">Sans effort.</span>
+      </h1>
+      <p class="h-sub">Solutions QR Code dynamiques pour hôtels & restaurants — multilingues, instantanées, zéro friction pour votre équipe et vos clients internationaux.</p>
+    </div>
+  </div>
+
+  <!-- GOLD BAND -->
+  <div class="h-transform">
+    <div class="h-transform-icon">🏆</div>
+    <div>
+      <div class="h-transform-text">Gagnant / Gagnant — Hôtel & Client</div>
+      <div class="h-transform-sub">Vos revenus augmentent · votre personnel se concentre sur le relationnel · vos clients vivent une expérience premium</div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="h-workflow">
+    <div class="h-section-label">Le séjour, de l'arrivée au départ</div>
+    <div class="h-flow">
+      <div class="h-flow-step">
+        <div class="h-flow-num">1</div>
+        <div class="h-flow-label"><strong>Check-in</strong>QR chambre activé</div>
+      </div>
+      <div class="h-flow-step">
+        <div class="h-flow-num">2</div>
+        <div class="h-flow-label"><strong>Client scanne</strong>table, chambre, zone</div>
+      </div>
+      <div class="h-flow-step">
+        <div class="h-flow-num">3</div>
+        <div class="h-flow-label"><strong>Menu s'ouvre</strong>dans sa langue</div>
+      </div>
+      <div class="h-flow-step">
+        <div class="h-flow-num">4</div>
+        <div class="h-flow-label"><strong>Tout au folio</strong>facturé au séjour</div>
+      </div>
+      <div class="h-flow-step">
+        <div class="h-flow-num">5</div>
+        <div class="h-flow-label"><strong>Check-out</strong>réglé + reçu PDF</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="h-features">
+    <div class="h-feat">
+      <div class="h-feat-header">
+        <span class="h-feat-icon">🌍</span>
+        <span class="h-feat-title">Multilingue automatique</span>
+      </div>
+      <div class="h-feat-body">Français, Arabe, Anglais, Espagnol, Allemand, Russe, Chinois — détection automatique selon le téléphone du client. Zéro action requise.</div>
+      <span class="h-feat-badge">7 langues incluses</span>
+    </div>
+    <div class="h-feat">
+      <div class="h-feat-header">
+        <span class="h-feat-icon">⚡</span>
+        <span class="h-feat-title">Mise à jour en temps réel</span>
+      </div>
+      <div class="h-feat-body">Prix, ruptures, promotions Flash — modifiables en 3 secondes depuis votre mobile. Tous les QR codes de l'hôtel mis à jour instantanément.</div>
+      <span class="h-feat-badge">0 réimpression</span>
+    </div>
+    <div class="h-feat">
+      <div class="h-feat-header">
+        <span class="h-feat-icon">🍽️</span>
+        <span class="h-feat-title">Room service facturé chambre</span>
+      </div>
+      <div class="h-feat-body">QR par chambre, par zone (bar, spa, piscine). Chaque commande est rattachée automatiquement au folio du séjour. Cuisine KDS en temps réel.</div>
+      <span class="h-feat-badge">Auto sur folio</span>
+    </div>
+    <div class="h-feat">
+      <div class="h-feat-header">
+        <span class="h-feat-icon">📊</span>
+        <span class="h-feat-title">Analytics & intelligence</span>
+      </div>
+      <div class="h-feat-body">Plats populaires, heures de pointe, langues clients, paniers abandonnés. Vos décisions basées sur des données — pas sur l'intuition.</div>
+      <span class="h-feat-badge">Dashboard temps réel</span>
+    </div>
+    <div class="h-feat">
+      <div class="h-feat-header">
+        <span class="h-feat-icon">💳</span>
+        <span class="h-feat-title">Paiement CMI intégré</span>
+      </div>
+      <div class="h-feat-body">Paiement direct depuis le menu — carte, mobile money. Reçu digital + demande d'avis Google en 1 clic après le paiement.</div>
+      <span class="h-feat-badge">CMI certifié</span>
+    </div>
+    <div class="h-feat">
+      <div class="h-feat-header">
+        <span class="h-feat-icon">🧾</span>
+        <span class="h-feat-title">Folio de séjour & reçu PDF</span>
+      </div>
+      <div class="h-feat-body">Un compte unique par séjour : hébergement, room service, spa, navettes. Soldé en une fois au check-out, reçu PDF généré et envoyé instantanément.</div>
+      <span class="h-feat-badge">Check-out express</span>
+    </div>
+  </div>
+
+  <!-- WIN WIN -->
+  <div class="h-winwin">
+    <div class="h-win-col">
+      <div class="h-win-title">🏨 Votre hôtel gagne</div>
+      <div class="h-win-item">+22% de panier moyen</div>
+      <div class="h-win-item">-73% de temps de commande</div>
+      <div class="h-win-item">60% d'économie impression</div>
+      <div class="h-win-item">Équipe libérée pour le relationnel</div>
+      <div class="h-win-item">Données clients exploitables</div>
+    </div>
+    <div class="h-win-col">
+      <div class="h-win-title">⭐ Vos clients gagnent</div>
+      <div class="h-win-item">Menu dans leur langue, immédiatement</div>
+      <div class="h-win-item">Commande sans attendre un serveur</div>
+      <div class="h-win-item">Allergènes & infos claires</div>
+      <div class="h-win-item">Paiement en 1 tap</div>
+      <div class="h-win-item">Zéro frustration, expérience premium</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="h-stats">
+    <div class="h-stat">
+      <span class="h-stat-num">+22%</span>
+      <span class="h-stat-lbl">Panier moyen</span>
+    </div>
+    <div class="h-stat">
+      <span class="h-stat-num">73%</span>
+      <span class="h-stat-lbl">Commandes plus rapides</span>
+    </div>
+    <div class="h-stat">
+      <span class="h-stat-num">60%</span>
+      <span class="h-stat-lbl">Économie impression</span>
+    </div>
+    <div class="h-stat">
+      <span class="h-stat-num">48h</span>
+      <span class="h-stat-lbl">Mise en service</span>
+    </div>
+    <div class="h-stat">
+      <span class="h-stat-num">7</span>
+      <span class="h-stat-lbl">Langues incluses</span>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="h-cta">
+    <div class="h-cta-left">
+      <strong>Démo gratuite dans votre hôtel</strong>
+      <span>Installation en 48h · Formation équipe incluse · Support FR/AR 7j/7<br>Package "Hôtel Digital" — Sur devis</span>
+    </div>
+    <div class="h-cta-right">
+      <div class="h-cta-pill">🎁 Imprimante offerte*</div>
+      <div class="h-cta-qr">
+        <div class="h-cta-qr-text">Scannez pour<br>démo gratuite</div>
+        <div class="h-cta-qr-box">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+            <rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+            <rect x="4" y="4" width="8" height="8" rx="0.5" fill="#D4AF37"/>
+            <rect x="25" y="1" width="14" height="14" rx="1" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+            <rect x="28" y="4" width="8" height="8" rx="0.5" fill="#D4AF37"/>
+            <rect x="1" y="25" width="14" height="14" rx="1" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+            <rect x="4" y="28" width="8" height="8" rx="0.5" fill="#D4AF37"/>
+            <rect x="20" y="20" width="3" height="3" fill="#D4AF37"/>
+            <rect x="24" y="20" width="3" height="3" fill="#1A1208"/>
+            <rect x="28" y="20" width="3" height="3" fill="#D4AF37"/>
+            <rect x="32" y="20" width="3" height="3" fill="#1A1208"/>
+            <rect x="36" y="20" width="3" height="3" fill="#D4AF37"/>
+            <rect x="20" y="24" width="3" height="3" fill="#1A1208"/>
+            <rect x="28" y="24" width="3" height="3" fill="#D4AF37"/>
+            <rect x="36" y="24" width="3" height="3" fill="#1A1208"/>
+            <rect x="20" y="28" width="3" height="3" fill="#D4AF37"/>
+            <rect x="24" y="28" width="3" height="3" fill="#1A1208"/>
+            <rect x="28" y="28" width="3" height="3" fill="#1A1208"/>
+            <rect x="32" y="28" width="3" height="3" fill="#D4AF37"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="h-footer">
+    <div class="h-footer-left">
+      contact@dimasolutions.ma · demo.dima-solutions.ma · +212 6XX XX XX XX<br>
+      *Imprimante thermique offerte pour les 10 premiers hôtels de Marrakech signant avant fin du mois
+    </div>
+    <div class="h-footer-right">DIMA Solutions AI Tech · Maroc 🇲🇦</div>
+  </div>
+
+</div><!-- /hotel -->
+
+
+<p class="print-label">▼ FLYER A4 — VERSION RIAD</p>
+
+<!-- ════════════════════════════════════
+  FLYER RIAD
+════════════════════════════════════ -->
+<div class="flyer-a4 riad">
+
+  <!-- ORNAMENT TOP -->
+  <div class="r-ornament"></div>
+
+  <!-- HEADER -->
+  <div class="r-header">
+    <div class="r-geo"></div>
+    <div class="r-brand-row">
+      <div class="r-brand-name">DIMA Solutions <em>AI Tech</em></div>
+      <div class="r-brand-pill">Riad & Médina</div>
+    </div>
+    <div class="r-hero-row">
+      <div class="r-eyebrow">Transformez chaque scan en opportunité</div>
+      <h1 class="r-headline">
+        Votre riad,<br>
+        <span class="amber">digital</span> &<br>
+        <span class="teal">chaleureux.</span>
+      </h1>
+      <p class="r-sub">Menu QR multilingue, commande en cuisine, paiement mobile — sans fatiguer votre personnel, en renforçant votre lien avec chaque visiteur du monde entier.</p>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="r-main">
+
+    <!-- FEATURE GRID -->
+    <div style="font-size:9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(200,147,42,0.75); margin-bottom:12px;">Ce que ça change, concrètement</div>
+    <div class="r-feat-grid">
+      <div class="r-feat">
+        <div class="r-feat-top">
+          <div class="r-feat-icon rfi-amber">🌍</div>
+          <span class="r-feat-title">Multilingue instantané</span>
+        </div>
+        <div class="r-feat-body">Vos clients espagnols, allemands, russes voient votre carte dans leur langue — automatiquement, sans que votre personnel fasse quoi que ce soit.</div>
+        <span class="r-feat-tag rft-amber">7 langues · Détection auto</span>
+      </div>
+      <div class="r-feat">
+        <div class="r-feat-top">
+          <div class="r-feat-icon rfi-teal">🔄</div>
+          <span class="r-feat-title">Menu vivant</span>
+        </div>
+        <div class="r-feat-body">Changez un prix, indiquez une rupture, lancez une promo — en 3 secondes depuis votre téléphone. Tous vos QR codes se mettent à jour immédiatement.</div>
+        <span class="r-feat-tag rft-teal">0 réimpression · 0 papier gaspillé</span>
+      </div>
+      <div class="r-feat">
+        <div class="r-feat-top">
+          <div class="r-feat-icon rfi-garnet">🖨️</div>
+          <span class="r-feat-title">Ticket thermique offline</span>
+        </div>
+        <div class="r-feat-body">Idéal pour la médina : ticket cuisine imprimé en 2 secondes, même sans réseau. Votre cuisine reçoit la commande claire, lisible, horodatée.</div>
+        <span class="r-feat-tag rft-garnet">Fonctionne sans internet</span>
+      </div>
+      <div class="r-feat">
+        <div class="r-feat-top">
+          <div class="r-feat-icon rfi-green">⭐</div>
+          <span class="r-feat-title">Avis Google automatique</span>
+        </div>
+        <div class="r-feat-body">Après chaque repas, un QR "Avis" dirige le client satisfait directement sur votre page Google. Vos étoiles grimpent — sans demander maladroitement.</div>
+        <span class="r-feat-tag rft-green">+Réputation en pilote automatique</span>
+      </div>
+    </div>
+
+    <!-- WIN WIN -->
+    <div style="font-size:9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(200,147,42,0.75); margin-bottom:10px;">L'équilibre gagnant / gagnant</div>
+    <div class="r-winwin">
+      <div class="r-win r-win-hotel">
+        <div class="r-win-title">🏡 Votre riad gagne</div>
+        <div class="r-win-item">Personnel concentré sur l'accueil, pas la traduction</div>
+        <div class="r-win-item">Panier moyen +22% (upsell visuel HD)</div>
+        <div class="r-win-item">Zéro coût de réimpression mensuel</div>
+        <div class="r-win-item">Données pour piloter votre offre</div>
+        <div class="r-win-item">Image premium moderne</div>
+      </div>
+      <div class="r-win r-win-client">
+        <div class="r-win-title">🌟 Vos hôtes gagnent</div>
+        <div class="r-win-item">Menu dans leur langue natale</div>
+        <div class="r-win-item">Photos HD des plats — pas de surprise</div>
+        <div class="r-win-item">Allergènes visibles clairement</div>
+        <div class="r-win-item">Commande & paiement sans attente</div>
+        <div class="r-win-item">Expérience authentique, sans friction</div>
+      </div>
+    </div>
+
+    <!-- WORKFLOW -->
+    <div class="r-workflow">
+      <div class="r-wf-label">Parcours en 5 étapes</div>
+      <div class="r-wf-steps">
+        <div class="r-wf-step">
+          <div class="r-wf-circle">1</div>
+          <div class="r-wf-step-label"><strong>Scan QR</strong>table ou salon</div>
+        </div>
+        <div class="r-wf-arrow">›</div>
+        <div class="r-wf-step">
+          <div class="r-wf-circle">2</div>
+          <div class="r-wf-step-label"><strong>Menu</strong>sa langue auto</div>
+        </div>
+        <div class="r-wf-arrow">›</div>
+        <div class="r-wf-step">
+          <div class="r-wf-circle">3</div>
+          <div class="r-wf-step-label"><strong>Commande</strong>& paiement</div>
+        </div>
+        <div class="r-wf-arrow">›</div>
+        <div class="r-wf-step">
+          <div class="r-wf-circle">4</div>
+          <div class="r-wf-step-label"><strong>Ticket</strong>cuisine imprimé</div>
+        </div>
+        <div class="r-wf-arrow">›</div>
+        <div class="r-wf-step">
+          <div class="r-wf-circle">5</div>
+          <div class="r-wf-step-label"><strong>Avis</strong>Google auto</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="r-stats">
+      <div class="r-stat">
+        <span class="r-stat-num">+22%</span>
+        <span class="r-stat-lbl">Panier moyen</span>
+      </div>
+      <div class="r-stat">
+        <span class="r-stat-num">73%</span>
+        <span class="r-stat-lbl">Commande plus rapide</span>
+      </div>
+      <div class="r-stat">
+        <span class="r-stat-num">60%</span>
+        <span class="r-stat-lbl">Économie impression</span>
+      </div>
+      <div class="r-stat">
+        <span class="r-stat-num">48h</span>
+        <span class="r-stat-lbl">Mise en service</span>
+      </div>
+      <div class="r-stat">
+        <span class="r-stat-num">7</span>
+        <span class="r-stat-lbl">Langues incluses</span>
+      </div>
+    </div>
+
+  </div><!-- /r-main -->
+
+  <!-- FOOTER -->
+  <div class="r-footer">
+    <div class="r-footer-cta">
+      <strong>Démo gratuite dans votre riad</strong>
+      <span>Installation 48h · Formation incluse · Support FR/AR · Sur devis<br>contact@dimasolutions.ma · demo.dima-solutions.ma</span>
+    </div>
+    <div class="r-footer-right">
+      <div class="r-footer-btn">🎁 Démo gratuite →</div>
+      <div class="r-footer-wa">💬 +212 6XX XX XX XX</div>
+    </div>
+  </div>
+
+  <!-- ORNAMENT BOTTOM -->
+  <div class="r-bottom-ornament"></div>
+
+</div><!-- /riad -->
+
+<p class="print-label" style="margin-bottom:30px;">* Offre valable pour les 10 premiers établissements signant avant fin du mois</p>
+
+</body>
+</html>

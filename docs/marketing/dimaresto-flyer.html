@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DimaResto — Flyer commercial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #e8e4dc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* ── PAGE A4 ── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: #faf8f3;
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #0f0e0c;
+  padding: 8mm 10mm 7mm;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  top: -30mm; right: -20mm;
+  width: 80mm; height: 80mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,119,44,.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5mm;
+}
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+}
+.logo-icon {
+  width: 10mm; height: 10mm;
+  background: #d4772c;
+  border-radius: 2.5mm;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-icon svg { width: 6mm; height: 6mm; }
+.logo-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 13pt;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+.logo-sub {
+  font-size: 6pt;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+.header-badge {
+  background: #d4772c;
+  color: #fff;
+  font-size: 6.5pt;
+  font-weight: 700;
+  padding: 1.5mm 4mm;
+  border-radius: 20mm;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.header-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22pt;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 2mm;
+}
+.header-title em {
+  color: #d4772c;
+  font-style: normal;
+}
+.header-sub {
+  font-size: 9pt;
+  color: rgba(255,255,255,.6);
+  font-weight: 300;
+  max-width: 140mm;
+  line-height: 1.5;
+}
+.header-stats {
+  display: flex;
+  gap: 8mm;
+  margin-top: 5mm;
+  padding-top: 4mm;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.stat-item { }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 14pt;
+  font-weight: 800;
+  color: #d4772c;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 6.5pt;
+  color: rgba(255,255,255,.45);
+  margin-top: .5mm;
+}
+
+/* ── BODY ── */
+.body {
+  flex: 1;
+  padding: 7mm 10mm;
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+
+/* ── SECTION TITLE ── */
+.section-label {
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #d4772c;
+  margin-bottom: 2mm;
+}
+.section-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: 13pt;
+  font-weight: 800;
+  color: #0f0e0c;
+  margin-bottom: 1.5mm;
+}
+
+/* ── WORKFLOW STRIP ── */
+.workflow-strip {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+.wf-step {
+  flex: 1;
+  padding: 3.5mm 3mm;
+  background: #f2ede3;
+  border-right: 1px solid #e0dbd0;
+  position: relative;
+}
+.wf-step:last-child { border-right: none; border-radius: 0 2mm 2mm 0; }
+.wf-step:first-child { border-radius: 2mm 0 0 2mm; }
+.wf-step::after {
+  content: '›';
+  position: absolute;
+  right: -3mm; top: 50%;
+  transform: translateY(-50%);
+  font-size: 10pt;
+  color: #d4772c;
+  font-weight: 700;
+  z-index: 2;
+}
+.wf-step:last-child::after { display: none; }
+.wf-num {
+  width: 5mm; height: 5mm; border-radius: 50%;
+  background: #d4772c; color: #fff;
+  font-size: 6pt; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5mm;
+}
+.wf-icon { font-size: 10pt; margin-bottom: 1mm; }
+.wf-title { font-size: 7.5pt; font-weight: 700; color: #0f0e0c; margin-bottom: .5mm; }
+.wf-desc { font-size: 6.5pt; color: #6b6560; line-height: 1.35; }
+
+/* ── FEATURES GRID ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3mm;
+}
+.feature-card {
+  background: #ffffff;
+  border: 1px solid #e0dbd0;
+  border-radius: 2.5mm;
+  padding: 3.5mm;
+  box-shadow: 0 1px 4px rgba(15,14,12,.05);
+}
+.feature-card.highlight {
+  border-color: #d4772c;
+  background: linear-gradient(135deg, #fffbf7 0%, #fff 100%);
+}
+.feature-icon { font-size: 12pt; margin-bottom: 1.5mm; }
+.feature-title { font-size: 8pt; font-weight: 700; color: #0f0e0c; margin-bottom: 1mm; }
+.feature-desc { font-size: 6.5pt; color: #6b6560; line-height: 1.4; }
+.feature-tag {
+  display: inline-block;
+  margin-top: 1.5mm;
+  font-size: 5.5pt; font-weight: 700;
+  padding: 1px 4px; border-radius: 10mm;
+  background: rgba(212,119,44,.1); color: #d4772c;
+}
+.feature-tag.jade {
+  background: rgba(45,106,79,.1); color: #2d6a4f;
+}
+
+/* ── BACK-OFFICE SECTION ── */
+.bo-section {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 3mm;
+  padding: 4mm;
+}
+.bo-section-title {
+  text-align: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 10pt;
+  font-weight: 800;
+  color: #0369a1;
+  margin-bottom: 1.5mm;
+}
+.bo-section-sub {
+  text-align: center;
+  font-size: 7.5pt;
+  color: #0c4a6e;
+  margin-bottom: 3mm;
+  font-weight: 300;
+}
+.bo-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3mm;
+  text-align: center;
+}
+.bo-item-icon { font-size: 14pt; margin-bottom: 1mm; }
+.bo-item-title { font-size: 7.5pt; font-weight: 700; color: #0369a1; margin-bottom: .8mm; }
+.bo-item-desc { font-size: 6.5pt; color: #475569; line-height: 1.35; }
+
+/* ── PRICING STRIP ── */
+.pricing-strip {
+  display: flex;
+  gap: 3mm;
+}
+.plan-card {
+  flex: 1;
+  background: #ffffff;
+  border: 1.5px solid #e0dbd0;
+  border-radius: 2.5mm;
+  padding: 3.5mm;
+  display: flex;
+  flex-direction: column;
+}
+.plan-card.featured {
+  border-color: #d4772c;
+  background: linear-gradient(160deg, #fffbf7 0%, #fff 100%);
+  box-shadow: 0 2px 10px rgba(212,119,44,.15);
+}
+.plan-header { display: flex; align-items: center; gap: 1.5mm; margin-bottom: 2mm; }
+.plan-icon { font-size: 10pt; }
+.plan-name { font-family: 'Syne', sans-serif; font-size: 9pt; font-weight: 800; color: #0f0e0c; }
+.plan-tagline { font-size: 6pt; color: #6b6560; margin-bottom: 2mm; }
+.plan-price { margin-bottom: 2mm; }
+.plan-amount { font-family: 'Syne', sans-serif; font-size: 13pt; font-weight: 800; color: #d4772c; }
+.plan-period { font-size: 6pt; color: #6b6560; }
+.plan-divider { border: none; border-top: 1px solid #e0dbd0; margin: 1.5mm 0; }
+.plan-features { list-style: none; flex: 1; }
+.plan-features li {
+  font-size: 6.5pt; color: #0f0e0c;
+  padding: .8mm 0;
+  border-bottom: 1px solid #f2ede3;
+  display: flex; gap: 1.5mm; align-items: flex-start;
+}
+.plan-features li::before { content: "✓"; color: #2d6a4f; font-weight: 700; flex-shrink: 0; }
+.plan-features li.no { color: #b8b2aa; }
+.plan-features li.no::before { content: "—"; color: #d0ccc6; }
+.featured-pill {
+  display: inline-block;
+  background: #d4772c; color: #fff;
+  font-size: 5.5pt; font-weight: 700;
+  padding: 1px 5px; border-radius: 10mm;
+  margin-bottom: 1.5mm;
+}
+
+/* ── BENEFITS ROW ── */
+.benefits-row {
+  display: flex;
+  gap: 3mm;
+  background: #0f0e0c;
+  border-radius: 2.5mm;
+  padding: 4mm 5mm;
+  align-items: center;
+}
+.benefit-item {
+  flex: 1;
+  text-align: center;
+}
+.benefit-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 14pt; font-weight: 800; color: #d4772c;
+  line-height: 1;
+}
+.benefit-label { font-size: 6pt; color: rgba(255,255,255,.5); margin-top: .5mm; }
+.benefit-sep { width: 1px; background: rgba(255,255,255,.1); align-self: stretch; }
+
+/* ── SECTORS ── */
+.sectors-row {
+  display: flex;
+  gap: 2mm;
+  flex-wrap: wrap;
+}
+.sector-pill {
+  background: #f2ede3;
+  border: 1px solid #e0dbd0;
+  border-radius: 20mm;
+  padding: 1.5mm 4mm;
+  font-size: 7pt;
+  font-weight: 500;
+  color: #0f0e0c;
+  white-space: nowrap;
+}
+
+/* ── GUARANTEE ROW ── */
+.guarantee-row {
+  display: flex;
+  gap: 3mm;
+  padding: 3mm 4mm;
+  background: rgba(45,106,79,.07);
+  border: 1px solid rgba(45,106,79,.2);
+  border-radius: 2.5mm;
+}
+.guarantee-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.5mm;
+  font-size: 6.5pt;
+  font-weight: 500;
+  color: #0f0e0c;
+}
+.g-icon { font-size: 9pt; }
+
+/* ── FOOTER ── */
+.footer {
+  background: #0f0e0c;
+  padding: 4mm 10mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 9pt; font-weight: 800; color: #fff;
+}
+.footer-brand span { color: #d4772c; }
+.footer-contacts {
+  display: flex;
+  gap: 5mm;
+  align-items: center;
+}
+.footer-contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.footer-contact-label { font-size: 5.5pt; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .06em; }
+.footer-contact-value { font-size: 7pt; font-weight: 600; color: #fff; }
+.footer-qr {
+  width: 12mm; height: 12mm;
+  background: #fff;
+  border-radius: 1.5mm;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1mm;
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: none; padding: 0; }
+  .page { box-shadow: none; border-radius: 0; width: 210mm; min-height: 297mm; }
+  .print-btn { display: none !important; }
+}
+@page { size: A4; margin: 0; }
+
+/* ── PRINT BUTTON ── */
+.print-btn {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: #d4772c; color: #fff;
+  border: none; padding: .8rem 1.8rem;
+  border-radius: 40px; font-size: .92rem; font-weight: 700;
+  cursor: pointer; box-shadow: 0 6px 20px rgba(212,119,44,.4);
+  transition: transform .2s, background .2s;
+  z-index: 999;
+}
+.print-btn:hover { transform: translateY(-2px); background: #a85a1c; }
+
+/* QR SVG inline */
+.qr-inline-svg { display: block; }
+</style>
+</head>
+<body>
+
+<!-- PRINT BUTTON -->
+<button class="print-btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+
+<!-- PAGE A4 -->
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-wrap">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white"/>
+            <circle cx="12" cy="12" r="4" fill="#d4772c"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">DimaResto</div>
+          <div class="logo-sub">by Dima Solutions AI Tech</div>
+        </div>
+      </div>
+      <div class="header-badge">Solution HoReCa · 2025</div>
+    </div>
+    <div class="header-title">
+      Votre restaurant prend<br>les commandes <em>tout seul.</em>
+    </div>
+    <div class="header-sub">
+      Menu QR dynamique · Commande à table · Paiement en ligne · Dashboard cuisine temps réel · Room Service hôtel
+    </div>
+    <div class="header-stats">
+      <div class="stat-item">
+        <div class="stat-num">−14 min</div>
+        <div class="stat-label">par table sur le cycle commande</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0 erreur</div>
+        <div class="stat-label">de transmission cuisine</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">+23 %</div>
+        <div class="stat-label">de panier moyen constaté</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">+38 %</div>
+        <div class="stat-label">d'engagement client mesuré</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- WORKFLOW -->
+    <div>
+      <div class="section-label">Comment ça marche</div>
+      <div class="workflow-strip">
+        <div class="wf-step">
+          <div class="wf-num">1</div>
+          <div class="wf-icon">📱</div>
+          <div class="wf-title">Scan du QR</div>
+          <div class="wf-desc">Le client scanne le QR sur la table ou en chambre. Sans appli.</div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">2</div>
+          <div class="wf-icon">🛒</div>
+          <div class="wf-title">Commande & Panier</div>
+          <div class="wf-desc">Menu filtré selon les stocks. Plats épuisés masqués en temps réel.</div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">3</div>
+          <div class="wf-icon">💳</div>
+          <div class="wf-title">Paiement en ligne</div>
+          <div class="wf-desc">Paiement carte sécurisé. Ticket digital envoyé par email ou SMS.</div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">4</div>
+          <div class="wf-icon">🍳</div>
+          <div class="wf-title">Dashboard cuisine</div>
+          <div class="wf-desc">Bon en cuisine instantanément. Kanban : Attente → Prêt → Servi.</div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-num">5</div>
+          <div class="wf-icon">📊</div>
+          <div class="wf-title">Analytiques</div>
+          <div class="wf-desc">CA par service, plats stars, rotations, stats de scans clients.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BÉNÉFICES -->
+    <div class="benefits-row">
+      <div class="benefit-item">
+        <div class="benefit-num">−14 min</div>
+        <div class="benefit-label">par table, cycle commande</div>
+      </div>
+      <div class="benefit-sep"></div>
+      <div class="benefit-item">
+        <div class="benefit-num">0 erreur</div>
+        <div class="benefit-label">de transmission cuisine</div>
+      </div>
+      <div class="benefit-sep"></div>
+      <div class="benefit-item">
+        <div class="benefit-num">+23 %</div>
+        <div class="benefit-label">panier moyen</div>
+      </div>
+      <div class="benefit-sep"></div>
+      <div class="benefit-item">
+        <div class="benefit-num">+38 %</div>
+        <div class="benefit-label">engagement client</div>
+      </div>
+      <div class="benefit-sep"></div>
+      <div class="benefit-item">
+        <div class="benefit-num">30 j</div>
+        <div class="benefit-label">essai gratuit</div>
+      </div>
+    </div>
+
+    <!-- BACK-OFFICE SECTION -->
+    <div class="bo-section">
+      <div class="bo-section-title">🛠️ Votre menu, toujours à portée de scan</div>
+      <div class="bo-section-sub">
+        Gérez vos plats, catégories et QR codes depuis un tableau de bord simple et efficace.
+      </div>
+      <div class="bo-items">
+        <div>
+          <div class="bo-item-icon">🍽️</div>
+          <div class="bo-item-title">Gestion des plats</div>
+          <div class="bo-item-desc">Ajout, photos HD, prix modifiés en temps réel</div>
+        </div>
+        <div>
+          <div class="bo-item-icon">◎</div>
+          <div class="bo-item-title">QR Codes dynamiques</div>
+          <div class="bo-item-desc">Génération, téléchargement HD &amp; partage social</div>
+        </div>
+        <div>
+          <div class="bo-item-icon">↗️</div>
+          <div class="bo-item-title">Stats de scans</div>
+          <div class="bo-item-desc">Suivez l'engagement et les pics d'activité clients</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FONCTIONNALITÉS -->
+    <div>
+      <div class="section-label">Fonctionnalités clés</div>
+      <div class="features-grid">
+        <div class="feature-card highlight">
+          <div class="feature-icon">📱</div>
+          <div class="feature-title">Menu QR Dynamique</div>
+          <div class="feature-desc">Plats épuisés masqués automatiquement. Même QR code, jamais à réimprimer.</div>
+          <span class="feature-tag">Salle &amp; Chambre</span>
+        </div>
+        <div class="feature-card highlight">
+          <div class="feature-icon">◎</div>
+          <div class="feature-title">QR Codes HD &amp; Partage</div>
+          <div class="feature-desc">Un QR par table, chambre ou borne. Téléchargez HD ou partagez sur vos réseaux.</div>
+          <span class="feature-tag">Illimité</span>
+        </div>
+        <div class="feature-card highlight">
+          <div class="feature-icon">↗</div>
+          <div class="feature-title">Stats de Scans</div>
+          <div class="feature-desc">Taux de conversion scan → commande. Heures de pointe par table. Engagement mesuré.</div>
+          <span class="feature-tag jade">Analytics</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🖥️</div>
+          <div class="feature-title">Borne Interactive</div>
+          <div class="feature-desc">Tablette ou écran tactile self-service en entrée d'établissement.</div>
+          <span class="feature-tag">Self-service</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🍳</div>
+          <div class="feature-title">Dashboard Cuisine Live</div>
+          <div class="feature-desc">Kanban temps réel via WebSocket. Attente → Préparation → Prêt → Servi.</div>
+          <span class="feature-tag jade">Temps réel</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛏️</div>
+          <div class="feature-title">Room Service Hôtel</div>
+          <div class="feature-desc">QR en chambre. La commande arrive en cuisine avec le numéro de chambre.</div>
+          <span class="feature-tag">Hôtellerie</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💳</div>
+          <div class="feature-title">Paiement Intégré</div>
+          <div class="feature-desc">CMI &amp; Stripe. Ticket digital email/SMS. Clôture automatique de table.</div>
+          <span class="feature-tag jade">CMI · Stripe</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🖨️</div>
+          <div class="feature-title">Imprimante Thermique</div>
+          <div class="feature-desc">Bons cuisine et tickets client imprimés automatiquement. ESC/POS standard.</div>
+          <span class="feature-tag">Matériel inclus</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-title">Sécurité &amp; Conformité</div>
+          <div class="feature-desc">JWT signé, HTTPS, chiffrement AES. Conformité loi 09-08. On-premise possible.</div>
+          <span class="feature-tag jade">Souverain</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div>
+      <div class="section-label">Plans tarifaires SaaS — Sans engagement · Premier mois offert</div>
+      <div class="pricing-strip">
+
+        <!-- Starter -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <div class="plan-icon">☕</div>
+            <div class="plan-name">Starter</div>
+          </div>
+          <div class="plan-tagline">Café, snack, petite brasserie</div>
+          <div class="plan-price">
+            <span class="plan-amount">590</span>
+            <span class="plan-period"> MAD / mois</span>
+          </div>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>Menu QR dynamique illimité</li>
+            <li>Gestion plats, catégories, photos</li>
+            <li>QR Codes HD téléchargeables</li>
+            <li>Stats de scans de base</li>
+            <li>App scan mobile incluse</li>
+            <li>Dashboard cuisine basique</li>
+            <li>3 utilisateurs max</li>
+            <li class="no">Paiement en ligne</li>
+            <li class="no">Room Service hôtel</li>
+          </ul>
+        </div>
+
+        <!-- Pro -->
+        <div class="plan-card featured">
+          <div class="featured-pill">⭐ Le plus populaire</div>
+          <div class="plan-header">
+            <div class="plan-icon">🍽</div>
+            <div class="plan-name">Pro Resto</div>
+          </div>
+          <div class="plan-tagline">Restaurant, brasserie, food-court</div>
+          <div class="plan-price">
+            <span class="plan-amount">990</span>
+            <span class="plan-period"> MAD / mois</span>
+          </div>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>Tout le plan Starter</li>
+            <li>QR Codes HD + partage social</li>
+            <li>Stats scans avancées par table</li>
+            <li>Paiement en ligne CMI / Stripe</li>
+            <li>Dashboard cuisine Kanban complet</li>
+            <li>Imprimante thermique intégrée</li>
+            <li>Analytiques de service</li>
+            <li>10 utilisateurs max</li>
+          </ul>
+        </div>
+
+        <!-- Hotel -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <div class="plan-icon">🏨</div>
+            <div class="plan-name">Hôtel &amp; Resort</div>
+          </div>
+          <div class="plan-tagline">Hôtel, riad, resort, club</div>
+          <div class="plan-price">
+            <span class="plan-amount">1 590</span>
+            <span class="plan-period"> MAD / mois</span>
+          </div>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>Tout le plan Pro</li>
+            <li>Room Service QR chambre</li>
+            <li>Borne interactive tablette</li>
+            <li>Multi-espaces (resto, bar, pool)</li>
+            <li>Portail client de suivi</li>
+            <li>Intégration PMS hôtel</li>
+            <li>Utilisateurs illimités</li>
+          </ul>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <div class="plan-icon">🏢</div>
+            <div class="plan-name">Groupe</div>
+          </div>
+          <div class="plan-tagline">Chaînes, multi-sites, franchises</div>
+          <div class="plan-price">
+            <span class="plan-amount" style="font-size:9pt;">Sur devis</span>
+          </div>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li>Tout le plan Hôtel</li>
+            <li>Back-office central multi-sites</li>
+            <li>Intégration ERP / comptabilité</li>
+            <li>White-label votre marque</li>
+            <li>Déploiement on-premise</li>
+            <li>Support dédié 24/7</li>
+            <li>SLA contractuel garanti</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTEURS -->
+    <div>
+      <div class="section-label">Secteurs couverts</div>
+      <div class="sectors-row">
+        <span class="sector-pill">🍽 Restaurant</span>
+        <span class="sector-pill">☕ Café &amp; Snack</span>
+        <span class="sector-pill">🏨 Hôtel &amp; Riad</span>
+        <span class="sector-pill">🏖 Resort &amp; Club</span>
+        <span class="sector-pill">🍔 Fast-food &amp; Food court</span>
+        <span class="sector-pill">🏢 Cantine &amp; Collectivité</span>
+        <span class="sector-pill">🌐 Franchise Multi-sites</span>
+      </div>
+    </div>
+
+    <!-- GARANTIES -->
+    <div class="guarantee-row">
+      <div class="guarantee-item"><span class="g-icon">🎁</span> Premier mois offert</div>
+      <div class="guarantee-item"><span class="g-icon">🔓</span> Sans engagement</div>
+      <div class="guarantee-item"><span class="g-icon">🛠</span> Installation sur site incluse</div>
+      <div class="guarantee-item"><span class="g-icon">👨‍🏫</span> Formation équipe incluse</div>
+      <div class="guarantee-item"><span class="g-icon">📤</span> Export données à tout moment</div>
+    </div>
+
+    <!-- TÉMOIGNAGE -->
+    <div style="background:#0f0e0c; border-radius:2.5mm; padding:4mm 5mm; position:relative; overflow:hidden;">
+      <div style="position:absolute;top:-4mm;right:3mm;font-family:'Syne',sans-serif;font-size:40pt;font-weight:800;color:rgba(212,119,44,.12);line-height:1;pointer-events:none;">"</div>
+      <div style="font-size:7.5pt;color:rgba(255,255,255,.75);font-weight:300;line-height:1.6;font-style:italic;margin-bottom:2mm;">
+        "Avant DimaResto, mes serveurs prenaient 3 commandes à la fois sur papier et les erreurs arrivaient tous les soirs. Depuis qu'on a mis les QR codes sur les tables, les commandes arrivent directement en cuisine. Je n'ai plus de bons perdus. Le retour sur investissement a été immédiat dès le premier mois."
+      </div>
+      <div style="display:flex;align-items:center;gap:2mm;">
+        <div style="width:6mm;height:6mm;border-radius:50%;background:#d4772c;display:flex;align-items:center;justify-content:center;font-size:8pt;">👨‍🍳</div>
+        <div>
+          <div style="font-size:7pt;font-weight:700;color:#fff;">M. Karim E.</div>
+          <div style="font-size:6pt;color:rgba(255,255,255,.4);">Propriétaire — Restaurant Le Jasmin, Casablanca</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>
+      <div class="footer-brand">Dima<span>Resto</span></div>
+      <div style="font-size:6pt;color:rgba(255,255,255,.3);margin-top:.5mm;">by Dima Solutions AI Tech · Maroc · France · Afrique Francophone</div>
+    </div>
+    <div class="footer-contacts">
+      <div class="footer-contact-item">
+        <span class="footer-contact-label">Téléphone / WhatsApp</span>
+        <span class="footer-contact-value">+212 6XX XXX XXX</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-label">Email</span>
+        <span class="footer-contact-value">contact@dimasolutions.ma</span>
+      </div>
+      <div class="footer-contact-item">
+        <span class="footer-contact-label">Web</span>
+        <span class="footer-contact-value">dimaresto.ma</span>
+      </div>
+      <div class="footer-qr">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#0f0e0c" stroke-width="2.5"/>
+          <rect x="7" y="7" width="10" height="10" rx="1" fill="#d4772c"/>
+          <rect x="27" y="3" width="18" height="18" rx="2" fill="none" stroke="#0f0e0c" stroke-width="2.5"/>
+          <rect x="31" y="7" width="10" height="10" rx="1" fill="#d4772c"/>
+          <rect x="3" y="27" width="18" height="18" rx="2" fill="none" stroke="#0f0e0c" stroke-width="2.5"/>
+          <rect x="7" y="31" width="10" height="10" rx="1" fill="#d4772c"/>
+          <rect x="27" y="27" width="5" height="5" fill="#0f0e0c"/>
+          <rect x="35" y="27" width="5" height="5" fill="#0f0e0c"/>
+          <rect x="27" y="35" width="5" height="5" fill="#0f0e0c"/>
+          <rect x="35" y="35" width="5" height="5" fill="#d4772c"/>
+          <rect x="43" y="27" width="3" height="3" fill="#0f0e0c"/>
+          <rect x="43" y="34" width="3" height="8" fill="#0f0e0c"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.page -->
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DIMA Concierge — Flyer A4</title>
+<style>
+  :root{
+    --sand:#f6f1e7; --ink:#1f2a37; --muted:#5b6677;
+    --terra:#c2683d; --gold:#caa451; --teal:#1f5d57; --card:#fffdf9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#d9d2c4;font-family:"Segoe UI",system-ui,sans-serif;color:var(--ink);padding:24px}
+  h1,h2,h3{font-family:Georgia,serif}
+  .page{width:210mm;min-height:297mm;margin:0 auto 24px;background:var(--sand);
+        box-shadow:0 12px 40px rgba(0,0,0,.18);overflow:hidden;position:relative}
+  /* RECTO HEADER */
+  .hd{background:linear-gradient(135deg,#1f5d57,#163f3b);color:#fff;padding:30px 34px 34px;position:relative;overflow:hidden}
+  .hd::after{content:"";position:absolute;inset:0;opacity:.10;
+    background-image:radial-gradient(circle at 16px 16px,#fff 2px,transparent 3px);background-size:42px 42px}
+  .hd>*{position:relative;z-index:1}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;margin-bottom:24px;letter-spacing:.02em}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--gold)}
+  .hd .kicker{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--gold);font-weight:700}
+  .hd h1{font-size:2.3rem;line-height:1.1;margin:8px 0 10px;max-width:18ch}
+  .hd h1 em{color:var(--gold);font-style:italic}
+  .hd p{opacity:.92;max-width:52ch}
+  .body{padding:28px 34px}
+  .lead{text-align:center;color:var(--muted);max-width:58ch;margin:0 auto 22px}
+  /* SERVICES GRID */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+  .fam{background:var(--card);border:1px solid rgba(31,42,55,.06);border-radius:16px;padding:16px}
+  .fam .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.4rem;color:#fff;margin-bottom:10px}
+  .fam h3{font-size:1rem;margin-bottom:3px}
+  .fam p{font-size:.82rem;color:var(--muted)}
+  .g1{background:linear-gradient(135deg,#f78ca0,#f9748f)}.g2{background:linear-gradient(135deg,#f6d365,#fda085)}
+  .g3{background:linear-gradient(135deg,#43cea2,#185a9d)}.g4{background:linear-gradient(135deg,#a18cd1,#fbc2eb)}
+  .g5{background:linear-gradient(135deg,#4facfe,#00f2fe)}.g6{background:linear-gradient(135deg,#667eea,#764ba2)}
+  /* KDS block */
+  .kds-head{font-family:Georgia,serif;font-size:1.05rem;font-weight:700;margin:6px 0 12px;color:var(--teal)}
+  .kds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+  .k{background:var(--card);border:1px solid rgba(31,42,55,.06);border-radius:12px;padding:11px 13px}
+  .k b{display:block;font-size:.84rem;margin-bottom:2px}
+  .k span{font-size:.74rem;color:var(--muted)}
+  /* STATS BAND */
+  .band{display:flex;justify-content:space-around;background:var(--teal);color:#fff;border-radius:16px;padding:18px;margin-bottom:8px}
+  .band .s{text-align:center}
+  .band .n{font-size:1.7rem;font-weight:800;font-family:Georgia,serif;color:var(--gold)}
+  .band .l{font-size:.78rem;opacity:.9}
+  /* VERSO */
+  .v-title{text-align:center;margin:8px 0 22px}
+  .v-title .kicker{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;color:var(--terra);font-weight:700}
+  .v-title h2{font-size:1.7rem;margin-top:6px}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px;counter-reset:s}
+  .step{background:var(--card);border-radius:14px;padding:16px;position:relative;border:1px solid rgba(31,42,55,.06)}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;top:-12px;left:16px;width:30px;height:30px;border-radius:50%;background:var(--terra);color:#fff;display:grid;place-items:center;font-weight:800;font-family:Georgia,serif}
+  .step h3{font-size:.95rem;margin:10px 0 4px}
+  .step p{font-size:.8rem;color:var(--muted)}
+  .pills{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:26px}
+  .pill{display:flex;gap:11px;background:var(--card);border-radius:14px;padding:14px 16px;border:1px solid rgba(31,42,55,.06)}
+  .pill .c{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+  .pill h3{font-size:.92rem}.pill p{font-size:.8rem;color:var(--muted)}
+  .cta{background:linear-gradient(135deg,#c2683d,#a9542e);color:#fff;border-radius:18px;padding:26px;text-align:center}
+  .cta h2{font-size:1.5rem;margin-bottom:6px}
+  .cta p{opacity:.92;margin-bottom:14px}
+  .cta .devis{display:inline-block;background:#fff;color:var(--terra);font-weight:800;padding:11px 22px;border-radius:999px}
+  .foot{text-align:center;color:var(--muted);font-size:.8rem;padding:14px 34px 24px}
+  @media print{body{background:#fff;padding:0}.page{box-shadow:none;margin:0}}
+</style>
+</head>
+<body>
+
+<!-- ============ RECTO ============ -->
+<div class="page">
+  <div class="hd">
+    <div class="brand"><span class="dot"></span> DIMA Solutions · Concierge</div>
+    <div class="kicker">Hôtels · Riads · Resorts</div>
+    <h1>Votre hôtel, un <em>palace digital</em>.</h1>
+    <p>SPA, taxi, laverie, anniversaire, salle de réunion, WiFi… tout depuis le QR code en chambre.</p>
+  </div>
+
+  <div class="body">
+    <p class="lead">Vos concurrents ont un menu QR. Vous, vous offrez à chaque client
+      un concierge 24h/24 dans sa poche — et un revenu additionnel à chaque séjour.</p>
+
+    <div class="grid">
+      <div class="fam"><div class="ic g1">🧖</div><h3>Bien-être & Corps</h3><p>SPA, hammam, massage, coiffure.</p></div>
+      <div class="fam"><div class="ic g2">🚕</div><h3>Mobilité</h3><p>Taxi, navette aéroport, location.</p></div>
+      <div class="fam"><div class="ic g3">👕</div><h3>Quotidien</h3><p>Laverie, ménage, garderie, pharmacie.</p></div>
+      <div class="fam"><div class="ic g4">🎂</div><h3>Événementiel</h3><p>Anniversaires, salle de réunion.</p></div>
+      <div class="fam"><div class="ic g5">📶</div><h3>Confort</h3><p>WiFi Premium, équipements.</p></div>
+      <div class="fam"><div class="ic g6">💬</div><h3>Assistant 24/7</h3><p>Réponses instantanées.</p></div>
+    </div>
+
+    <div class="kds-head">Le socle : QR Menu &amp; Cuisine en temps réel</div>
+    <div class="kds">
+      <div class="k"><b>📱 Menu QR dynamique</b><span>Plats épuisés masqués. Jamais à réimprimer.</span></div>
+      <div class="k"><b>🍳 Dashboard cuisine live</b><span>Kanban WebSocket : Attente → Prêt → Servi.</span></div>
+      <div class="k"><b>💳 Commande & paiement</b><span>En ligne ou à la chambre, sans app.</span></div>
+      <div class="k"><b>🛏️ Room service</b><span>Commande en cuisine avec n° de chambre.</span></div>
+      <div class="k"><b>◎ QR HD & borne</b><span>Par table/chambre + écran self-service.</span></div>
+      <div class="k"><b>↗ Stats de scans</b><span>Conversion et heures de pointe mesurées.</span></div>
+    </div>
+
+    <div class="band">
+      <div class="s"><div class="n">+23%</div><div class="l">revenus / séjour</div></div>
+      <div class="s"><div class="n">0</div><div class="l">appel réception</div></div>
+      <div class="s"><div class="n">24/7</div><div class="l">disponible</div></div>
+      <div class="s"><div class="n">4</div><div class="l">langues (FR/AR/EN/ES)</div></div>
+    </div>
+  </div>
+  <div class="foot">DIMA Solutions AI Tech · Maroc 🇲🇦 — recto</div>
+</div>
+
+<!-- ============ VERSO ============ -->
+<div class="page">
+  <div class="body" style="padding-top:34px">
+    <div class="v-title">
+      <div class="kicker">Comment ça marche</div>
+      <h2>De la chambre à la facture, sans friction</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step"><h3>Scan</h3><p>Aucune app à installer.</p></div>
+      <div class="step"><h3>Choix</h3><p>Service + formulaire simple.</p></div>
+      <div class="step"><h3>Paiement</h3><p>En ligne ou à la chambre.</p></div>
+      <div class="step"><h3>Service</h3><p>Réception notifiée en direct.</p></div>
+    </div>
+
+    <div class="v-title"><div class="kicker">Pourquoi DIMA</div><h2>Pensé pour les hôteliers</h2></div>
+    <div class="pills">
+      <div class="pill"><div class="c">✓</div><div><h3>Back-office temps réel</h3><p>Demandes routées par équipe sur la tablette réception.</p></div></div>
+      <div class="pill"><div class="c">✓</div><div><h3>Facture juste au check-out</h3><p>Intégration PMS (Mews, Opera) — zéro double saisie.</p></div></div>
+      <div class="pill"><div class="c">✓</div><div><h3>Partenaires & commissions</h3><p>Taxi, spa, baby-sitter référencés, agenda partagé.</p></div></div>
+      <div class="pill"><div class="c">✓</div><div><h3>À vos couleurs</h3><p>White-label : votre nom, logo, domaine.</p></div></div>
+    </div>
+
+    <div class="cta">
+      <h2>Diagnostic gratuit de votre hôtel</h2>
+      <p>Proposition personnalisée, réponse sous 24h.</p>
+      <span class="devis">Tarifs sur devis · sans engagement</span>
+      <p style="margin-top:14px;font-size:.9rem">contact@dima-solutions.ma · demo.dima-solutions.ma</p>
+    </div>
+  </div>
+  <div class="foot">DIMA Solutions AI Tech · Maroc 🇲🇦 — verso</div>
+</div>
+
+</body>
+</html>

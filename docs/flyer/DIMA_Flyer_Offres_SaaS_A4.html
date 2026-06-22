@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIMA Solutions — Offres SaaS Hôtellerie & Restauration</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink:     #0E0C1A;
+  --ink2:    #1C1930;
+  --ink3:    #2E2A45;
+  --gold:    #C9981A;
+  --gold-l:  #EDB93A;
+  --gold-ll: #F5D87A;
+  --teal:    #1FA99B;
+  --teal-l:  #3DD4C6;
+  --cream:   #FAF7F0;
+  --cream2:  #F0EBE0;
+  --muted:   rgba(14,12,26,.42);
+  --muted2:  rgba(14,12,26,.22);
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+body {
+  background: #13111f;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 20px 60px;
+  gap: 0;
+}
+
+/* ─── A4 shell ─── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 80px 160px rgba(0,0,0,.7);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+/* ══════════════════════════════
+   HEADER
+══════════════════════════════ */
+.pg-head {
+  background: var(--ink);
+  padding: 22px 30px 0;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* diagonal slice at the bottom */
+.pg-head::after {
+  content: '';
+  display: block;
+  height: 28px;
+  background: var(--cream);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  margin-top: -1px;
+}
+
+/* subtle grid texture */
+.pg-head::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,152,26,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,152,26,.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.head-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-gem {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-ll));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.brand-name {
+  font-size: 15px; font-weight: 700; color: #fff;
+  letter-spacing: -.2px;
+}
+.brand-name b { color: var(--gold-l); font-weight: 800; }
+.brand-sub { font-size: 9px; color: rgba(255,255,255,.38); letter-spacing: 1.5px; text-transform: uppercase; }
+
+.head-pill {
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201,152,26,.35);
+  padding: 5px 14px; border-radius: 20px;
+  background: rgba(201,152,26,.08);
+}
+
+/* headline block */
+.head-hero {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 24px;
+}
+.head-eyebrow {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--teal-l); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.head-eyebrow span { width: 22px; height: 1px; background: var(--teal-l); display: inline-block; }
+
+.head-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 40px; line-height: 1.04; color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: -.5px;
+}
+.head-h1 em { color: var(--gold-l); font-style: italic; }
+.head-h1 s  { text-decoration: none; color: var(--teal-l); }
+
+.head-tagline {
+  font-size: 12.5px; color: rgba(255,255,255,.5);
+  line-height: 1.7; max-width: 480px; font-weight: 300;
+}
+.head-tagline strong { color: rgba(255,255,255,.85); font-weight: 500; }
+
+/* accent bar */
+.accent-bar {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold) 0, var(--gold) 40px,
+    var(--teal) 40px, var(--teal) 80px,
+    var(--ink3) 80px, var(--ink3) 120px
+  );
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   WIN-WIN STRIP
+══════════════════════════════ */
+.ww-strip {
+  display: flex;
+  gap: 0;
+  padding: 14px 30px;
+  background: var(--cream2);
+  border-bottom: 1px solid var(--muted2);
+  flex-shrink: 0;
+}
+.ww-col {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+.ww-col + .ww-col { border-left: 1px solid var(--muted2); padding-left: 18px; margin-left: 0; }
+.ww-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0; margin-top: 1px;
+}
+.ww-gold { background: rgba(201,152,26,.12); }
+.ww-teal { background: rgba(31,169,155,.12); }
+.ww-garnet { background: rgba(139,26,47,.1); }
+.ww-body strong { font-size: 11.5px; font-weight: 700; color: var(--ink); display: block; margin-bottom: 2px; }
+.ww-body span   { font-size: 10px; color: var(--muted); line-height: 1.55; }
+
+/* ══════════════════════════════
+   SECTION LABEL
+══════════════════════════════ */
+.sec-label {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--muted2); }
+
+/* ══════════════════════════════
+   PRICING SECTION
+══════════════════════════════ */
+.pricing-wrap {
+  padding: 18px 30px 14px;
+  flex-shrink: 0;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.18fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* CARD base */
+.pk {
+  border-radius: var(--r);
+  padding: 16px 14px 14px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Starter */
+.pk-starter {
+  background: #fff;
+  border: 1px solid rgba(14,12,26,.1);
+}
+/* Pro — featured */
+.pk-pro {
+  background: var(--ink);
+  border: 2px solid var(--gold);
+  box-shadow: 0 8px 40px rgba(201,152,26,.18);
+}
+/* Enterprise */
+.pk-enterprise {
+  background: var(--ink2);
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+/* featured ribbon */
+.pk-ribbon {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: linear-gradient(90deg, var(--gold), var(--gold-ll));
+  font-size: 8px; font-weight: 800;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--ink);
+  text-align: center; padding: 4px;
+}
+
+.pk-pro { padding-top: 24px; }
+
+/* tier badge */
+.pk-tier {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.pk-starter    .pk-tier { color: var(--muted); }
+.pk-pro        .pk-tier { color: var(--gold-l); }
+.pk-enterprise .pk-tier { color: rgba(255,255,255,.45); }
+
+/* target tag */
+.pk-target {
+  font-size: 9.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: 4px;
+  display: inline-block; margin-bottom: 10px;
+  letter-spacing: .3px;
+}
+.pk-starter    .pk-target { background: rgba(14,12,26,.07); color: var(--muted); }
+.pk-pro        .pk-target { background: rgba(201,152,26,.15); color: var(--gold-l); }
+.pk-enterprise .pk-target { background: rgba(61,212,198,.1); color: var(--teal-l); }
+
+/* price */
+.pk-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+.pk-amount {
+  font-family: 'DM Serif Display', serif;
+  font-size: 34px; line-height: 1;
+}
+.pk-starter    .pk-amount { color: var(--ink); }
+.pk-pro        .pk-amount { color: var(--gold-l); }
+.pk-enterprise .pk-amount { color: #fff; }
+
+.pk-currency {
+  font-size: 13px; font-weight: 400;
+}
+.pk-starter    .pk-currency { color: var(--muted); }
+.pk-pro        .pk-currency { color: rgba(237,185,58,.65); }
+.pk-enterprise .pk-currency { color: rgba(255,255,255,.4); }
+
+.pk-period {
+  font-size: 9.5px; margin-bottom: 4px;
+}
+.pk-starter    .pk-period { color: var(--muted); }
+.pk-pro        .pk-period { color: rgba(237,185,58,.5); }
+.pk-enterprise .pk-period { color: rgba(255,255,255,.3); }
+
+.pk-setup {
+  font-size: 9px; font-weight: 600;
+  padding: 3px 8px; border-radius: 4px;
+  display: inline-block; margin-bottom: 12px;
+}
+.pk-starter    .pk-setup { background: rgba(14,12,26,.07); color: var(--muted); }
+.pk-pro        .pk-setup { background: rgba(201,152,26,.12); color: var(--gold); }
+.pk-enterprise .pk-setup { background: rgba(255,255,255,.07); color: rgba(255,255,255,.5); }
+
+/* divider */
+.pk-divider {
+  height: 1px; margin-bottom: 10px;
+}
+.pk-starter    .pk-divider { background: rgba(14,12,26,.08); }
+.pk-pro        .pk-divider { background: rgba(201,152,26,.2); }
+.pk-enterprise .pk-divider { background: rgba(255,255,255,.08); }
+
+/* features list */
+.pk-features { flex: 1; }
+.pk-feat {
+  display: flex; align-items: flex-start;
+  gap: 6px; margin-bottom: 6px;
+  font-size: 10.5px; line-height: 1.45;
+}
+.pk-feat-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7.5px; font-weight: 800;
+  flex-shrink: 0; margin-top: 1px;
+}
+.pk-starter    .pk-feat-dot { background: rgba(14,12,26,.08); color: var(--muted); }
+.pk-pro        .pk-feat-dot { background: rgba(201,152,26,.15); color: var(--gold); }
+.pk-enterprise .pk-feat-dot { background: rgba(61,212,198,.12); color: var(--teal-l); }
+
+.pk-starter    .pk-feat { color: rgba(14,12,26,.65); }
+.pk-pro        .pk-feat { color: rgba(255,255,255,.75); }
+.pk-enterprise .pk-feat { color: rgba(255,255,255,.6); }
+
+.pk-feat b {
+  font-weight: 700;
+}
+.pk-starter    .pk-feat b { color: var(--ink); }
+.pk-pro        .pk-feat b { color: #fff; }
+.pk-enterprise .pk-feat b { color: rgba(255,255,255,.9); }
+
+/* bonus */
+.pk-bonus {
+  margin-top: 10px;
+  border-radius: var(--r-sm);
+  padding: 7px 9px;
+  font-size: 10px; font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+}
+.pk-starter    .pk-bonus { background: rgba(14,12,26,.06); color: var(--muted); border: 1px dashed var(--muted2); }
+.pk-pro        .pk-bonus { background: rgba(201,152,26,.1); color: var(--gold-l); border: 1px dashed rgba(201,152,26,.4); }
+.pk-enterprise .pk-bonus { background: rgba(61,212,198,.08); color: var(--teal-l); border: 1px dashed rgba(61,212,198,.25); }
+
+/* CTA button */
+.pk-cta {
+  margin-top: 10px;
+  width: 100%; padding: 9px 0;
+  border-radius: var(--r-sm);
+  font-size: 11.5px; font-weight: 700;
+  border: none; cursor: pointer;
+  letter-spacing: .3px;
+  text-align: center;
+}
+.pk-starter .pk-cta    { background: rgba(14,12,26,.07); color: var(--ink); border: 1px solid rgba(14,12,26,.15); }
+.pk-pro .pk-cta        { background: linear-gradient(90deg, var(--gold), var(--gold-ll)); color: var(--ink); }
+.pk-enterprise .pk-cta { background: rgba(61,212,198,.15); color: var(--teal-l); border: 1px solid rgba(61,212,198,.25); }
+
+/* ══════════════════════════════
+   HARDWARE ADDON
+══════════════════════════════ */
+.hw-wrap {
+  padding: 0 30px 14px;
+  flex-shrink: 0;
+}
+.hw-box {
+  background: var(--ink);
+  border-radius: var(--r);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hw-left { flex: 1; }
+.hw-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--gold-l); margin-bottom: 5px;
+  letter-spacing: .3px;
+}
+.hw-items {
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+.hw-chip {
+  background: rgba(201,152,26,.1);
+  border: 1px solid rgba(201,152,26,.2);
+  border-radius: 5px;
+  padding: 3px 9px;
+  font-size: 9.5px; color: rgba(237,185,58,.8);
+}
+.hw-chip b { color: var(--gold-l); font-weight: 700; }
+.hw-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+.hw-price-old {
+  font-size: 10px; color: rgba(255,255,255,.25);
+  text-decoration: line-through; display: block;
+}
+.hw-price-new {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px; color: var(--gold-l); line-height: 1; display: block;
+}
+.hw-price-unit { font-size: 10px; color: rgba(201,152,26,.55); }
+.hw-badge {
+  display: inline-block; margin-top: 4px;
+  background: rgba(31,169,155,.15);
+  border: 1px solid rgba(61,212,198,.25);
+  color: var(--teal-l);
+  font-size: 9px; font-weight: 700;
+  padding: 2px 8px; border-radius: 4px;
+}
+
+/* ══════════════════════════════
+   INCLUDED FOR ALL
+══════════════════════════════ */
+.all-wrap {
+  padding: 0 30px 14px;
+  flex-shrink: 0;
+}
+.all-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.all-item {
+  background: #fff;
+  border: 1px solid var(--muted2);
+  border-radius: var(--r-sm);
+  padding: 9px 8px;
+  text-align: center;
+}
+.all-emoji { font-size: 16px; display: block; margin-bottom: 4px; }
+.all-label { font-size: 9.5px; color: rgba(14,12,26,.65); font-weight: 500; line-height: 1.35; }
+
+/* ══════════════════════════════
+   URGENCY BAND
+══════════════════════════════ */
+.urgency {
+  background: var(--ink2);
+  padding: 11px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.urgency::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--teal), var(--gold));
+}
+.urg-left {
+  display: flex; align-items: center; gap: 10px;
+}
+.urg-badge {
+  background: linear-gradient(135deg, var(--gold), var(--gold-ll));
+  color: var(--ink);
+  font-size: 10px; font-weight: 800;
+  padding: 5px 12px; border-radius: 6px;
+  white-space: nowrap;
+  letter-spacing: .3px;
+  flex-shrink: 0;
+}
+.urg-text strong { font-size: 12px; color: #fff; display: block; margin-bottom: 1px; }
+.urg-text span   { font-size: 10px; color: rgba(255,255,255,.45); }
+.urg-right {
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.urg-wa {
+  background: #1DAA61;
+  color: #fff;
+  font-size: 10px; font-weight: 700;
+  padding: 6px 14px; border-radius: 6px;
+  white-space: nowrap;
+}
+.urg-qr {
+  width: 42px; height: 42px;
+  background: #fff; border-radius: 5px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.pg-foot {
+  background: var(--ink);
+  padding: 9px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.foot-left { font-size: 9px; color: rgba(255,255,255,.25); line-height: 1.6; }
+.foot-right { font-size: 9px; color: rgba(201,152,26,.45); letter-spacing: 1px; }
+
+/* bottom ornament */
+.foot-ornament {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold) 0, var(--gold) 20px,
+    var(--teal) 20px, var(--teal) 40px,
+    var(--ink3) 40px, var(--ink3) 60px,
+    var(--teal) 60px, var(--teal) 80px,
+    var(--gold) 80px, var(--gold) 100px
+  );
+  flex-shrink: 0;
+}
+
+/* Print */
+@media print {
+  body { background: white; padding: 0; }
+  .page { box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <div class="pg-head">
+    <div class="head-top">
+      <div class="brand">
+        <div class="brand-gem">🚀</div>
+        <div>
+          <div class="brand-name">DIMA Solutions <b>AI Tech</b></div>
+          <div class="brand-sub">QR Code Dynamique · Maroc</div>
+        </div>
+      </div>
+      <div class="head-pill">Tarifs & Offres 2026</div>
+    </div>
+
+    <div class="head-hero">
+      <div class="head-eyebrow"><span></span>Solutions SaaS Hôtellerie & Restauration</div>
+      <h1 class="head-h1">
+        Chaque scan,<br>
+        une <em>opportunité.</em><br>
+        <s>Gagnant / Gagnant.</s>
+      </h1>
+      <p class="head-tagline">
+        Menus digitaux multilingues · Commandes cuisine en temps réel · Paiement CMI ·<br>
+        <strong>Sans fatiguer votre personnel — en renforçant chaque relation client.</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="accent-bar"></div>
+
+  <!-- ══ WIN-WIN STRIP ══ -->
+  <div class="ww-strip">
+    <div class="ww-col">
+      <div class="ww-icon ww-gold">🏨</div>
+      <div class="ww-body">
+        <strong>Votre établissement gagne</strong>
+        <span>Revenus +22% · Coûts impression -60% · Personnel libéré pour l'accueil</span>
+      </div>
+    </div>
+    <div class="ww-col" style="padding-left:18px; margin-left:0;">
+      <div class="ww-icon ww-teal">🌍</div>
+      <div class="ww-body">
+        <strong>Vos clients internationaux gagnent</strong>
+        <span>Menu dans leur langue · Commande sans attente · Expérience premium</span>
+      </div>
+    </div>
+    <div class="ww-col" style="padding-left:18px; margin-left:0;">
+      <div class="ww-icon ww-garnet">⚡</div>
+      <div class="ww-body">
+        <strong>Votre équipe gagne</strong>
+        <span>Moins de course, moins d'erreurs · Plus de temps pour le vrai service</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PRICING ══ -->
+  <div class="pricing-wrap">
+    <div class="sec-label">Choisissez votre formule</div>
+
+    <div class="pricing-grid">
+
+      <!-- STARTER -->
+      <div class="pk pk-starter">
+        <div class="pk-tier">Starter</div>
+        <div class="pk-target">Riad · Café · Petit restaurant</div>
+        <div class="pk-price">
+          <span class="pk-amount">1 490</span>
+          <span class="pk-currency">MAD/mois</span>
+        </div>
+        <div class="pk-period">/mois · engagement 3 mois</div>
+        <div class="pk-setup">Setup : 2 000 MAD</div>
+        <div class="pk-divider"></div>
+        <div class="pk-features">
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span><b>Menu QR</b> multilingue 4 langues</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Jusqu'à <b>20 tables</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span><b>5 QR codes</b> physiques inclus</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Mise à jour menu <b>en temps réel</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Dashboard <b>basique</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Support WhatsApp <b>FR/AR</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Impression thermique <b>offline</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">—</div><span style="opacity:.45;">Paiement CMI</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">—</div><span style="opacity:.45;">Analytics avancées</span></div>
+        </div>
+        <div class="pk-bonus">Essai 7 jours gratuit<br>sans engagement</div>
+        <div class="pk-cta">Démarrer →</div>
+      </div>
+
+      <!-- PRO -->
+      <div class="pk pk-pro">
+        <div class="pk-ribbon">⭐ RECOMMANDÉ — MEILLEURE VALEUR</div>
+        <div class="pk-tier">Pro · Riad Digital</div>
+        <div class="pk-target">Hôtel 3-4★ · Riad premium · Restaurant</div>
+        <div class="pk-price">
+          <span class="pk-amount">2 490</span>
+          <span class="pk-currency">MAD/mois</span>
+        </div>
+        <div class="pk-period">/mois · engagement 6 mois</div>
+        <div class="pk-setup">Setup : 3 500 MAD</div>
+        <div class="pk-divider"></div>
+        <div class="pk-features">
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span><b>Menu QR</b> multilingue <b>7 langues</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Tables <b>illimitées</b> + room service</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span><b>10 QR codes</b> plastique rigide inclus</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Dashboard cuisine <b>KDS live</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Paiement <b>CMI intégré</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span><b>Analytics avancées</b> + export</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>QR <b>Avis Google</b> automatique</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Formation équipe <b>1h sur site</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Support WhatsApp <b>7j/7 prioritaire</b></span></div>
+        </div>
+        <div class="pk-bonus">🎁 Imprimante thermique OFFERTE<br>si signature avant fin du mois*</div>
+        <div class="pk-cta">Choisir Pro →</div>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div class="pk pk-enterprise">
+        <div class="pk-tier">Enterprise</div>
+        <div class="pk-target">Groupe hôtelier · Multi-sites</div>
+        <div class="pk-price">
+          <span class="pk-amount">5 990</span>
+          <span class="pk-currency">MAD/mois</span>
+        </div>
+        <div class="pk-period">/mois · engagement 12 mois</div>
+        <div class="pk-setup">Setup : sur devis</div>
+        <div class="pk-divider"></div>
+        <div class="pk-features">
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Tout le pack <b>Pro</b> inclus</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Intégration <b>PMS hôtel</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span><b>Check-in digital</b> QR/NFC</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>API ouverte <b>+ webhooks</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Multi-sites <b>tableau de bord</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span><b>SLA 4h</b> · Manager dédié</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Billetterie <b>événementielle</b></span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Badge <b>contrôle d'accès</b> QR</span></div>
+          <div class="pk-feat"><div class="pk-feat-dot">✓</div><span>Formation équipe <b>complète</b></span></div>
+        </div>
+        <div class="pk-bonus">Démo personnalisée<br>sur site · Devis sous 24h</div>
+        <div class="pk-cta">Demander un devis →</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ HARDWARE ══ -->
+  <div class="hw-wrap">
+    <div class="hw-box">
+      <div class="hw-left">
+        <div class="hw-title">🔧 Bundle Hardware — optionnel (clé en main)</div>
+        <div class="hw-items">
+          <div class="hw-chip">Terminal Android <b>Zebra / Honeywell</b></div>
+          <div class="hw-chip">Imprimante thermique <b>BT portable</b></div>
+          <div class="hw-chip">Douchette <b>Bluetooth</b></div>
+          <div class="hw-chip">QR codes plastique <b>rigide 10×10cm</b></div>
+          <div class="hw-chip">Powerbank + câbles</div>
+        </div>
+      </div>
+      <div class="hw-right">
+        <span class="hw-price-old">7 800 MAD</span>
+        <span class="hw-price-new">6 900</span>
+        <span class="hw-price-unit">MAD — bundle complet</span>
+        <span class="hw-badge">Économie 900 MAD</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ INCLUDED FOR ALL ══ -->
+  <div class="all-wrap">
+    <div class="sec-label">Inclus dans toutes les formules</div>
+    <div class="all-grid">
+      <div class="all-item">
+        <span class="all-emoji">🔄</span>
+        <span class="all-label">QR dynamique modifiable après impression</span>
+      </div>
+      <div class="all-item">
+        <span class="all-emoji">📱</span>
+        <span class="all-label">PWA — sans télécharger d'application</span>
+      </div>
+      <div class="all-item">
+        <span class="all-emoji">🔒</span>
+        <span class="all-label">Hébergement sécurisé Maroc · RGPD</span>
+      </div>
+      <div class="all-item">
+        <span class="all-emoji">🌐</span>
+        <span class="all-label">Sous-domaine personnalisé menu.votrehôtel.ma</span>
+      </div>
+      <div class="all-item">
+        <span class="all-emoji">📶</span>
+        <span class="all-label">Mode offline — fonctionne sans réseau</span>
+      </div>
+      <div class="all-item">
+        <span class="all-emoji">⚙️</span>
+        <span class="all-label">Mises à jour automatiques incluses</span>
+      </div>
+      <div class="all-item">
+        <span class="all-emoji">🇲🇦</span>
+        <span class="all-label">Support local FR / AR / Darija sur site</span>
+      </div>
+      <div class="all-item">
+        <span class="all-emoji">🚀</span>
+        <span class="all-label">Mise en service en 48 heures garantie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ URGENCY ══ -->
+  <div class="urgency">
+    <div class="urg-left">
+      <div class="urg-badge">🔥 Offre Lancement Marrakech</div>
+      <div class="urg-text">
+        <strong>10 établissements seulement · Exclusivité géographique 6 mois</strong>
+        <span>Votre concurrent de quartier ne pourra pas avoir le même système pendant 6 mois. Imprimante thermique (2 500 MAD) offerte avec le Pack Pro.*</span>
+      </div>
+    </div>
+    <div class="urg-right">
+      <div class="urg-wa">💬 WhatsApp<br>+212 6XX XX XX XX</div>
+      <div class="urg-qr">
+        <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+          <rect x="1" y="1" width="12" height="12" rx="1" fill="none" stroke="#C9981A" stroke-width="1.5"/>
+          <rect x="3.5" y="3.5" width="7" height="7" rx=".5" fill="#C9981A"/>
+          <rect x="23" y="1" width="12" height="12" rx="1" fill="none" stroke="#C9981A" stroke-width="1.5"/>
+          <rect x="25.5" y="3.5" width="7" height="7" rx=".5" fill="#C9981A"/>
+          <rect x="1" y="23" width="12" height="12" rx="1" fill="none" stroke="#C9981A" stroke-width="1.5"/>
+          <rect x="3.5" y="25.5" width="7" height="7" rx=".5" fill="#C9981A"/>
+          <rect x="18" y="18" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="21.5" y="18" width="2.5" height="2.5" fill="#0E0C1A"/>
+          <rect x="25" y="18" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="28.5" y="18" width="2.5" height="2.5" fill="#0E0C1A"/>
+          <rect x="32" y="18" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="18" y="21.5" width="2.5" height="2.5" fill="#0E0C1A"/>
+          <rect x="25" y="21.5" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="32" y="21.5" width="2.5" height="2.5" fill="#0E0C1A"/>
+          <rect x="18" y="25" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="21.5" y="25" width="2.5" height="2.5" fill="#0E0C1A"/>
+          <rect x="28.5" y="25" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="18" y="28.5" width="2.5" height="2.5" fill="#0E0C1A"/>
+          <rect x="21.5" y="28.5" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="25" y="28.5" width="2.5" height="2.5" fill="#0E0C1A"/>
+          <rect x="32" y="28.5" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="18" y="32" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="25" y="32" width="2.5" height="2.5" fill="#C9981A"/>
+          <rect x="28.5" y="32" width="2.5" height="2.5" fill="#0E0C1A"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="pg-foot">
+    <div class="foot-left">
+      demo.dima-solutions.ma · contact@dimasolutions.ma · +212 6XX XX XX XX<br>
+      *Offre valable pour les 10 premiers établissements de Marrakech signant le Pack Pro avant fin du mois · Prix HT · TVA 20% non incluse
+    </div>
+    <div class="foot-right">DIMA Solutions AI Tech · Maroc 🇲🇦 · 2026</div>
+  </div>
+  <div class="foot-ornament"></div>
+
+</div>
+
+</body>
+</html>

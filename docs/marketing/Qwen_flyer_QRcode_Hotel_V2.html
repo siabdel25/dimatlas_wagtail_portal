@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>DIMA Solutions — Flyer A4 Hôtel (v2)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f5f5f5; }
+        .flyer {
+            width: 210mm; height: 297mm; margin: 0 auto;
+            background: white; padding: 12mm;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative; overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 7mm; margin: -12mm -12mm 8mm -12mm;
+            text-align: center;
+        }
+        .logo { font-size: 26pt; font-weight: bold; margin-bottom: 2mm; }
+        .tagline { font-size: 10pt; opacity: 0.95; }
+        .badge {
+            display: inline-block; background: #ffd700; color: #333;
+            padding: 2mm 5mm; border-radius: 3mm;
+            font-weight: bold; font-size: 8pt; margin-top: 2mm;
+        }
+        .hero { text-align: center; margin: 5mm 0; }
+        .hero h1 {
+            font-size: 22pt; color: #2d3748;
+            margin-bottom: 3mm; line-height: 1.2;
+        }
+        .hero .subtitle {
+            font-size: 11pt; color: #667eea; font-weight: 600;
+        }
+        .stats-bar {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 2mm; margin: 6mm 0;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 5mm; border-radius: 3mm; color: white;
+        }
+        .stat { text-align: center; }
+        .stat-num { font-size: 18pt; font-weight: bold; }
+        .stat-label { font-size: 7pt; opacity: 0.95; }
+        .features {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4mm; margin: 6mm 0;
+        }
+        .feature {
+            background: #f7fafc; padding: 4mm;
+            border-radius: 3mm; border-left: 3px solid #667eea;
+        }
+        .feature h3 {
+            color: #667eea; font-size: 9pt;
+            margin-bottom: 1.5mm; display: flex;
+            align-items: center; gap: 2mm;
+        }
+        .feature p { font-size: 7.5pt; color: #4a5568; line-height: 1.4; }
+        .zones {
+            background: #edf2f7; padding: 4mm;
+            border-radius: 3mm; margin: 5mm 0; text-align: center;
+        }
+        .zones h3 { font-size: 10pt; color: #2d3748; margin-bottom: 3mm; }
+        .zone-list {
+            display: flex; justify-content: space-around;
+            flex-wrap: wrap; gap: 3mm;
+        }
+        .zone {
+            background: white; padding: 2mm 4mm;
+            border-radius: 2mm; font-size: 8pt;
+            border: 1px solid #e2e8f0;
+        }
+        .benefits {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4mm; margin: 5mm 0;
+        }
+        .benefit-col {
+            background: #f7fafc; padding: 4mm;
+            border-radius: 3mm;
+        }
+        .benefit-col h3 {
+            font-size: 9pt; color: #667eea;
+            margin-bottom: 2mm; text-align: center;
+        }
+        .benefit-col ul {
+            list-style: none; font-size: 7.5pt;
+            color: #4a5568; line-height: 1.6;
+        }
+        .benefit-col li { padding-left: 4mm; position: relative; }
+        .benefit-col li:before {
+            content: "✓"; position: absolute; left: 0;
+            color: #48bb78; font-weight: bold;
+        }
+        .offer-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 5mm;
+            border-radius: 4mm; margin: 5mm 0;
+            text-align: center;
+        }
+        .offer-box h2 { font-size: 14pt; margin-bottom: 2mm; }
+        .price { font-size: 22pt; font-weight: bold; margin: 2mm 0; }
+        .price .old {
+            font-size: 11pt; text-decoration: line-through;
+            opacity: 0.7; display: block;
+        }
+        .offer-list {
+            text-align: left; font-size: 8pt; line-height: 1.5;
+            columns: 2; column-gap: 5mm;
+        }
+        .offer-list li {
+            list-style: none; padding-left: 4mm;
+            position: relative; margin-bottom: 1mm;
+        }
+        .offer-list li:before {
+            content: "✓"; position: absolute; left: 0;
+            font-weight: bold;
+        }
+        .cta {
+            background: #48bb78; color: white;
+            text-align: center; padding: 4mm;
+            border-radius: 3mm; margin-top: 4mm;
+        }
+        .cta h3 { font-size: 11pt; margin-bottom: 2mm; }
+        .contact { font-size: 8pt; line-height: 1.5; }
+        .footer {
+            position: absolute; bottom: 12mm; left: 12mm; right: 12mm;
+            text-align: center; font-size: 7pt; color: #718096;
+            border-top: 1px solid #e2e8f0; padding-top: 3mm;
+        }
+    </style>
+</head>
+<body>
+    <div class="flyer">
+        <div class="header">
+            <div class="logo">🚀 DIMA Solutions</div>
+            <div class="tagline">QR Menu · Room Service · Dashboard Cuisine · Folio Unifié</div>
+            <div class="badge">🎁 OFFRE BÊTA MARRAKECH — 1ER HÔTEL PARTENAIRE</div>
+        </div>
+
+        <div class="hero">
+            <h1>Vos clients commandent.<br>Votre cuisine exécute.<br>Votre équipe conseille.</h1>
+            <div class="subtitle">QR Menu multilingue · KDS temps réel · Zéro friction</div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-num">+22%</div>
+                <div class="stat-label">Panier moyen</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">-73%</div>
+                <div class="stat-label">Temps commande</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">60%</div>
+                <div class="stat-label">Économie papier</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">48h</div>
+                <div class="stat-label">Mise en service</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">7</div>
+                <div class="stat-label">Langues incluses</div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>📱 QR Menu Multilingue</h3>
+                <p>Le client scanne, le menu s'affiche dans sa langue (FR/AR/EN/ES). Photos, allergènes, descriptions. Aucune appli à installer. RTL natif pour l'arabe.</p>
+            </div>
+            <div class="feature">
+                <h3>🍳 Dashboard Cuisine (KDS)</h3>
+                <p>La commande arrive instantanément en cuisine. 3 colonnes : Attente · Préparation · Prêt. Chronomètre couleur, alertes, priorités. Zéro bon perdu.</p>
+            </div>
+            <div class="feature">
+                <h3>🧾 Folio de Séjour Unifié</h3>
+                <p>Un compte par chambre : room service, restaurant, spa, bar, navettes. Tout s'ajoute automatiquement. Règlement unique au check-out. Reçu PDF instantané.</p>
+            </div>
+            <div class="feature">
+                <h3>⚡ Service 30% plus rapide</h3>
+                <p>Rotation des tables accélérée. Plus d'attente serveur. Le client commande à son rythme. La cuisine voit tout en temps réel via WebSocket.</p>
+            </div>
+        </div>
+
+        <div class="zones">
+            <h3>🎯 Un QR code pour chaque zone de votre établissement</h3>
+            <div class="zone-list">
+                <div class="zone">🍽️ Table restaurant</div>
+                <div class="zone">🛏️ Chambre</div>
+                <div class="zone">🍸 Bar</div>
+                <div class="zone">🏊 Piscine</div>
+                <div class="zone">💆 Spa / Hammam</div>
+                <div class="zone">☕ Lobby / Terrasse</div>
+            </div>
+        </div>
+
+        <div class="benefits">
+            <div class="benefit-col">
+                <h3>⭐ Votre hôtel gagne</h3>
+                <ul>
+                    <li>+22% de panier moyen constaté</li>
+                    <li>Commandes 73% plus rapides</li>
+                    <li>60% d'économie d'impression</li>
+                    <li>Équipe libérée pour le relationnel</li>
+                    <li>Données clients exploitables</li>
+                    <li>Multi-espaces depuis un seul back-office</li>
+                    <li>Mise à jour prix en 3 secondes</li>
+                </ul>
+            </div>
+            <div class="benefit-col">
+                <h3>🌟 Vos clients gagnent</h3>
+                <ul>
+                    <li>Menu dans leur langue, immédiatement</li>
+                    <li>Commande sans attendre un serveur</li>
+                    <li>Allergènes & infos clairs</li>
+                    <li>Paiement en 1 tap (CMI/Stripe)</li>
+                    <li>Zéro frustration, expérience premium</li>
+                    <li>Suivi de commande en temps réel</li>
+                    <li>Ajout au folio chambre automatique</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="offer-box">
+            <h2>🎁 Offre Bêta Exclusive — 1er Hôtel Marrakech</h2>
+            <div class="price">
+                Sur devis
+                <span class="old">Sur devis</span>
+            </div>
+            <ul class="offer-list">
+                <li>Setup & installation OFFERTS</li>
+                <li>Tablettes d'accueil incluses</li>
+                <li>Imprimantes thermiques fournies</li>
+                <li>QR codes plastifiés personnalisés</li>
+                <li>Formation équipe complète</li>
+                <li>Support 7j/7 FR/AR</li>
+                <li>Personnalisation workflow</li>
+                <li>Sans engagement 3 mois</li>
+            </ul>
+        </div>
+
+        <div class="cta">
+            <h3>📅 Démo gratuite dans votre hôtel — 30 min</h3>
+            <div class="contact">
+                <strong>Installation 48h · Matériel inclus · Support premium</strong><br>
+                📞 +212 6XX XX XX XX · 📧 contact@dimasolutions.ma · 🌐 demo.dima-solutions.ma
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>DIMA Solutions AI Tech · Maroc 🇲🇦</strong><br>
+            Offre limitée aux 10 premiers établissements de Marrakech
+        </div>
+    </div>
+</body>
+</html>

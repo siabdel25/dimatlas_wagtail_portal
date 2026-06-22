@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIMA Solutions — Flyer A4 Hôtel</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:#1C1C28;
+  display:flex; flex-direction:column; align-items:center;
+  gap:40px; padding:50px 20px;
+  font-family:'Outfit',sans-serif;
+}
+
+.flyer-a4 {
+  width:210mm; min-height:297mm;
+  background:#0A0A14; color:#F0EDE6;
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+  print-color-adjust:exact; -webkit-print-color-adjust:exact;
+  box-shadow:0 60px 120px rgba(0,0,0,0.6);
+}
+.gold { color:#D4AF37; }
+.outline { color:transparent; -webkit-text-stroke:1px rgba(212,175,55,0.55); }
+
+/* HEADER */
+.header { padding:30px 36px 0; position:relative; overflow:hidden; }
+.arc, .arc2 { position:absolute; border-radius:50%; }
+.arc  { top:-60px; right:-60px; width:260px; height:260px; border:1px solid rgba(212,175,55,0.12); }
+.arc2 { top:-30px; right:-30px; width:160px; height:160px; border:1px solid rgba(212,175,55,0.2); }
+.brand { display:flex; align-items:center; justify-content:space-between; position:relative; z-index:1; }
+.brand-left { display:flex; align-items:center; gap:11px; }
+.brand-dot { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#D4AF37,#F0D060); display:flex; align-items:center; justify-content:center; font-size:16px; }
+.brand-name { font-weight:700; font-size:14px; letter-spacing:0.3px; }
+.brand-name span { color:#D4AF37; }
+.brand-tag { font-size:10px; font-weight:500; color:rgba(212,175,55,0.75); border:1px solid rgba(212,175,55,0.25); padding:4px 12px; border-radius:20px; letter-spacing:1.5px; text-transform:uppercase; }
+
+/* HERO */
+.hero { padding:24px 36px 26px; position:relative; z-index:1; }
+.eyebrow { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.eye-line { width:28px; height:1px; background:linear-gradient(90deg,#D4AF37,transparent); }
+.eye-text { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(212,175,55,0.8); }
+.headline { font-size:50px; line-height:1.03; font-weight:800; letter-spacing:-1.5px; }
+.sub { margin-top:15px; max-width:90%; font-size:13.5px; line-height:1.6; color:rgba(240,237,230,0.72); font-weight:300; }
+
+/* GOLD BAND */
+.band { margin:0 36px; padding:15px 22px; border-radius:14px; background:linear-gradient(135deg,rgba(212,175,55,0.14),rgba(212,175,55,0.04)); border:1px solid rgba(212,175,55,0.25); display:flex; align-items:center; gap:16px; }
+.band-icon { font-size:26px; }
+.band-text { font-weight:700; font-size:14px; color:#F0D060; }
+.band-sub { font-size:11px; color:rgba(240,237,230,0.65); margin-top:2px; }
+
+.section-label { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:rgba(212,175,55,0.8); font-weight:600; margin-bottom:13px; }
+
+/* WORKFLOW */
+.workflow { padding:22px 36px 4px; }
+.flow { display:flex; gap:8px; }
+.flow-step { flex:1; background:rgba(255,255,255,0.02); border:1px solid rgba(212,175,55,0.12); border-radius:12px; padding:13px 9px; text-align:center; }
+.flow-num { width:25px; height:25px; margin:0 auto 7px; border-radius:50%; background:linear-gradient(135deg,#D4AF37,#F0D060); color:#0A0A14; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; }
+.flow-label { font-size:10px; line-height:1.35; color:rgba(240,237,230,0.7); }
+.flow-label strong { display:block; color:#F0EDE6; font-weight:600; font-size:11px; margin-bottom:2px; }
+
+/* FEATURES */
+.features { padding:20px 36px 4px; display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+.feat { background:rgba(255,255,255,0.02); border:1px solid rgba(212,175,55,0.12); border-radius:14px; padding:14px 16px; }
+.feat-header { display:flex; align-items:center; gap:9px; margin-bottom:7px; }
+.feat-icon { font-size:18px; }
+.feat-title { font-weight:600; font-size:13px; color:#F0EDE6; }
+.feat-body { font-size:11px; line-height:1.5; color:rgba(240,237,230,0.68); }
+.feat-badge { display:inline-block; margin-top:9px; font-size:9.5px; font-weight:600; color:#D4AF37; border:1px solid rgba(212,175,55,0.3); padding:3px 10px; border-radius:20px; letter-spacing:0.5px; }
+
+/* WIN WIN */
+.winwin { margin:20px 36px 0; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.win-col { background:rgba(255,255,255,0.02); border:1px solid rgba(212,175,55,0.12); border-radius:14px; padding:16px 18px; }
+.win-title { font-weight:700; font-size:13.5px; color:#F0D060; margin-bottom:10px; }
+.win-item { font-size:11.5px; line-height:1.45; color:rgba(240,237,230,0.78); padding:4px 0 4px 18px; position:relative; }
+.win-item::before { content:"›"; position:absolute; left:2px; color:#D4AF37; font-weight:700; }
+
+/* STATS */
+.stats { margin:20px 36px 0; display:flex; justify-content:space-between; border-top:1px solid rgba(212,175,55,0.15); border-bottom:1px solid rgba(212,175,55,0.15); padding:16px 0; }
+.stat { text-align:center; }
+.stat-num { display:block; font-size:25px; font-weight:800; color:#D4AF37; }
+.stat-lbl { font-size:9.5px; color:rgba(240,237,230,0.6); letter-spacing:0.3px; }
+
+/* CTA */
+.cta { margin:20px 36px 0; padding:18px 24px; border-radius:16px; background:linear-gradient(135deg,rgba(212,175,55,0.16),rgba(212,175,55,0.05)); border:1px solid rgba(212,175,55,0.3); display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.cta-left strong { display:block; font-size:15.5px; color:#F0D060; margin-bottom:6px; }
+.cta-left span { font-size:11px; line-height:1.6; color:rgba(240,237,230,0.7); }
+.cta-pill { font-size:11px; font-weight:600; color:#0A0A14; background:linear-gradient(135deg,#D4AF37,#F0D060); padding:8px 14px; border-radius:20px; white-space:nowrap; }
+
+/* FOOTER */
+.footer { margin-top:auto; padding:16px 36px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(212,175,55,0.12); font-size:9.5px; color:rgba(240,237,230,0.5); }
+.footer-right { color:rgba(212,175,55,0.7); font-weight:600; }
+
+.print-label { color:rgba(255,255,255,0.4); font-size:12px; letter-spacing:2px; }
+
+@page { size:A4; margin:0; }
+@media print {
+  body { background:#fff; padding:0; gap:0; }
+  .flyer-a4 { box-shadow:none; page-break-after:avoid; }
+  .print-label { display:none; }
+}
+</style>
+</head>
+<body>
+
+<p class="print-label">▲ FLYER A4 — HÔTEL</p>
+
+<div class="flyer-a4">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="arc"></div>
+    <div class="arc2"></div>
+    <div class="brand">
+      <div class="brand-left">
+        <div class="brand-dot">🚀</div>
+        <div class="brand-name">DIMA Solutions <span>AI Tech</span></div>
+      </div>
+      <div class="brand-tag">Hôtel · Restaurant</div>
+    </div>
+
+    <div class="hero">
+      <div class="eyebrow">
+        <div class="eye-line"></div>
+        <span class="eye-text">Du petit-déjeuner au room service</span>
+      </div>
+      <h1 class="headline">
+        Le room service<br>
+        <span class="gold">de votre hôtel.</span><br>
+        <span class="outline">En un QR.</span>
+      </h1>
+      <p class="sub">Menu QR multilingue, commande à table comme en chambre, cuisine en temps réel et une seule note de séjour. Plus de revenus, une équipe concentrée sur l'accueil.</p>
+    </div>
+  </div>
+
+  <!-- GOLD BAND -->
+  <div class="band">
+    <div class="band-icon">🧾</div>
+    <div>
+      <div class="band-text">Une seule note de séjour — du café du matin au check-out</div>
+      <div class="band-sub">Room service, restaurant, spa, navettes — tout au folio, réglé en une fois, reçu PDF instantané</div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="workflow">
+    <div class="section-label">Comment ça marche</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-label"><strong>Check-in digital</strong>le séjour démarre</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-label"><strong>Client scanne</strong>table, chambre, zone</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-label"><strong>Menu s'ouvre</strong>dans sa langue</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-label"><strong>Cuisine reçoit</strong>KDS temps réel</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-label"><strong>Tout au folio</strong>réglé au départ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features">
+    <div class="feat">
+      <div class="feat-header"><span class="feat-icon">🌍</span><span class="feat-title">Menu multilingue automatique</span></div>
+      <div class="feat-body">Français, Arabe, Anglais, Espagnol et plus — détection selon le téléphone du client, RTL natif pour l'arabe. Zéro action requise.</div>
+      <span class="feat-badge">7 langues</span>
+    </div>
+    <div class="feat">
+      <div class="feat-header"><span class="feat-icon">🍽️</span><span class="feat-title">Room service & multi-zones</span></div>
+      <div class="feat-body">Un QR par table, par chambre, par zone (bar, spa, piscine). Chaque commande s'impute automatiquement au folio du séjour.</div>
+      <span class="feat-badge">Toutes zones · auto folio</span>
+    </div>
+    <div class="feat">
+      <div class="feat-header"><span class="feat-icon">🔥</span><span class="feat-title">Cuisine KDS en temps réel</span></div>
+      <div class="feat-body">Dashboard cuisine instantané, suivi de préparation, alertes. Service 30% plus rapide, rotation des tables +25%.</div>
+      <span class="feat-badge">Service +30%</span>
+    </div>
+    <div class="feat">
+      <div class="feat-header"><span class="feat-icon">🧾</span><span class="feat-title">Folio de séjour & reçu PDF</span></div>
+      <div class="feat-body">Un compte unique par chambre — hébergement, room service, spa. Soldé en une fois au check-out, reçu PDF généré instantanément.</div>
+      <span class="feat-badge">Check-out express</span>
+    </div>
+    <div class="feat">
+      <div class="feat-header"><span class="feat-icon">💳</span><span class="feat-title">Paiement en 1 tap</span></div>
+      <div class="feat-body">Paiement direct depuis le menu — carte, mobile money (CMI). Reçu digital + demande d'avis Google en 1 clic après le paiement.</div>
+      <span class="feat-badge">CMI certifié</span>
+    </div>
+    <div class="feat">
+      <div class="feat-header"><span class="feat-icon">⚡</span><span class="feat-title">Temps réel & zéro réimpression</span></div>
+      <div class="feat-body">Prix, ruptures, promotions modifiables en 3 secondes depuis votre mobile — tous les QR mis à jour instantanément. Multi-établissement.</div>
+      <span class="feat-badge">0 réimpression</span>
+    </div>
+  </div>
+
+  <!-- WIN WIN -->
+  <div class="winwin">
+    <div class="win-col">
+      <div class="win-title">🏨 Votre hôtel gagne</div>
+      <div class="win-item">+22% de panier moyen</div>
+      <div class="win-item">-73% de temps de commande</div>
+      <div class="win-item">60% d'économie impression</div>
+      <div class="win-item">Équipe libérée pour le relationnel</div>
+      <div class="win-item">Données clients exploitables</div>
+    </div>
+    <div class="win-col">
+      <div class="win-title">⭐ Vos clients gagnent</div>
+      <div class="win-item">Menu dans leur langue, immédiatement</div>
+      <div class="win-item">Commande sans attendre un serveur</div>
+      <div class="win-item">Allergènes & infos claires</div>
+      <div class="win-item">Paiement en 1 tap</div>
+      <div class="win-item">Zéro frustration, expérience premium</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><span class="stat-num">+22%</span><span class="stat-lbl">Panier moyen</span></div>
+    <div class="stat"><span class="stat-num">73%</span><span class="stat-lbl">Commandes plus rapides</span></div>
+    <div class="stat"><span class="stat-num">60%</span><span class="stat-lbl">Économie impression</span></div>
+    <div class="stat"><span class="stat-num">48h</span><span class="stat-lbl">Mise en service</span></div>
+    <div class="stat"><span class="stat-num">7</span><span class="stat-lbl">Langues incluses</span></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="cta-left">
+      <strong>Démo gratuite dans votre hôtel</strong>
+      <span>Installation en 48h · Formation équipe incluse · Support FR/AR 7j/7<br>Package « Hôtel Digital » — Sur devis</span>
+    </div>
+    <div class="cta-pill">🎁 Imprimante offerte*</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>contact@dimasolutions.ma · demo.dima-solutions.ma · +212 6XX XX XX XX<br>*Imprimante thermique offerte pour les 10 premiers établissements de Marrakech signant avant fin du mois</div>
+    <div class="footer-right">DIMA Solutions AI Tech · Maroc 🇲🇦</div>
+  </div>
+
+</div>
+
+</body>
+</html>

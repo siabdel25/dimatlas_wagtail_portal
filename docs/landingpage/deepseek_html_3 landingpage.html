@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Dima Solutions AI Tech – QR Code Dynamique Maroc</title>
+    <!-- Google Fonts + Bootstrap + Font Awesome + Vue.js -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        :root { --primary: #1e5af7; --primary-dark: #0a3bb5; --secondary: #ff6b35; --dark: #0b1120; --gray-bg: #f8fafc; }
+        body { background: white; overflow-x: hidden; }
+        .btn-primary { background: var(--primary); border: none; padding: 12px 28px; border-radius: 48px; font-weight: 600; transition: 0.2s; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30,90,247,0.25); }
+        .btn-outline-light:hover { background: white; color: var(--primary); }
+        section { padding: 80px 0; }
+        h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
+        .badge-maroc { background: #e11d48; color: white; font-weight: 500; padding: 6px 14px; border-radius: 40px; font-size: 0.8rem; }
+        .comparison-table td { padding: 16px; border-bottom: 1px solid #e2e8f0; }
+        .card-border { border-radius: 32px; border: none; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.07); transition: 0.25s; }
+        .card-border:hover { transform: translateY(-5px); box-shadow: 0 25px 40px -12px rgba(0,0,0,0.12); }
+        footer { background: var(--dark); color: #94a3b8; padding: 40px 0; margin-top: 40px; }
+        .floating-svg { animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
+        .nav-tabs .nav-link { font-weight: 600; color: #334155; border: none; padding: 12px 24px; }
+        .nav-tabs .nav-link.active { color: var(--primary); border-bottom: 3px solid var(--primary); background: transparent; }
+        @media (max-width: 768px) { section { padding: 50px 0; } h1 { font-size: 2.2rem; } }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- Navigation multi-secteur -->
+    <nav class="navbar navbar-expand-lg bg-white py-3 shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="#">Dima<span class="text-primary">Solutions</span> <span class="badge-maroc ms-2">🇲🇦 Maroc</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#" @click.prevent="activeTab='restaurant'">📍 Restaurants & Hôtels</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#" @click.prevent="activeTab='event'">🎟️ Événements</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#" @click.prevent="activeTab='trace'">🔒 Traçabilité & Contrôle</a></li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">Demander un devis</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- RESTAURANTS & HÔTELS -->
+    <div v-show="activeTab === 'restaurant'">
+        <section class="bg-white">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <span class="badge-maroc mb-3 d-inline-block">Contactless • Hygiène • ROI direct</span>
+                        <h1 class="display-4 fw-bold mb-4">Finies les cartes <span class="text-primary">obsolètes</span><br>Passez au menu QR intelligent</h1>
+                        <p class="lead text-secondary mb-4">Changez vos prix en temps réel, gérez les ruptures, offrez 4 langues (FR/AR/EN/ES) — sans imprimer une seule fois.</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="#contact" class="btn btn-primary px-4 py-3" @click.prevent="scrollToContact">📱 Découvrir la démo</a>
+                            <a href="#" class="btn btn-outline-secondary px-4 py-3 border-2" @click.prevent="scrollToContact">Recevoir un devis restaurant</a>
+                        </div>
+                        <div class="mt-5 pt-3">
+                            <div class="row g-4">
+                                <div class="col-6"><i class="fas fa-check-circle text-primary me-2"></i> Table turnover +25%</div>
+                                <div class="col-6"><i class="fas fa-check-circle text-primary me-2"></i> Zéro papier / écolo</div>
+                                <div class="col-6"><i class="fas fa-check-circle text-primary me-2"></i> Fidélité sans application</div>
+                                <div class="col-6"><i class="fas fa-check-circle text-primary me-2"></i> Compatible CMI paiement</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <svg width="360" height="360" viewBox="0 0 200 200" class="floating-svg">
+                            <rect x="30" y="30" width="50" height="50" rx="12" fill="#1e5af7" opacity="0.9"/>
+                            <rect x="100" y="30" width="50" height="50" rx="12" fill="#ff6b35" opacity="0.9"/>
+                            <rect x="30" y="100" width="50" height="50" rx="12" fill="#1e5af7" opacity="0.7"/>
+                            <rect x="100" y="100" width="50" height="50" rx="12" fill="#1e5af7" opacity="0.9"/>
+                            <circle cx="125" cy="125" r="12" fill="white"/>
+                            <path d="M70 155 L85 170 L115 140" stroke="#1e5af7" stroke-width="5" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Avantages comparatifs -->
+        <section class="bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Avant vs. Après : l'impact immédiat du QR dynamique</h2>
+                <div class="table-responsive">
+                    <table class="table comparison-table bg-white rounded-4 overflow-hidden shadow-sm">
+                        <thead class="bg-dark text-white"><tr><th>Métrique</th><th>Menu papier classique</th><th>Menu QR Dima Solutions</th></tr></thead>
+                        <tbody>
+                            <tr><td>Mise à jour tarif</td><td>Réimpression (3-5 jours, coût élevé)</td><td class="text-primary fw-bold">Instantané — 1 seconde</td></tr>
+                            <tr><td>Multi-langues</td><td>Plusieurs cartes, confusions</td><td class="text-primary fw-bold">FR/AR/EN/ES automatique</td></tr>
+                            <tr><td>Upselling digital</td><td>Inexistant</td><td class="text-primary fw-bold">Recommandations + panier moyen +20%</td></tr>
+                            <tr><td>Check-in hôtel</td><td>Queue à la réception : 12 min</td><td class="text-primary fw-bold">QR code = 2 min, sans contact</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module Hotellerie spécifique-->
+        <section class="bg-white">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-md-6"><img src="https://placehold.co/600x400/1e5af7/white?text=HOTEL+QR+CHECK-IN" class="img-fluid rounded-4 shadow" alt="check-in hotel"></div>
+                    <div class="col-md-6"><h3 class="mb-4">✈️ Check-in 100% sans contact · Accès chambre par QR</h3><p>Le client reçoit son QR avant l'arrivée. À l'hôtel, scan → vérification ID → génération QR temporaire pour la chambre. Plus de badges perdus, zéro attente. Idéal pour les riads et hôtels de charme.</p><ul class="list-unstyled mt-3"><li><i class="fas fa-door-open text-primary me-2"></i> Contrôle d'accès par QR</li><li><i class="fas fa-chart-line text-primary me-2"></i> Occupation en temps réel</li><li><i class="fas fa-wifi text-primary me-2"></i> QR pour WiFi + services</li></ul></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ÉVÉNEMENTIEL & BILLETTERIE -->
+    <div v-show="activeTab === 'event'">
+        <section class="bg-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6"><span class="badge-maroc">Sans abonnement · 0% commission</span><h1 class="display-4 fw-bold mt-2">Billetterie QR <span class="text-primary">anti-fraude</span> pour tous vos événements</h1><p class="lead">Générez des billets uniques, scannez avec douchette Honeywell, imprimez des badges en 3 secondes. Pour concerts, festivals ou conférences.</p><div class="mt-4"><a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">Créer ma billetterie →</a></div></div>
+                    <div class="col-lg-6 text-center"><i class="fas fa-ticket-alt" style="font-size: 180px; color: var(--primary); opacity: 0.2;"></i><div class="mt-3 p-4 bg-light rounded-4"><span class="fw-bold">Tarif unique : 2,9% par billet · Frais bancaires inclus</span><br>Gratuit pour événements gratuits</div></div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-light"><div class="container"><div class="row text-center g-4"><div class="col-md-4"><div class="card-border card h-100 p-4"><i class="fas fa-qrcode fa-3x text-primary mb-3"></i><h4>Billets QR uniques</h4><p>Chaque participant reçoit son QR par email/SMS, intégrable Apple Wallet</p></div></div><div class="col-md-4"><div class="card-border card h-100 p-4"><i class="fas fa-mobile-alt fa-3x text-primary mb-3"></i><h4>Scan 100% mobile</h4><p>Application de contrôle Android/iOS, même hors ligne</p></div></div><div class="col-md-4"><div class="card-border card h-100 p-4"><i class="fas fa-chart-simple fa-3x text-primary mb-3"></i><h4>Statistiques en direct</h4><p>Check-in temps réel, taux de remplissage, export CSV</p></div></div></div></div></section>
+    </div>
+
+    <!-- TRACABILITÉ & CONTRÔLE ACCÈS -->
+    <div v-show="activeTab === 'trace'">
+        <section class="bg-white">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6"><span class="badge-maroc">GS1 ready · Anti-contrefaçon</span><h1 class="display-4 fw-bold mt-2">Traçabilité produit & badge sécurisé pour PME</h1><p class="lead">QR dynamique certifié, suivi de colis B2C, contrôle d'accès par QR code pour vos locaux. Une solution industrielle clé-en-main.</p><div class="mt-4"><a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">Demander un audit traçabilité</a></div></div>
+                    <div class="col-lg-6 bg-light p-5 rounded-4"><i class="fas fa-cubes fa-4x text-primary mb-3"></i><p><strong>Exemple concret :</strong> Éditeur de vin marocain → QR sur chaque bouteille → le client scanne, voit l'origine, le cépage, vidéo du domaine, et vérifie l'authenticité. Fini les contrefaçons.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-light"><div class="container"><div class="row"><div class="col-md-6"><h3>🔒 Contrôle d'accès sans RFID</h3><p>Gérez vos employés, visiteurs, zones sensibles avec un simple QR sur badge ou smartphone. Historique complet, désactivation à distance, compatible serrures existantes.</p><i class="fas fa-shield-alt fa-2x text-primary"></i><br><span class="badge bg-success mt-3">Déjà adopté par 3 zones industrielles au Maroc</span></div><div class="col-md-6"><h3>📦 Logistique & colis B2C</h3><p>Scan à chaque étape (départ, hub, livraison) avec géolocalisation et signature numérique. Réduction des litiges de 67%.</p><i class="fas fa-truck-fast fa-2x text-primary"></i><div class="mt-3 small text-secondary">Partenariat avec transporteurs marocains disponible</div></div></div></div></section>
+    </div>
+
+    <!-- FORMULAIRE DE CONTACT COMMUN -->
+    <section id="contact" class="bg-white py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 bg-gray-bg p-5 rounded-5 shadow-sm">
+                    <h3 class="text-center mb-4">📞 Recevez votre devis personnalisé sous 24h</h3>
+                    <form @submit.prevent="submitForm">
+                        <div class="mb-3"><input type="text" class="form-control form-control-lg" placeholder="Nom complet" v-model="form.name"></div>
+                        <div class="mb-3"><input type="email" class="form-control form-control-lg" placeholder="Email professionnel" v-model="form.email"></div>
+                        <div class="mb-3"><input type="tel" class="form-control form-control-lg" placeholder="Téléphone" v-model="form.phone"></div>
+                        <div class="mb-3"><select class="form-select" v-model="form.solution"><option value="restauration">Restaurant / Hôtel (menu QR)</option><option value="billetterie">Événement / Billetterie</option><option value="traçabilité">Traçabilité / Contrôle accès</option></select></div>
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold">Envoyer →</button>
+                        <p class="text-center text-muted small mt-3">Sans engagement, étude gratuite du projet.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center">
+        <div class="container"><p class="mb-2">Dima Solutions AI Tech — Casablanca / Marrakech / Tanger</p><p><i class="fab fa-whatsapp text-success"></i> +212 6 XX XX XX XX | contact@dima-solutions.ma | <i class="fab fa-linkedin"></i> dimasolutions</p><small>Stack : Django / Vue.js / Docker / Honeywell — Solutions 100% souveraines 🇲🇦</small></div>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+new Vue({
+    el: '#app',
+    data: { activeTab: 'restaurant', form: { name: '', email: '', phone: '', solution: '' } },
+    methods: {
+        scrollToContact() { document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); },
+        submitForm() { alert(`Merci ${this.form.name} ! Votre demande a bien été envoyée. Un expert Dima vous recontacte dans les 24h.`); this.form = { name: '', email: '', phone: '', solution: '' }; }
+    }
+});
+</script>
+</body>
+</html>

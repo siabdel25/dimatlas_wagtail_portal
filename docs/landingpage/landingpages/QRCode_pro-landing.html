@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QRPro — Solutions QR Code Intelligentes B2B</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/vue@3.3.13/dist/vue.global.prod.min.js"></script>
+
+<style>
+:root {
+  --ink:     #0a0a0f;
+  --ink2:    #1a1a2e;
+  --cream:   #f7f4ee;
+  --warm:    #ede8df;
+  --gold:    #c8a84b;
+  --gold2:   #e8c96a;
+  --teal:    #00b4a6;
+  --teal2:   #00d4c4;
+  --accent:  #ff5c3a;
+  --muted:   #6b6b80;
+  --card-bg: #ffffff;
+  --border:  rgba(10,10,15,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, .font-display { font-family: 'Syne', sans-serif; }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ─── NAV ─── */
+.navbar-qr {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: rgba(247,244,238,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  transition: all .3s;
+}
+.navbar-qr.scrolled {
+  padding: .6rem 0;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+}
+.nav-brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--ink);
+  text-decoration: none;
+  display: flex; align-items: center; gap: .5rem;
+}
+.nav-brand span { color: var(--teal); }
+.nav-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.4); }
+}
+.nav-link-qr {
+  color: var(--ink) !important;
+  font-weight: 500;
+  font-size: .9rem;
+  letter-spacing: .02em;
+  text-decoration: none;
+  padding: .4rem .8rem !important;
+  border-radius: 6px;
+  transition: all .2s;
+}
+.nav-link-qr:hover { background: var(--warm); color: var(--teal) !important; }
+.btn-nav-cta {
+  background: var(--ink);
+  color: var(--cream) !important;
+  font-weight: 600;
+  font-size: .88rem;
+  padding: .5rem 1.2rem !important;
+  border-radius: 8px;
+  transition: all .2s;
+  border: none;
+}
+.btn-nav-cta:hover {
+  background: var(--teal);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,180,166,0.3);
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  padding: 120px 0 80px;
+  background: var(--ink2);
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,180,166,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,180,166,.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,212,196,.15) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+}
+.hero-glow-2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(200,168,75,.1) 0%, transparent 70%);
+  bottom: -50px; left: -50px;
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(0,180,166,.15);
+  border: 1px solid rgba(0,180,166,.3);
+  color: var(--teal2);
+  font-size: .82rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .4rem 1rem; border-radius: 50px;
+  margin-bottom: 1.5rem;
+}
+.hero-badge i { font-size: 1rem; }
+.hero-title {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 800;
+  color: var(--cream);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  margin-bottom: 1.5rem;
+}
+.hero-title .highlight {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title .highlight-teal {
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.15rem;
+  color: rgba(247,244,238,.65);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+.btn-hero-primary {
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
+  color: var(--ink) !important;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: .9rem 2rem;
+  border-radius: 12px;
+  border: none;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: .6rem;
+  transition: all .3s;
+  box-shadow: 0 8px 30px rgba(0,180,166,0.4);
+}
+.btn-hero-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,180,166,0.5);
+}
+.btn-hero-secondary {
+  background: transparent;
+  color: rgba(247,244,238,.8) !important;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: .9rem 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(247,244,238,.2);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: .6rem;
+  transition: all .3s;
+}
+.btn-hero-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold) !important;
+  background: rgba(200,168,75,.08);
+}
+.hero-stats {
+  display: flex; gap: 2.5rem;
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(247,244,238,.1);
+  flex-wrap: wrap;
+}
+.hero-stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem; font-weight: 800;
+  color: var(--cream);
+  line-height: 1;
+}
+.hero-stat-num span { color: var(--gold); }
+.hero-stat-label {
+  font-size: .82rem;
+  color: rgba(247,244,238,.45);
+  margin-top: .2rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* QR visual */
+.hero-visual {
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
+}
+.qr-mockup {
+  position: relative;
+  width: 320px; height: 320px;
+}
+.qr-phone {
+  position: absolute; bottom: -20px; right: -30px;
+  width: 160px;
+  background: var(--ink);
+  border: 2px solid rgba(255,255,255,.15);
+  border-radius: 24px;
+  padding: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  animation: float-phone 4s ease-in-out infinite;
+}
+@keyframes float-phone {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.qr-phone-screen {
+  background: linear-gradient(160deg, var(--teal2), var(--teal));
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+.qr-phone-screen p {
+  color: var(--ink);
+  font-size: .7rem;
+  font-weight: 700;
+  margin-top: 8px;
+  font-family: 'Syne', sans-serif;
+}
+.qr-card-floating {
+  position: absolute; top: -10px; left: -20px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 14px 18px;
+  animation: float-card 3.5s ease-in-out infinite 1s;
+}
+@keyframes float-card {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(0deg); }
+}
+.qr-card-floating .val {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem; font-weight: 800;
+  color: var(--teal2);
+}
+.qr-card-floating .lbl {
+  font-size: .72rem;
+  color: rgba(247,244,238,.5);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* SVG QR Code */
+.qr-svg-wrap {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.4);
+  width: 220px; height: 220px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px;
+}
+.qr-label {
+  font-family: 'Syne', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.scan-ring {
+  position: absolute;
+  width: 240px; height: 240px;
+  border: 2px solid rgba(0,212,196,.3);
+  border-radius: 24px;
+  animation: scan-pulse 2.5s ease-in-out infinite;
+}
+.scan-ring-2 {
+  width: 280px; height: 280px;
+  animation-delay: .5s;
+  border-color: rgba(200,168,75,.2);
+}
+@keyframes scan-pulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: .4; }
+}
+
+/* ─── SECTION TITLES ─── */
+.section-label {
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: .8rem;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 560px;
+  font-weight: 300;
+}
+section { padding: 100px 0; }
+
+/* ─── HOW IT WORKS ─── */
+.how-section { background: white; }
+.how-step {
+  display: flex; gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-radius: 16px;
+  transition: all .3s;
+  border: 1px solid transparent;
+}
+.how-step:hover {
+  background: var(--warm);
+  border-color: var(--border);
+  transform: translateX(6px);
+}
+.how-step-num {
+  width: 48px; height: 48px; min-width: 48px;
+  background: var(--ink2);
+  color: var(--gold);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.1rem;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.how-step-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 1.05rem;
+  margin-bottom: .35rem;
+}
+.how-step-text { font-size: .92rem; color: var(--muted); line-height: 1.6; }
+
+.benefit-pill {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--warm);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: .5rem 1rem;
+  font-size: .88rem; font-weight: 500;
+  color: var(--ink2);
+  transition: all .2s;
+}
+.benefit-pill:hover {
+  background: var(--teal);
+  color: white; border-color: var(--teal);
+}
+.benefit-pill i { color: var(--gold); font-size: 1rem; }
+.benefit-pill:hover i { color: white; }
+
+/* ─── NICHES ─── */
+.niches-section { background: var(--cream); }
+.niche-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  transition: all .35s;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.niche-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s;
+}
+.niche-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.1); }
+.niche-card:hover::before { transform: scaleX(1); }
+.niche-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+}
+.niche-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 1.1rem;
+  margin-bottom: .8rem;
+}
+.niche-text { font-size: .9rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+.niche-features { list-style: none; padding: 0; }
+.niche-features li {
+  font-size: .85rem; color: var(--ink2);
+  padding: .3rem 0;
+  display: flex; align-items: center; gap: .6rem;
+}
+.niche-features li i { color: var(--teal); font-size: .9rem; }
+.niche-tag {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: .3rem .7rem; border-radius: 50px;
+}
+
+/* ─── VALUE PROPS ─── */
+.value-section {
+  background: var(--ink2);
+  color: var(--cream);
+}
+.value-tab-btn {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(247,244,238,.6);
+  font-family: 'Syne', sans-serif;
+  font-weight: 600; font-size: .88rem;
+  padding: .7rem 1.4rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .25s;
+  white-space: nowrap;
+}
+.value-tab-btn.active, .value-tab-btn:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--ink);
+}
+.value-content { display: none; }
+.value-content.active { display: block; }
+.value-metric {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+}
+.value-metric-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.4rem; font-weight: 800;
+  line-height: 1;
+}
+.value-metric-label {
+  font-size: .82rem;
+  color: rgba(247,244,238,.5);
+  margin-top: .4rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* ─── PRICING ─── */
+.pricing-section { background: white; }
+.pricing-tabs {
+  display: flex; gap: .5rem;
+  background: var(--warm);
+  padding: .4rem;
+  border-radius: 12px;
+  display: inline-flex;
+}
+.pricing-tab {
+  background: transparent;
+  border: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600; font-size: .88rem;
+  padding: .5rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s;
+  color: var(--muted);
+}
+.pricing-tab.active {
+  background: white;
+  color: var(--ink);
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+.plan-card {
+  background: var(--cream);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 2.2rem;
+  height: 100%;
+  transition: all .3s;
+  position: relative;
+}
+.plan-card.featured {
+  background: var(--ink2);
+  border-color: var(--teal);
+  color: var(--cream);
+  transform: scale(1.03);
+  box-shadow: 0 20px 60px rgba(0,0,0,.15);
+}
+.plan-card:not(.featured):hover {
+  border-color: var(--teal);
+  box-shadow: 0 12px 40px rgba(0,0,0,.08);
+}
+.plan-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
+  color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  font-size: .75rem; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .35rem 1rem; border-radius: 50px;
+  white-space: nowrap;
+}
+.plan-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.2rem;
+  margin-bottom: .5rem;
+}
+.plan-desc { font-size: .88rem; color: var(--muted); margin-bottom: 1.5rem; }
+.plan-card.featured .plan-desc { color: rgba(247,244,238,.55); }
+.plan-price {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 2.8rem;
+  line-height: 1; margin-bottom: .3rem;
+}
+.plan-price sup { font-size: 1.2rem; font-weight: 600; }
+.plan-price sub { font-size: .9rem; font-weight: 400; color: var(--muted); }
+.plan-card.featured .plan-price sub { color: rgba(247,244,238,.5); }
+.plan-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+.plan-card.featured .plan-divider { border-color: rgba(255,255,255,.1); }
+.plan-features { list-style: none; padding: 0; }
+.plan-features li {
+  display: flex; align-items: flex-start; gap: .7rem;
+  font-size: .88rem; padding: .45rem 0;
+  line-height: 1.4;
+}
+.plan-features li i { color: var(--teal); font-size: 1rem; margin-top: 1px; min-width: 16px; }
+.plan-features li.disabled { opacity: .35; }
+.plan-features li.disabled i { color: var(--muted); }
+.btn-plan {
+  width: 100%; padding: .85rem;
+  border-radius: 12px; border: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: .95rem;
+  cursor: pointer; transition: all .25s;
+  margin-top: 1.5rem;
+  text-decoration: none; display: block; text-align: center;
+}
+.btn-plan-outline {
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--ink);
+}
+.btn-plan-outline:hover {
+  border-color: var(--teal); color: var(--teal);
+  background: rgba(0,180,166,.05);
+}
+.btn-plan-primary {
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
+  color: var(--ink) !important;
+  box-shadow: 0 8px 24px rgba(0,180,166,.35);
+}
+.btn-plan-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0,180,166,.45);
+}
+.plan-card.featured .btn-plan-outline {
+  border-color: rgba(255,255,255,.25);
+  color: var(--cream);
+}
+.plan-card.featured .btn-plan-outline:hover {
+  border-color: var(--gold); color: var(--gold);
+}
+.price-flag {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .82rem; font-weight: 600;
+  padding: .25rem .6rem; border-radius: 6px;
+}
+
+/* ─── GUARANTEES ─── */
+.guarantee-section { background: var(--cream); }
+.guarantee-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid var(--border);
+  transition: all .3s;
+  height: 100%;
+}
+.guarantee-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.08);
+}
+.guarantee-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 1.2rem;
+}
+
+/* ─── TRUST ─── */
+.trust-section { background: white; }
+.trust-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--warm);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  transition: all .2s;
+}
+.trust-item:hover { border-color: var(--teal); }
+.trust-item i { font-size: 1.6rem; color: var(--teal); min-width: 32px; }
+.trust-item-title { font-weight: 700; font-size: .95rem; }
+.trust-item-text { font-size: .85rem; color: var(--muted); }
+
+/* ─── FAQ ─── */
+.faq-section { background: var(--cream); }
+.faq-item {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: .75rem;
+  overflow: hidden;
+  transition: all .25s;
+}
+.faq-item.open { border-color: var(--teal); }
+.faq-question {
+  padding: 1.2rem 1.5rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600; font-size: .95rem;
+  cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem;
+}
+.faq-question i { transition: transform .3s; font-size: 1.1rem; color: var(--teal); min-width: 20px; }
+.faq-item.open .faq-question i { transform: rotate(45deg); }
+.faq-answer {
+  padding: 0 1.5rem;
+  max-height: 0; overflow: hidden;
+  font-size: .9rem; color: var(--muted); line-height: 1.7;
+  transition: max-height .4s ease, padding .3s;
+}
+.faq-item.open .faq-answer { max-height: 200px; padding-bottom: 1.2rem; }
+
+/* ─── CTA FINAL ─── */
+.cta-section {
+  background: var(--ink2);
+  color: var(--cream);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(0,180,166,.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 50%, rgba(200,168,75,.1) 0%, transparent 60%);
+}
+.cta-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800; letter-spacing: -.02em;
+  position: relative;
+}
+.cta-sub {
+  font-size: 1.1rem;
+  color: rgba(247,244,238,.6);
+  max-width: 500px; margin: 1.2rem auto 2.5rem;
+  font-weight: 300; line-height: 1.7;
+  position: relative;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink);
+  color: rgba(247,244,238,.5);
+  padding: 3rem 0 2rem;
+}
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem; font-weight: 800;
+  color: var(--cream);
+}
+.footer-link {
+  color: rgba(247,244,238,.5);
+  text-decoration: none;
+  font-size: .88rem;
+  display: block;
+  padding: .25rem 0;
+  transition: color .2s;
+}
+.footer-link:hover { color: var(--teal); }
+.footer-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: .9rem;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* ─── ANIMATIONS ─── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+[v-cloak] { display: none; }
+
+/* ─── COUNTRY TOGGLE ─── */
+.country-switch {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--warm);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: .3rem .4rem;
+}
+.country-btn {
+  font-size: .82rem; font-weight: 600;
+  padding: .3rem .8rem; border-radius: 50px;
+  border: none; cursor: pointer;
+  transition: all .2s;
+  background: transparent; color: var(--muted);
+}
+.country-btn.active {
+  background: white;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .hero { padding: 100px 0 60px; }
+  .hero-visual { margin-top: 3rem; }
+  .qr-mockup { width: 240px; height: 240px; }
+  .plan-card.featured { transform: none; }
+  .hero-stats { gap: 1.5rem; }
+  section { padding: 70px 0; }
+}
+</style>
+</head>
+<body>
+
+<div id="app" v-cloak>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar-qr" :class="{scrolled: scrolled}">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="#" class="nav-brand">
+        <span class="nav-dot"></span>
+        QR<span>Pro</span>
+      </a>
+      <div class="d-none d-lg-flex align-items-center gap-2">
+        <a href="#solutions" class="nav-link-qr">Solutions</a>
+        <a href="#comment" class="nav-link-qr">Comment ça marche</a>
+        <a href="#tarifs" class="nav-link-qr">Tarifs</a>
+        <a href="#garanties" class="nav-link-qr">Garanties</a>
+        <a href="#contact" class="btn-nav-cta nav-link-qr ms-2">Démo gratuite →</a>
+      </div>
+      <button class="d-lg-none btn btn-sm" style="border:1px solid var(--border);border-radius:8px" @click="menuOpen=!menuOpen">
+        <i class="bi" :class="menuOpen ? 'bi-x-lg' : 'bi-list'" style="font-size:1.2rem"></i>
+      </button>
+    </div>
+    <!-- mobile menu -->
+    <div v-if="menuOpen" style="padding:1rem 0;border-top:1px solid var(--border);margin-top:.8rem">
+      <a href="#solutions" class="nav-link-qr d-block py-2" @click="menuOpen=false">Solutions</a>
+      <a href="#comment" class="nav-link-qr d-block py-2" @click="menuOpen=false">Comment ça marche</a>
+      <a href="#tarifs" class="nav-link-qr d-block py-2" @click="menuOpen=false">Tarifs</a>
+      <a href="#garanties" class="nav-link-qr d-block py-2" @click="menuOpen=false">Garanties</a>
+      <a href="#contact" class="btn-nav-cta nav-link-qr d-block py-2 mt-2 text-center" @click="menuOpen=false">Démo gratuite</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="hero-badge">
+          <i class="bi bi-lightning-charge-fill"></i>
+          Solutions QR Code B2B — France & Maroc
+        </div>
+        <h1 class="hero-title">
+          Transformez un simple<br>
+          <span class="highlight">scan</span> en expérience<br>
+          <span class="highlight-teal">client mémorable</span>
+        </h1>
+        <p class="hero-sub">
+          Du menu de restaurant à la billetterie d'événement — 
+          offrez à vos clients et partenaires une technologie intelligente, 
+          mesurable et rentable dès le premier mois.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#tarifs" class="btn-hero-primary">
+            <i class="bi bi-arrow-right-circle-fill"></i>
+            Voir les offres
+          </a>
+          <a href="#comment" class="btn-hero-secondary">
+            <i class="bi bi-play-circle"></i>
+            Comment ça marche
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">3<span>s</span></div>
+            <div class="hero-stat-label">Temps de scan</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">-<span>70%</span></div>
+            <div class="hero-stat-label">Coûts impression</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">+<span>40%</span></div>
+            <div class="hero-stat-label">Engagement client</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-visual mt-5 mt-lg-0">
+          <div class="qr-mockup">
+            <div class="scan-ring"></div>
+            <div class="scan-ring scan-ring-2"></div>
+            <div class="qr-svg-wrap">
+              <span class="qr-label">QRPro</span>
+              <svg width="140" height="140" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                <rect width="21" height="21" fill="white"/>
+                <!-- TL finder -->
+                <rect x="1" y="1" width="7" height="7" fill="#0a0a0f"/>
+                <rect x="2" y="2" width="5" height="5" fill="white"/>
+                <rect x="3" y="3" width="3" height="3" fill="#00b4a6"/>
+                <!-- TR finder -->
+                <rect x="13" y="1" width="7" height="7" fill="#0a0a0f"/>
+                <rect x="14" y="2" width="5" height="5" fill="white"/>
+                <rect x="15" y="3" width="3" height="3" fill="#00b4a6"/>
+                <!-- BL finder -->
+                <rect x="1" y="13" width="7" height="7" fill="#0a0a0f"/>
+                <rect x="2" y="14" width="5" height="5" fill="white"/>
+                <rect x="3" y="15" width="3" height="3" fill="#00b4a6"/>
+                <!-- data dots -->
+                <rect x="9" y="1" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="11" y="1" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="9" y="3" width="1" height="1" fill="#c8a84b"/>
+                <rect x="11" y="3" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="9" y="5" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="11" y="5" width="1" height="1" fill="#c8a84b"/>
+                <rect x="1" y="9" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="3" y="9" width="1" height="1" fill="#c8a84b"/>
+                <rect x="5" y="9" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="9" y="9" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="11" y="9" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="13" y="9" width="1" height="1" fill="#c8a84b"/>
+                <rect x="15" y="9" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="17" y="9" width="1" height="1" fill="#c8a84b"/>
+                <rect x="19" y="9" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="9" y="11" width="1" height="1" fill="#c8a84b"/>
+                <rect x="11" y="11" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="13" y="11" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="15" y="11" width="1" height="1" fill="#c8a84b"/>
+                <rect x="17" y="11" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="9" y="13" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="11" y="15" width="1" height="1" fill="#c8a84b"/>
+                <rect x="13" y="13" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="15" y="15" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="17" y="13" width="1" height="1" fill="#c8a84b"/>
+                <rect x="19" y="15" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="9" y="17" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="11" y="19" width="1" height="1" fill="#c8a84b"/>
+                <rect x="13" y="17" width="1" height="1" fill="#c8a84b"/>
+                <rect x="15" y="19" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="17" y="17" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="19" y="19" width="1" height="1" fill="#c8a84b"/>
+                <!-- timing -->
+                <rect x="8" y="1" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="8" y="3" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="8" y="5" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="1" y="8" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="3" y="8" width="1" height="1" fill="#0a0a0f"/>
+                <rect x="5" y="8" width="1" height="1" fill="#0a0a0f"/>
+              </svg>
+            </div>
+            <div class="qr-card-floating">
+              <div class="val">+247</div>
+              <div class="lbl">Scans aujourd'hui</div>
+            </div>
+            <div class="qr-phone">
+              <div class="qr-phone-screen">
+                <i class="bi bi-check-circle-fill" style="font-size:1.8rem;color:var(--ink)"></i>
+                <p>Accès validé ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section class="how-section" id="comment">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="section-label">Technologie simple</div>
+        <h2 class="section-title mb-3">Comment ça marche ?</h2>
+        <p class="section-sub">
+          Un QR Code est une image que n'importe quel smartphone peut lire en 3 secondes. 
+          Derrière ce carré se cache une porte d'entrée vers vos services digitaux.
+        </p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="how-step fade-up">
+          <div class="how-step-num">01</div>
+          <div>
+            <div class="how-step-title">Vous créez votre QR depuis votre dashboard</div>
+            <div class="how-step-text">En quelques clics, générez votre QR personnalisé avec votre logo, vos couleurs, et le contenu de destination (menu, lien, billet, fiche contact…).</div>
+          </div>
+        </div>
+        <div class="how-step fade-up mt-2">
+          <div class="how-step-num">02</div>
+          <div>
+            <div class="how-step-title">Vous l'affichez là où sont vos clients</div>
+            <div class="how-step-text">Table de restaurant, devanture, brochure, badge, écran — imprimez ou affichez le QR une seule fois. Le lien derrière reste modifiable à tout moment.</div>
+          </div>
+        </div>
+        <div class="how-step fade-up mt-2">
+          <div class="how-step-num">03</div>
+          <div>
+            <div class="how-step-title">Le client scanne avec son téléphone</div>
+            <div class="how-step-text">Aucune app à télécharger. L'appareil photo suffit. En 3 secondes, votre client accède à votre menu, achète son billet ou enregistre vos contacts.</div>
+          </div>
+        </div>
+        <div class="how-step fade-up mt-2">
+          <div class="how-step-num">04</div>
+          <div>
+            <div class="how-step-title">Vous mesurez et optimisez en temps réel</div>
+            <div class="how-step-text">Votre dashboard affiche chaque scan : heure, localisation, type d'appareil. Vous prenez des décisions basées sur des données réelles.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div style="background:var(--warm);border-radius:20px;padding:2rem;border:1px solid var(--border)">
+          <div class="fw-bold mb-1" style="font-family:'Syne',sans-serif;font-size:1rem">Ce que vous gagnez concrètement</div>
+          <div class="text-muted mb-3" style="font-size:.85rem">Pour vous (le manager) et vos clients finaux</div>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="benefit-pill"><i class="bi bi-clock-history"></i> Mise à jour en 1 clic</span>
+            <span class="benefit-pill"><i class="bi bi-graph-up-arrow"></i> Analytics en temps réel</span>
+            <span class="benefit-pill"><i class="bi bi-printer"></i> Zéro impression à refaire</span>
+            <span class="benefit-pill"><i class="bi bi-phone"></i> Sans app pour le client</span>
+            <span class="benefit-pill"><i class="bi bi-shield-check"></i> QR anti-falsification</span>
+            <span class="benefit-pill"><i class="bi bi-translate"></i> Multilingue</span>
+            <span class="benefit-pill"><i class="bi bi-palette2"></i> Aux couleurs de votre marque</span>
+            <span class="benefit-pill"><i class="bi bi-wifi"></i> Fonctionne hors connexion</span>
+            <span class="benefit-pill"><i class="bi bi-star-fill"></i> Lien vers vos avis Google</span>
+            <span class="benefit-pill"><i class="bi bi-gear"></i> Intégration CRM/ERP</span>
+          </div>
+          <hr style="border-color:var(--border);margin:1.5rem 0">
+          <div class="row g-3 text-center">
+            <div class="col-4">
+              <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--teal)">72%</div>
+              <div style="font-size:.78rem;color:var(--muted)">des clients scannent à nouveau</div>
+            </div>
+            <div class="col-4">
+              <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--gold)">3×</div>
+              <div style="font-size:.78rem;color:var(--muted)">plus rapide que l'impression</div>
+            </div>
+            <div class="col-4">
+              <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)">0€</div>
+              <div style="font-size:.78rem;color:var(--muted)">de frais de mise à jour</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SOLUTIONS (NICHES) ─── -->
+<section class="niches-section" id="solutions">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label">Nos secteurs</div>
+      <h2 class="section-title mb-3">Une solution pour chaque métier</h2>
+      <p class="section-sub mx-auto">
+        Chaque secteur a ses besoins. Nos packs sont conçus sur mesure 
+        pour que vous soyez opérationnel en moins de 24h.
+      </p>
+    </div>
+    <div class="row g-4">
+      <!-- RESTO -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="niche-card">
+          <span class="niche-tag bg-success bg-opacity-10 text-success">Plus populaire</span>
+          <div class="niche-icon" style="background:#e8f8f7;color:var(--teal)"><i class="bi bi-cup-hot-fill"></i></div>
+          <div class="niche-title">Restaurants & Cafés</div>
+          <p class="niche-text">Menu digital interactif mis à jour en temps réel. Vos clients commandent, paient et laissent un avis — sans quitter leur table.</p>
+          <ul class="niche-features">
+            <li><i class="bi bi-check2-circle"></i> Menu QR avec photos & allergènes</li>
+            <li><i class="bi bi-check2-circle"></i> Commande à table intégrée</li>
+            <li><i class="bi bi-check2-circle"></i> Carte de fidélité digitale</li>
+            <li><i class="bi bi-check2-circle"></i> Redirection vers avis Google</li>
+            <li><i class="bi bi-check2-circle"></i> Mise à jour prix en 1 clic</li>
+          </ul>
+        </div>
+      </div>
+      <!-- HOTEL -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="niche-card">
+          <div class="niche-icon" style="background:#fff8e8;color:var(--gold)"><i class="bi bi-building"></i></div>
+          <div class="niche-title">Hôtels & Riads</div>
+          <p class="niche-text">Check-in digital, accès chambre, services room service, guide touristique local — tout en un seul QR dans la chambre.</p>
+          <ul class="niche-features">
+            <li><i class="bi bi-check2-circle"></i> Check-in / check-out digital</li>
+            <li><i class="bi bi-check2-circle"></i> Room service via QR</li>
+            <li><i class="bi bi-check2-circle"></i> Guide activités locales</li>
+            <li><i class="bi bi-check2-circle"></i> Wi-Fi auto par scan</li>
+            <li><i class="bi bi-check2-circle"></i> Enquête satisfaction</li>
+          </ul>
+        </div>
+      </div>
+      <!-- CARTE DE VISITE -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="niche-card">
+          <span class="niche-tag" style="background:rgba(255,92,58,.1);color:var(--accent)">Viral par nature</span>
+          <div class="niche-icon" style="background:#fff0ec;color:var(--accent)"><i class="bi bi-person-vcard-fill"></i></div>
+          <div class="niche-title">Carte de Visite Digitale</div>
+          <p class="niche-text">Une carte qui ne se perd jamais. Partagez votre profil complet d'un scan — coordonnées, portfolio, réseaux sociaux, prise de RDV.</p>
+          <ul class="niche-features">
+            <li><i class="bi bi-check2-circle"></i> Profil web personnalisé</li>
+            <li><i class="bi bi-check2-circle"></i> Enregistrement contact 1 tap</li>
+            <li><i class="bi bi-check2-circle"></i> Portfolio & liens réseaux</li>
+            <li><i class="bi bi-check2-circle"></i> Prise de RDV intégrée</li>
+            <li><i class="bi bi-check2-circle"></i> Analytics de consultation</li>
+          </ul>
+        </div>
+      </div>
+      <!-- EVENTS -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="niche-card">
+          <div class="niche-icon" style="background:#f0ecff;color:#7c5cbf"><i class="bi bi-ticket-perforated-fill"></i></div>
+          <div class="niche-title">Événements & Billetterie</div>
+          <p class="niche-text">Billets anti-fraude, contrôle d'accès instantané, gestion des capacités en temps réel. Pour festivals, expos, conférences.</p>
+          <ul class="niche-features">
+            <li><i class="bi bi-check2-circle"></i> Billets QR uniques & sécurisés</li>
+            <li><i class="bi bi-check2-circle"></i> App de scan staff incluse</li>
+            <li><i class="bi bi-check2-circle"></i> Comptage entrées en direct</li>
+            <li><i class="bi bi-check2-circle"></i> Rapport post-événement</li>
+            <li><i class="bi bi-check2-circle"></i> Multi-zones & passes VIP</li>
+          </ul>
+        </div>
+      </div>
+      <!-- BADGE -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="niche-card">
+          <div class="niche-icon" style="background:#e8f4ff;color:#1a78c2"><i class="bi bi-shield-lock-fill"></i></div>
+          <div class="niche-title">Badge & Contrôle d'Accès</div>
+          <p class="niche-text">Remplacez les badges magnétiques coûteux par des QR dynamiques. Gestion RH, pointeuse, accès multi-sites depuis un tableau de bord.</p>
+          <ul class="niche-features">
+            <li><i class="bi bi-check2-circle"></i> Badge QR employé dynamique</li>
+            <li><i class="bi bi-check2-circle"></i> Pointeuse automatisée</li>
+            <li><i class="bi bi-check2-circle"></i> Accès zones sécurisées</li>
+            <li><i class="bi bi-check2-circle"></i> Désactivation instantanée</li>
+            <li><i class="bi bi-check2-circle"></i> Export rapport RH</li>
+          </ul>
+        </div>
+      </div>
+      <!-- CUSTOM -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="niche-card" style="background:var(--ink2);border-color:transparent;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:320px">
+          <i class="bi bi-puzzle-fill" style="font-size:2.5rem;color:var(--gold);margin-bottom:1.2rem"></i>
+          <div class="niche-title" style="color:var(--cream)">Votre secteur<br>sur mesure</div>
+          <p class="niche-text" style="color:rgba(247,244,238,.55);margin-top:.8rem">Vous avez un cas d'usage spécifique ? On développe la solution adaptée à votre métier.</p>
+          <a href="#contact" class="btn-hero-secondary mt-3" style="font-size:.88rem;padding:.6rem 1.4rem">
+            Parlons-en <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VALUE PROPS (Manager vs Client) ─── -->
+<section class="value-section" id="valeur">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label" style="color:var(--teal2)">Double bénéfice</div>
+      <h2 class="section-title mb-3" style="color:var(--cream)">Qui gagne quoi ?</h2>
+      <p class="section-sub mx-auto" style="color:rgba(247,244,238,.55)">
+        La vraie force du QR Code : créer de la valeur pour vous <em>et</em> pour vos clients finaux simultanément.
+      </p>
+    </div>
+    <!-- Tab switcher -->
+    <div class="text-center mb-4">
+      <div style="display:inline-flex;gap:.5rem;background:rgba(255,255,255,.06);padding:.4rem;border-radius:12px;">
+        <button class="value-tab-btn" :class="{active: valueTab==='manager'}" @click="valueTab='manager'">
+          <i class="bi bi-briefcase-fill me-2"></i>Pour le Manager
+        </button>
+        <button class="value-tab-btn" :class="{active: valueTab==='client'}" @click="valueTab='client'">
+          <i class="bi bi-people-fill me-2"></i>Pour le Client Final
+        </button>
+        <button class="value-tab-btn" :class="{active: valueTab==='chiffres'}" @click="valueTab='chiffres'">
+          <i class="bi bi-bar-chart-fill me-2"></i>En Chiffres
+        </button>
+      </div>
+    </div>
+    <!-- Manager -->
+    <div class="value-content" :class="{active: valueTab==='manager'}">
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3" v-for="item in managerBenefits" :key="item.title">
+          <div class="value-metric">
+            <div style="font-size:2rem;margin-bottom:.8rem">{{item.icon}}</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--cream);margin-bottom:.5rem">{{item.title}}</div>
+            <div style="font-size:.85rem;color:rgba(247,244,238,.5);line-height:1.6">{{item.text}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Client -->
+    <div class="value-content" :class="{active: valueTab==='client'}">
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3" v-for="item in clientBenefits" :key="item.title">
+          <div class="value-metric">
+            <div style="font-size:2rem;margin-bottom:.8rem">{{item.icon}}</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--cream);margin-bottom:.5rem">{{item.title}}</div>
+            <div style="font-size:.85rem;color:rgba(247,244,238,.5);line-height:1.6">{{item.text}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Chiffres -->
+    <div class="value-content" :class="{active: valueTab==='chiffres'}">
+      <div class="row g-4">
+        <div class="col-6 col-md-3" v-for="stat in keyStats" :key="stat.label">
+          <div class="value-metric">
+            <div class="value-metric-num" :style="{color: stat.color}">{{stat.value}}</div>
+            <div class="value-metric-label">{{stat.label}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section class="pricing-section" id="tarifs">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label">Tarification transparente</div>
+      <h2 class="section-title mb-3">Des prix clairs, sans surprise</h2>
+      <p class="section-sub mx-auto mb-4">
+        Choisissez votre pays et votre secteur. Sans engagement, sans frais cachés. 
+        Résiliable à tout moment.
+      </p>
+      <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+        <div class="country-switch">
+          <button class="country-btn" :class="{active: country==='fr'}" @click="country='fr'">🇫🇷 France (€)</button>
+          <button class="country-btn" :class="{active: country==='ma'}" @click="country='ma'">🇲🇦 Maroc (MAD)</button>
+        </div>
+        <div class="pricing-tabs">
+          <button class="pricing-tab" :class="{active: pricingTab==='resto'}" @click="pricingTab='resto'">🍽️ Resto / Hôtel</button>
+          <button class="pricing-tab" :class="{active: pricingTab==='bcard'}" @click="pricingTab='bcard'">👤 Carte de Visite</button>
+          <button class="pricing-tab" :class="{active: pricingTab==='event'}" @click="pricingTab='event'">🎭 Événements</button>
+          <button class="pricing-tab" :class="{active: pricingTab==='badge'}" @click="pricingTab='badge'">🏷️ Badge Accès</button>
+        </div>
+      </div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4" v-for="plan in currentPlans" :key="plan.name">
+        <div class="plan-card" :class="{featured: plan.featured}">
+          <div class="plan-badge" v-if="plan.badge">{{plan.badge}}</div>
+          <div class="plan-name">{{plan.name}}</div>
+          <div class="plan-desc">{{plan.desc}}</div>
+          <div class="plan-price">
+            <sup>{{plan.currency}}</sup>{{plan.price}}<sub>/mois</sub>
+          </div>
+          <div v-if="plan.note" style="font-size:.8rem;margin-top:.3rem" :style="{color: plan.featured ? 'rgba(247,244,238,.4)' : 'var(--muted)'}">{{plan.note}}</div>
+          <hr class="plan-divider">
+          <ul class="plan-features">
+            <li v-for="f in plan.features" :key="f.text" :class="{disabled: !f.included}">
+              <i class="bi" :class="f.included ? 'bi-check-circle-fill' : 'bi-x-circle'"></i>
+              {{f.text}}
+            </li>
+          </ul>
+          <a href="#contact" class="btn-plan" :class="plan.featured ? 'btn-plan-primary' : 'btn-plan-outline'">
+            {{plan.featured ? 'Commencer maintenant' : 'Choisir ce plan'}}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <p style="font-size:.88rem;color:var(--muted)">
+        <i class="bi bi-info-circle me-1"></i>
+        Premier mois offert · Sans engagement · Résiliable à tout moment
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GUARANTEES ─── -->
+<section class="guarantee-section" id="garanties">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label">Confiance & Sécurité</div>
+      <h2 class="section-title mb-3">Nos garanties</h2>
+      <p class="section-sub mx-auto">Nous construisons une relation long terme. Votre confiance est notre priorité absolue.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 fade-up" v-for="g in guarantees" :key="g.title">
+        <div class="guarantee-card">
+          <div class="guarantee-icon" :style="{background: g.bg}">{{g.icon}}</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.6rem">{{g.title}}</div>
+          <div style="font-size:.88rem;color:var(--muted);line-height:1.6">{{g.text}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUST SIGNALS ─── -->
+<section class="trust-section">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-5">
+        <div class="section-label">Sécurité technique</div>
+        <h2 class="section-title mb-3">Une infrastructure solide</h2>
+        <p class="section-sub">Votre données et celles de vos clients sont protégées aux standards les plus élevés.</p>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-4 fade-up" v-for="t in trustItems" :key="t.title">
+        <div class="trust-item">
+          <i class="bi" :class="t.icon"></i>
+          <div>
+            <div class="trust-item-title">{{t.title}}</div>
+            <div class="trust-item-text">{{t.text}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="faq-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 mb-5 mb-lg-0">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title mb-3">Questions fréquentes</h2>
+        <p class="section-sub">Tout ce que vous devez savoir avant de vous lancer.</p>
+        <a href="#contact" class="btn-hero-primary d-inline-flex mt-4" style="background:var(--ink);color:var(--cream)!important;box-shadow:none">
+          Autre question ? <i class="bi bi-chat-dots ms-2"></i>
+        </a>
+      </div>
+      <div class="col-lg-7">
+        <div class="faq-item" :class="{open: faqOpen===i}" v-for="(faq, i) in faqs" :key="i">
+          <div class="faq-question" @click="faqOpen = faqOpen===i ? null : i">
+            {{faq.q}}
+            <i class="bi bi-plus-lg"></i>
+          </div>
+          <div class="faq-answer">{{faq.a}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section" id="contact">
+  <div class="container" style="position:relative">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <div class="hero-badge mb-4" style="background:rgba(200,168,75,.15);border-color:rgba(200,168,75,.3);color:var(--gold2)">
+          <i class="bi bi-gift-fill"></i>
+          Premier mois 100% gratuit — Sans carte bancaire
+        </div>
+        <h2 class="cta-title">Prêt à transformer<br>votre business ?</h2>
+        <p class="cta-sub">
+          Rejoignez les entreprises en France et au Maroc qui ont déjà digitalisé leur relation client avec QRPro.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a href="mailto:contact@qrpro.io" class="btn-hero-primary">
+            <i class="bi bi-envelope-fill"></i>
+            Demander une démo
+          </a>
+          <a href="tel:+33100000000" class="btn-hero-secondary">
+            <i class="bi bi-telephone-fill"></i>
+            Nous appeler
+          </a>
+        </div>
+        <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap" style="font-size:.85rem;color:rgba(247,244,238,.4)">
+          <span><i class="bi bi-check-circle me-1" style="color:var(--teal)"></i>Réponse sous 2h</span>
+          <span><i class="bi bi-check-circle me-1" style="color:var(--teal)"></i>Démo en visio 30 min</span>
+          <span><i class="bi bi-check-circle me-1" style="color:var(--teal)"></i>Mise en prod sous 24h</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <div class="col-lg-4">
+        <div class="footer-brand mb-2">QR<span style="color:var(--teal)">Pro</span></div>
+        <div style="font-size:.88rem;line-height:1.7;max-width:280px">
+          Solutions QR Code intelligentes pour les professionnels en France et au Maroc.
+        </div>
+        <div class="d-flex gap-3 mt-3">
+          <a href="#" style="color:rgba(247,244,238,.4);font-size:1.3rem"><i class="bi bi-linkedin"></i></a>
+          <a href="#" style="color:rgba(247,244,238,.4);font-size:1.3rem"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" style="color:rgba(247,244,238,.4);font-size:1.3rem"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-title">Solutions</div>
+        <a href="#" class="footer-link">Restaurants</a>
+        <a href="#" class="footer-link">Hôtels & Riads</a>
+        <a href="#" class="footer-link">Carte de visite</a>
+        <a href="#" class="footer-link">Événements</a>
+        <a href="#" class="footer-link">Badge accès</a>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-title">Ressources</div>
+        <a href="#" class="footer-link">Documentation API</a>
+        <a href="#" class="footer-link">Guide démarrage</a>
+        <a href="#" class="footer-link">Blog</a>
+        <a href="#" class="footer-link">Webinaires</a>
+        <a href="#" class="footer-link">Statut service</a>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-title">Entreprise</div>
+        <a href="#" class="footer-link">À propos</a>
+        <a href="#" class="footer-link">Partenaires</a>
+        <a href="#" class="footer-link">Recrutement</a>
+        <a href="#" class="footer-link">Presse</a>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-title">Légal</div>
+        <a href="#" class="footer-link">CGU</a>
+        <a href="#" class="footer-link">CGV</a>
+        <a href="#" class="footer-link">Confidentialité</a>
+        <a href="#" class="footer-link">RGPD</a>
+        <a href="#" class="footer-link">Mentions légales</a>
+      </div>
+    </div>
+    <hr style="border-color:rgba(255,255,255,.08);margin-bottom:1.5rem">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2" style="font-size:.8rem">
+      <div>© 2025 QRPro. Tous droits réservés. Conçu en 🇫🇷 & 🇲🇦</div>
+      <div style="color:rgba(247,244,238,.3)">Propulsé par votre agence web</div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- end #app -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const { createApp, ref, computed, onMounted } = Vue;
+
+createApp({
+  setup() {
+    const scrolled = ref(false);
+    const menuOpen = ref(false);
+    const valueTab = ref('manager');
+    const pricingTab = ref('resto');
+    const country = ref('fr');
+    const faqOpen = ref(null);
+
+    // NAV SCROLL
+    onMounted(() => {
+      window.addEventListener('scroll', () => { scrolled.value = window.scrollY > 60; });
+      // Intersection Observer for fade-up
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    });
+
+    // VALUE DATA
+    const managerBenefits = [
+      { icon: '📊', title: 'Analytics en temps réel', text: 'Visualisez chaque scan : heure, device, localisation. Prenez des décisions basées sur des données.' },
+      { icon: '🔄', title: 'Mise à jour instantanée', text: "Changez menu, prix ou destination en 1 clic sans rechanger le QR affiché." },
+      { icon: '💰', title: 'Réduction des coûts', text: 'Fini les impressions à refaire. Un QR une fois — des économies chaque mois.' },
+      { icon: '🤝', title: 'Image professionnelle', text: "Un QR à vos couleurs renforce votre marque et inspire confiance à vos partenaires." },
+    ];
+    const clientBenefits = [
+      { icon: '⚡', title: 'Accès instantané', text: "3 secondes chrono — pas d'app, pas d'attente, pas de friction. Juste pointer et scanner." },
+      { icon: '🌍', title: 'Multilingue', text: "Le contenu s'adapte automatiquement à la langue du téléphone du client." },
+      { icon: '🔒', title: 'Confiance & sécurité', text: "Les QR signés numériquement garantissent l'authenticité du contenu affiché." },
+      { icon: '🎯', title: 'Expérience personnalisée', text: "Suggestions adaptées à l'heure, la saison, ou l'historique — pour un service sur mesure." },
+    ];
+    const keyStats = [
+      { value: '89%', label: 'Taux de satisfaction client', color: 'var(--teal2)' },
+      { value: '-68%', label: 'Coûts impressions annuels', color: 'var(--gold2)' },
+      { value: '+3×', label: "Vitesse d'accès vs papier", color: 'var(--accent)' },
+      { value: '< 24h', label: 'Mise en production', color: '#a78bfa' },
+    ];
+
+    // PRICING DATA
+    const pricingData = {
+      resto: {
+        fr: [
+          { name: 'Starter', desc: 'Idéal pour lancer', price: '29', currency: '€', note: '1 mois offert',
+            features: [
+              {text:'1 QR Menu digital', included:true},
+              {text:'3 mises à jour/mois', included:true},
+              {text:'Analytics basiques', included:true},
+              {text:'Support email', included:true},
+              {text:'QR illimités', included:false},
+              {text:'Commande à table', included:false},
+              {text:'Carte fidélité', included:false},
+            ]},
+          { name: 'Pro', desc: 'Le plus choisi', price: '59', currency: '€', featured: true, badge: '⭐ Meilleure valeur',
+            features: [
+              {text:'QR illimités', included:true},
+              {text:'Mises à jour illimitées', included:true},
+              {text:'Analytics complets', included:true},
+              {text:'Carte de fidélité digitale', included:true},
+              {text:'Support prioritaire', included:true},
+              {text:'Avis Google automatique', included:true},
+              {text:'Commande à table', included:false},
+            ]},
+          { name: 'Premium', desc: 'Pour les pros exigeants', price: '99', currency: '€', note: '',
+            features: [
+              {text:'Tout du plan Pro', included:true},
+              {text:'Commande à table', included:true},
+              {text:'Intégration caisse', included:true},
+              {text:'Paiement QR intégré', included:true},
+              {text:'Manager dédié', included:true},
+              {text:'API access', included:true},
+              {text:'White label', included:true},
+            ]},
+        ],
+        ma: [
+          { name: 'Starter', desc: 'Idéal pour démarrer', price: '199', currency: 'MAD', note: '1 mois offert',
+            features: [
+              {text:'1 QR Menu digital', included:true},
+              {text:'3 mises à jour/mois', included:true},
+              {text:'Analytics basiques', included:true},
+              {text:'Support email', included:true},
+              {text:'QR illimités', included:false},
+              {text:'Commande à table', included:false},
+              {text:'Carte fidélité', included:false},
+            ]},
+          { name: 'Pro', desc: 'Le plus choisi', price: '399', currency: 'MAD', featured: true, badge: '⭐ Meilleure valeur',
+            features: [
+              {text:'QR illimités', included:true},
+              {text:'Mises à jour illimitées', included:true},
+              {text:'Analytics complets', included:true},
+              {text:'Carte de fidélité digitale', included:true},
+              {text:'Support prioritaire', included:true},
+              {text:'Avis Google automatique', included:true},
+              {text:'Commande à table', included:false},
+            ]},
+          { name: 'Premium', desc: 'Pour les pros exigeants', price: '699', currency: 'MAD',
+            features: [
+              {text:'Tout du plan Pro', included:true},
+              {text:'Commande à table', included:true},
+              {text:'Intégration caisse', included:true},
+              {text:'Paiement QR intégré', included:true},
+              {text:'Manager dédié', included:true},
+              {text:'API access', included:true},
+              {text:'White label', included:true},
+            ]},
+        ]
+      },
+      bcard: {
+        fr: [
+          { name: 'Solo', desc: 'Pour les indépendants', price: '9', currency: '€',
+            features:[
+              {text:'1 carte de visite QR', included:true},
+              {text:'Design standard', included:true},
+              {text:'Lien & QR partageable', included:true},
+              {text:'Enregistrement vCard', included:true},
+              {text:'Multi-cartes équipe', included:false},
+              {text:'Analytics', included:false},
+              {text:'Intégration CRM', included:false},
+            ]},
+          { name: 'Business', desc: 'Pour les équipes', price: '29', currency: '€', featured:true, badge:'⭐ Populaire',
+            features:[
+              {text:'Jusqu\'à 10 cartes', included:true},
+              {text:'Dashboard admin', included:true},
+              {text:'Analytics complets', included:true},
+              {text:'Design premium', included:true},
+              {text:'Prise de RDV intégrée', included:true},
+              {text:'Export contacts', included:true},
+              {text:'Intégration CRM', included:false},
+            ]},
+          { name: 'Entreprise', desc: 'Illimité & intégré', price: '79', currency: '€',
+            features:[
+              {text:'Cartes illimitées', included:true},
+              {text:'Branding 100% custom', included:true},
+              {text:'Intégration CRM/Salesforce', included:true},
+              {text:'SSO & sécurité avancée', included:true},
+              {text:'Onboarding dédié', included:true},
+              {text:'SLA garanti 99.9%', included:true},
+              {text:'Support 24/7', included:true},
+            ]},
+        ],
+        ma: [
+          { name: 'Solo', desc: 'Pour les indépendants', price: '79', currency: 'MAD',
+            features:[{text:'1 carte de visite QR', included:true},{text:'Design standard', included:true},{text:'Lien & QR partageable', included:true},{text:'Enregistrement vCard', included:true},{text:'Multi-cartes équipe', included:false},{text:'Analytics', included:false},{text:'Intégration CRM', included:false}]},
+          { name: 'Business', desc: 'Pour les équipes', price: '199', currency: 'MAD', featured:true, badge:'⭐ Populaire',
+            features:[{text:'Jusqu\'à 10 cartes', included:true},{text:'Dashboard admin', included:true},{text:'Analytics complets', included:true},{text:'Design premium', included:true},{text:'Prise de RDV intégrée', included:true},{text:'Export contacts', included:true},{text:'Intégration CRM', included:false}]},
+          { name: 'Entreprise', desc: 'Illimité & intégré', price: '499', currency: 'MAD',
+            features:[{text:'Cartes illimitées', included:true},{text:'Branding 100% custom', included:true},{text:'Intégration CRM/Salesforce', included:true},{text:'SSO & sécurité avancée', included:true},{text:'Onboarding dédié', included:true},{text:'SLA garanti 99.9%', included:true},{text:'Support 24/7', included:true}]},
+        ]
+      },
+      event: {
+        fr: [
+          { name: 'Pack Event', desc: 'Par événement', price: '199', currency: '€', note: 'Facturation à l\'event',
+            features:[{text:'Jusqu\'à 500 billets', included:true},{text:'QR anti-fraude unique', included:true},{text:'App scanner staff', included:true},{text:'Rapport post-event', included:true},{text:'Multi-zones', included:false},{text:'Pass VIP', included:false},{text:'API billetterie', included:false}]},
+          { name: 'Pack Festival', desc: 'Grands événements', price: '499', currency: '€', featured:true, badge:'🎭 Le plus complet',
+            features:[{text:'Jusqu\'à 5 000 billets', included:true},{text:'QR anti-fraude unique', included:true},{text:'App scanner multi-staff', included:true},{text:'Multi-zones & VIP', included:true},{text:'Accès temps réel', included:true},{text:'Rapport analytique complet', included:true},{text:'API billetterie', included:false}]},
+          { name: 'Abonnement', desc: 'Organisateurs réguliers', price: '149', currency: '€',
+            features:[{text:'Événements illimités', included:true},{text:'Billets illimités', included:true},{text:'API complète', included:true},{text:'White label', included:true},{text:'Support dédié', included:true},{text:'Tableau de bord global', included:true},{text:'Facturation client', included:true}]},
+        ],
+        ma: [
+          { name: 'Pack Event', desc: 'Par événement', price: '1500', currency: 'MAD', note: 'Facturation à l\'event',
+            features:[{text:'Jusqu\'à 500 billets', included:true},{text:'QR anti-fraude unique', included:true},{text:'App scanner staff', included:true},{text:'Rapport post-event', included:true},{text:'Multi-zones', included:false},{text:'Pass VIP', included:false},{text:'API billetterie', included:false}]},
+          { name: 'Pack Festival', desc: 'Grands événements', price: '3500', currency: 'MAD', featured:true, badge:'🎭 Le plus complet',
+            features:[{text:'Jusqu\'à 5 000 billets', included:true},{text:'QR anti-fraude unique', included:true},{text:'App scanner multi-staff', included:true},{text:'Multi-zones & VIP', included:true},{text:'Accès temps réel', included:true},{text:'Rapport analytique complet', included:true},{text:'API billetterie', included:false}]},
+          { name: 'Abonnement', desc: 'Organisateurs réguliers', price: '999', currency: 'MAD',
+            features:[{text:'Événements illimités', included:true},{text:'Billets illimités', included:true},{text:'API complète', included:true},{text:'White label', included:true},{text:'Support dédié', included:true},{text:'Tableau de bord global', included:true},{text:'Facturation client', included:true}]},
+        ]
+      },
+      badge: {
+        fr: [
+          { name: 'PME', desc: 'Petites structures', price: '79', currency: '€',
+            features:[{text:'Jusqu\'à 50 badges', included:true},{text:'Pointeuse QR', included:true},{text:'Rapports hebdomadaires', included:true},{text:'Désactivation instantanée', included:true},{text:'Multi-sites', included:false},{text:'Intégration RH/ERP', included:false},{text:'API access', included:false}]},
+          { name: 'Entreprise', desc: 'Structures moyennes', price: '199', currency: '€', featured:true, badge:'🏢 Recommandé',
+            features:[{text:'Badges illimités', included:true},{text:'Pointeuse avancée', included:true},{text:'Multi-sites', included:true},{text:'Intégration RH/paie', included:true},{text:'Rapports temps réel', included:true},{text:'API access', included:true},{text:'Support prioritaire', included:true}]},
+          { name: 'Grand Compte', desc: 'Organisations complexes', price: '399', currency: '€',
+            features:[{text:'Tout du plan Entreprise', included:true},{text:'SSO Active Directory', included:true},{text:'Audit logs complets', included:true},{text:'SLA 99.99% garanti', included:true},{text:'Manager compte dédié', included:true},{text:'Déploiement on-premise', included:true},{text:'Formation équipe', included:true}]},
+        ],
+        ma: [
+          { name: 'PME', desc: 'Petites structures', price: '599', currency: 'MAD',
+            features:[{text:'Jusqu\'à 50 badges', included:true},{text:'Pointeuse QR', included:true},{text:'Rapports hebdomadaires', included:true},{text:'Désactivation instantanée', included:true},{text:'Multi-sites', included:false},{text:'Intégration RH/ERP', included:false},{text:'API access', included:false}]},
+          { name: 'Entreprise', desc: 'Structures moyennes', price: '1499', currency: 'MAD', featured:true, badge:'🏢 Recommandé',
+            features:[{text:'Badges illimités', included:true},{text:'Pointeuse avancée', included:true},{text:'Multi-sites', included:true},{text:'Intégration RH/paie', included:true},{text:'Rapports temps réel', included:true},{text:'API access', included:true},{text:'Support prioritaire', included:true}]},
+          { name: 'Grand Compte', desc: 'Organisations complexes', price: '2999', currency: 'MAD',
+            features:[{text:'Tout du plan Entreprise', included:true},{text:'SSO Active Directory', included:true},{text:'Audit logs complets', included:true},{text:'SLA 99.99% garanti', included:true},{text:'Manager compte dédié', included:true},{text:'Déploiement on-premise', included:true},{text:'Formation équipe', included:true}]},
+        ]
+      }
+    };
+
+    const currentPlans = computed(() => pricingData[pricingTab.value][country.value]);
+
+    // GUARANTEES
+    const guarantees = [
+      { icon: '🔒', title: 'Données 100% sécurisées', text: 'Chiffrement AES-256 en transit et au repos. Hébergement RGPD-compliant en Europe.', bg: '#e8f8f7' },
+      { icon: '⏱️', title: 'Uptime 99.9% garanti', text: "SLA contractuel sur tous les plans Pro+. Monitoring 24/7 avec alertes proactives.", bg: '#fff8e8' },
+      { icon: '🔄', title: 'Sans engagement', text: "Résiliez à tout moment, sans préavis ni pénalité. Exportez vos données en 1 clic.", bg: '#f0ecff' },
+      { icon: '🛡️', title: 'Satisfaction ou remboursé', text: "30 jours d'essai satisfait ou remboursé. Si ça ne correspond pas, on vous rend chaque centime.", bg: '#fff0ec' },
+      { icon: '📞', title: 'Support humain', text: "Pas de chatbot — une vraie équipe bilingue (FR/AR) répond en moins de 2h en semaine.", bg: '#e8f4ff' },
+      { icon: '📦', title: 'Mise en prod sous 24h', text: "Votre QR est opérationnel le lendemain de la souscription. Onboarding guidé inclus.", bg: '#f0ffe8' },
+      { icon: '🔑', title: 'Vos données vous appartiennent', text: "Aucune revente de données. Aucun partage tiers. Votre business reste le vôtre.", bg: '#fff8e8' },
+      { icon: '⚖️', title: 'Conforme RGPD & CNDP', text: "Conforme au règlement européen (RGPD) et à la Commission Nationale (CNDP) marocaine.", bg: '#e8f8f7' },
+    ];
+
+    // TRUST
+    const trustItems = [
+      { icon: 'bi-lock-fill', title: 'Chiffrement SSL/TLS', text: 'Toutes les communications chiffrées en HTTPS/TLS 1.3' },
+      { icon: 'bi-shield-check', title: 'RGPD & CNDP', text: "Conforme aux réglementations européenne et marocaine" },
+      { icon: 'bi-server', title: 'Hébergement EU', text: 'Données stockées en Europe — jamais hors UE sans accord' },
+      { icon: 'bi-arrow-repeat', title: 'Backups automatiques', text: 'Sauvegardes quotidiennes avec rétention 30 jours' },
+      { icon: 'bi-eye-slash-fill', title: 'Logs anonymisés', text: 'Analytics sans PII — respect de la vie privée de vos clients' },
+      { icon: 'bi-cloud-check-fill', title: 'Redondance multi-zone', text: 'Infrastructure redondante — aucun point de défaillance unique' },
+    ];
+
+    // FAQ
+    const faqs = [
+      { q: "Mes clients ont-ils besoin d'une application pour scanner ?", a: "Non, aucune app n'est nécessaire. L'appareil photo natif de tout smartphone iOS ou Android (depuis 2018) suffit pour scanner un QR Code. C'est zéro friction pour votre client." },
+      { q: "Puis-je modifier le contenu après avoir imprimé le QR ?", a: "Oui, c'est l'un de nos avantages clés. Votre QR Code est dit 'dynamique' — l'image imprimée ne change jamais, mais vous pouvez modifier la destination à tout moment depuis votre dashboard. Idéal pour mettre à jour les prix sans réimprimer." },
+      { q: "Combien de temps faut-il pour être opérationnel ?", a: "Moins de 24h. Après votre souscription, notre équipe vous accompagne pour générer vos premiers QR, les configurer et vous former au dashboard. Certains clients sont en production le jour même." },
+      { q: "Les QR Codes sont-ils sécurisés contre la fraude ?", a: "Oui. Nos QR pour billetterie et badges utilisent des identifiants uniques chiffrés, impossibles à dupliquer ou falsifier. Chaque scan est vérifié en temps réel contre notre base de données." },
+      { q: "Quelle est la différence entre France et Maroc ?", a: "La tarification est adaptée au marché local (€ vs MAD) et le support est assuré dans les deux zones. Techniquement, l'infrastructure est identique. Nous avons des équipes locales dans les deux pays." },
+      { q: "Puis-je tester avant de payer ?", a: "Absolument — le premier mois est offert sans carte bancaire. Vous avez 30 jours pour tester toutes les fonctionnalités de votre plan. Si vous n'êtes pas satisfait, vous ne payez rien." },
+    ];
+
+    return {
+      scrolled, menuOpen, valueTab, pricingTab, country,
+      faqOpen, managerBenefits, clientBenefits, keyStats,
+      currentPlans, guarantees, trustItems, faqs,
+    };
+  }
+}).mount('#app');
+</script>
+</body>
+</html>

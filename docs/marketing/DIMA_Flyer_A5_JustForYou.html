@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIMA Solutions — Flyer A5 Just for You!</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=Tajawal:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 20px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .print-hint {
+    color: #aaa;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ─── A5 CONTAINER ─── */
+  .flyer {
+    width: 148mm;
+    min-height: 210mm;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* ══════════════════════════════════
+     RECTO — FRANÇAIS
+  ══════════════════════════════════ */
+  .recto {
+    background: #0D0D1A;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP BAND */
+  .recto-top {
+    background: linear-gradient(135deg, #6C3CE1 0%, #A855F7 60%, #F59E0B 100%);
+    padding: 22px 24px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .recto-top::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 140px; height: 140px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .recto-top::before {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 30px;
+    width: 80px; height: 80px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+  }
+  .brand-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .brand-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  .brand-name span { font-weight: 300; opacity: 0.85; }
+
+  .hero-tagline {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tagline .just {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    display: block;
+  }
+  .hero-tagline .for-you {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: #FBBF24;
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 40px rgba(251,191,36,0.4);
+  }
+  .hero-tagline .exclaim {
+    display: inline-block;
+    background: #fff;
+    color: #6C3CE1;
+    font-size: 52px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    line-height: 1;
+    padding: 0 6px;
+    margin-left: 2px;
+    border-radius: 4px;
+  }
+  .hero-sub {
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* PHONE MOCKUP AREA */
+  .recto-visual {
+    padding: 16px 24px 0;
+    display: flex;
+    justify-content: center;
+    background: #0D0D1A;
+  }
+  .phone-wrap {
+    width: 86px;
+    height: 155px;
+    background: #1e1e35;
+    border-radius: 14px;
+    border: 2px solid rgba(108,60,225,0.5);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(108,60,225,0.3);
+    flex-shrink: 0;
+  }
+  .phone-screen {
+    position: absolute;
+    inset: 6px;
+    background: #fff;
+    border-radius: 9px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .ps-header {
+    background: linear-gradient(90deg,#6C3CE1,#A855F7);
+    padding: 4px 6px;
+    font-size: 5.5px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .ps-flag {
+    font-size: 9px;
+    padding: 2px 4px;
+    background: #f0f4ff;
+    border-bottom: 1px solid #e0e7ff;
+    display: flex; gap: 3px; align-items: center;
+  }
+  .ps-dish {
+    padding: 3px 4px;
+    display: flex; gap: 4px; align-items: center;
+  }
+  .ps-img {
+    width: 20px; height: 16px;
+    background: linear-gradient(135deg,#f59e0b,#ef4444);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .ps-txt { font-size: 5px; color: #333; line-height: 1.4; }
+  .ps-price { font-size: 5.5px; font-weight: 700; color: #6C3CE1; }
+  .ps-btn {
+    margin: 3px 4px;
+    background: #6C3CE1;
+    color: #fff;
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-size: 5px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .ps-rupture {
+    background: #fef2f2;
+    border: 0.5px solid #fca5a5;
+    color: #dc2626;
+    font-size: 4.5px;
+    padding: 1px 3px;
+    border-radius: 2px;
+    margin: 0 4px 3px;
+    text-align: center;
+  }
+
+  .scan-arrow {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 8px;
+  }
+  .scan-arrow svg { opacity: 0.5; }
+  .scan-arrow span { font-size: 7px; color: rgba(255,255,255,0.4); text-align: center; line-height: 1.4; }
+
+  .qr-block {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px;
+  }
+  .qr-box {
+    width: 60px; height: 60px;
+    background: #fff;
+    border-radius: 6px;
+    padding: 4px;
+    box-shadow: 0 4px 14px rgba(108,60,225,0.25);
+  }
+  .qr-label {
+    font-size: 7px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* BENEFITS */
+  .recto-benefits {
+    padding: 16px 22px 12px;
+    background: #0D0D1A;
+    flex: 1;
+  }
+  .benefits-title {
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .benefit-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+  .benefit-icon {
+    width: 26px; height: 26px; flex-shrink: 0;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+  }
+  .bi-purple { background: rgba(108,60,225,0.2); }
+  .bi-gold   { background: rgba(245,158,11,0.2); }
+  .bi-green  { background: rgba(16,185,129,0.2); }
+  .bi-blue   { background: rgba(59,130,246,0.2); }
+
+  .benefit-text strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .benefit-text span {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.4;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: rgba(108,60,225,0.12);
+    border-top: 1px solid rgba(108,60,225,0.2);
+    border-bottom: 1px solid rgba(108,60,225,0.2);
+    display: flex;
+    padding: 10px 22px;
+    gap: 0;
+  }
+  .stat-item {
+    flex: 1;
+    text-align: center;
+  }
+  .stat-item + .stat-item {
+    border-left: 1px solid rgba(108,60,225,0.25);
+  }
+  .stat-num {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(90deg,#A855F7,#F59E0B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .stat-lbl {
+    display: block;
+    font-size: 8px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* CTA BOTTOM */
+  .recto-cta {
+    background: linear-gradient(90deg, #6C3CE1, #A855F7);
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .cta-text strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .cta-text span {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.8);
+  }
+  .cta-badge {
+    background: #FBBF24;
+    color: #0D0D1A;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 6px;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+
+  /* CONTACT STRIP */
+  .recto-contact {
+    background: #080812;
+    padding: 9px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .contact-info {
+    display: flex; gap: 14px; align-items: center;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 8.5px; color: rgba(255,255,255,0.45);
+  }
+  .contact-item strong { color: rgba(255,255,255,0.7); }
+  .wa-badge {
+    background: #25D366;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* ══════════════════════════════════
+     VERSO — ARABE
+  ══════════════════════════════════ */
+  .verso {
+    background: #F8F5FF;
+    color: #0D0D1A;
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  /* TOP ORNAMENT */
+  .verso-ornament {
+    background: #0D0D1A;
+    padding: 18px 22px 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .verso-ornament::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236C3CE1' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .verso-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+  .verso-logo-text {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    color: #fff;
+  }
+  .verso-logo-text span {
+    color: #FBBF24;
+  }
+  .verso-tagline-ar {
+    text-align: center;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .verso-tagline-ar .ar-just {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    display: block;
+  }
+  .verso-tagline-ar .ar-for {
+    font-size: 28px;
+    font-weight: 800;
+    color: #FBBF24;
+    display: block;
+    line-height: 1.1;
+    text-shadow: 0 0 30px rgba(251,191,36,0.3);
+  }
+  .verso-sub-ar {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-top: 4px;
+    font-weight: 300;
+    position: relative; z-index: 1;
+  }
+
+  /* MAIN CONTENT */
+  .verso-main {
+    padding: 20px 22px;
+    flex: 1;
+  }
+  .verso-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #6C3CE1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .verso-section-label::before {
+    content: '';
+    width: 20px; height: 2px;
+    background: #6C3CE1;
+    border-radius: 2px;
+    order: 1;
+  }
+
+  .ar-benefit {
+    background: #fff;
+    border-radius: 10px;
+    padding: 11px 13px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1px solid rgba(108,60,225,0.1);
+    box-shadow: 0 2px 8px rgba(108,60,225,0.06);
+    transition: box-shadow 0.2s;
+  }
+  .ar-benefit-num {
+    width: 24px; height: 24px; flex-shrink: 0;
+    background: linear-gradient(135deg,#6C3CE1,#A855F7);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 1px;
+  }
+  .ar-benefit-content strong {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #0D0D1A;
+    line-height: 1.3;
+  }
+  .ar-benefit-content span {
+    font-size: 10px;
+    color: #6B7280;
+    line-height: 1.5;
+  }
+
+  /* PRICE BLOCK */
+  .verso-price {
+    background: #0D0D1A;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .verso-price::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,#FBBF24,#6C3CE1);
+  }
+  .price-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .price-amount {
+    font-size: 28px;
+    font-weight: 800;
+    font-family: 'DM Sans', sans-serif;
+    color: #FBBF24;
+    line-height: 1;
+  }
+  .price-unit {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .price-sub {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+  }
+  .price-bonus {
+    background: rgba(251,191,36,0.15);
+    border: 1px solid rgba(251,191,36,0.3);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 8px;
+    font-size: 10px;
+    color: #FBBF24;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  /* WORKFLOW STEPS */
+  .verso-steps {
+    margin: 14px 0;
+  }
+  .step-ar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: #374151;
+  }
+  .step-ar-num {
+    width: 20px; height: 20px; flex-shrink: 0;
+    background: rgba(108,60,225,0.1);
+    color: #6C3CE1;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .step-arrow {
+    color: rgba(108,60,225,0.4);
+    font-size: 10px;
+    margin: 0 2px;
+  }
+
+  /* CTA BOTTOM VERSO */
+  .verso-cta {
+    background: linear-gradient(135deg,#6C3CE1,#A855F7);
+    padding: 14px 22px;
+    margin-top: auto;
+  }
+  .verso-cta-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .verso-cta-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .verso-cta-btns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+  .cta-btn-white {
+    background: #fff;
+    color: #6C3CE1;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 7px 14px;
+    border-radius: 7px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .cta-btn-wa {
+    background: #25D366;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 7px 14px;
+    border-radius: 7px;
+    text-align: center;
+    line-height: 1.3;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* FOOTER VERSO */
+  .verso-footer {
+    background: #080812;
+    padding: 8px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .vf-url {
+    font-size: 8.5px;
+    color: rgba(255,255,255,0.35);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .vf-email {
+    font-size: 8.5px;
+    color: rgba(255,255,255,0.35);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .vf-dot {
+    width: 4px; height: 4px;
+    background: #6C3CE1;
+    border-radius: 50%;
+  }
+
+  /* LABEL */
+  .side-label {
+    color: rgba(255,255,255,0.3);
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  @media print {
+    body { background: white; padding: 0; gap: 0; }
+    .print-hint { display: none; }
+    .flyer { box-shadow: none; border-radius: 0; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<p class="print-hint">▲ Flyer A5 — RECTO (Français)</p>
+
+<!-- ══════════ FLYER RECTO ══════════ -->
+<div class="flyer recto">
+
+  <!-- TOP GRADIENT BAND -->
+  <div class="recto-top">
+    <div class="brand-row">
+      <div class="brand-icon">🚀</div>
+      <div class="brand-name">DIMA Solutions <span>AI Tech</span></div>
+    </div>
+    <div class="hero-tagline">
+      <span class="just">Just</span>
+      <span class="for-you">for You<span class="exclaim">!</span></span>
+    </div>
+    <p class="hero-sub">Votre menu digital multilingue en 3 secondes.<br>Scannez. Commandez. Payez. Sans friction.</p>
+  </div>
+
+  <!-- VISUAL: PHONE + QR -->
+  <div class="recto-visual" style="padding:18px 22px 14px; display:flex; align-items:center; justify-content:center; gap:12px; background:#0D0D1A;">
+
+    <!-- Phone mockup -->
+    <div class="phone-wrap">
+      <div class="phone-screen">
+        <div class="ps-header">🍽 Riad Al Andalus</div>
+        <div class="ps-flag">🇪🇸 <span style="font-size:5px;color:#555;">Español detectado</span></div>
+        <div class="ps-dish">
+          <div class="ps-img"></div>
+          <div>
+            <div class="ps-txt">Tajine de cordero</div>
+            <div class="ps-price">95 MAD / 9€</div>
+          </div>
+        </div>
+        <div class="ps-dish">
+          <div class="ps-img" style="background:linear-gradient(135deg,#10b981,#3b82f6);"></div>
+          <div>
+            <div class="ps-txt">Ensalada marroquí</div>
+            <div class="ps-price">55 MAD / 5€</div>
+          </div>
+        </div>
+        <div class="ps-rupture">⚠ Pastilla — Rupture</div>
+        <div class="ps-btn">🛒 Ajouter au panier</div>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="scan-arrow">
+      <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+        <path d="M1 7h19M13 1l7 6-7 6" stroke="rgba(108,60,225,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Scan<br>QR</span>
+    </div>
+
+    <!-- QR block -->
+    <div class="qr-block">
+      <div class="qr-box">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
+          <!-- QR code simplified decorative -->
+          <rect x="2" y="2" width="22" height="22" rx="2" fill="none" stroke="#6C3CE1" stroke-width="2.5"/>
+          <rect x="7" y="7" width="12" height="12" rx="1" fill="#6C3CE1"/>
+          <rect x="36" y="2" width="22" height="22" rx="2" fill="none" stroke="#6C3CE1" stroke-width="2.5"/>
+          <rect x="41" y="7" width="12" height="12" rx="1" fill="#6C3CE1"/>
+          <rect x="2" y="36" width="22" height="22" rx="2" fill="none" stroke="#6C3CE1" stroke-width="2.5"/>
+          <rect x="7" y="41" width="12" height="12" rx="1" fill="#6C3CE1"/>
+          <rect x="30" y="30" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="36" y="30" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="42" y="30" width="4" height="4" fill="#A855F7"/>
+          <rect x="48" y="30" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="54" y="30" width="4" height="4" fill="#A855F7"/>
+          <rect x="30" y="36" width="4" height="4" fill="#A855F7"/>
+          <rect x="42" y="36" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="48" y="36" width="4" height="4" fill="#A855F7"/>
+          <rect x="30" y="42" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="36" y="42" width="4" height="4" fill="#A855F7"/>
+          <rect x="42" y="42" width="4" height="4" fill="#F59E0B"/>
+          <rect x="54" y="42" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="30" y="48" width="4" height="4" fill="#A855F7"/>
+          <rect x="42" y="48" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="48" y="48" width="4" height="4" fill="#F59E0B"/>
+          <rect x="54" y="48" width="4" height="4" fill="#A855F7"/>
+          <rect x="30" y="54" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="36" y="54" width="4" height="4" fill="#6C3CE1"/>
+          <rect x="48" y="54" width="4" height="4" fill="#A855F7"/>
+        </svg>
+      </div>
+      <div class="qr-label">Table 12<br>demo.dima.ma</div>
+    </div>
+  </div>
+
+  <!-- BENEFITS -->
+  <div class="recto-benefits">
+    <div class="benefits-title">Pourquoi Dima ?</div>
+
+    <div class="benefit-row">
+      <div class="benefit-icon bi-purple">🌍</div>
+      <div class="benefit-text">
+        <strong>Multilingue automatique</strong>
+        <span>Français, Arabe, Anglais, Espagnol, Allemand... détection automatique</span>
+      </div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-icon bi-gold">⚡</div>
+      <div class="benefit-text">
+        <strong>Mise à jour en temps réel</strong>
+        <span>Prix, ruptures, promotions — modifiables en 3 secondes depuis votre mobile</span>
+      </div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-icon bi-green">🖨️</div>
+      <div class="benefit-text">
+        <strong>Impression thermique intégrée</strong>
+        <span>Ticket cuisine + reçu client sans réseau — solution 100% hors ligne possible</span>
+      </div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-icon bi-blue">📊</div>
+      <div class="benefit-text">
+        <strong>Analytics & ROI mesurable</strong>
+        <span>Plats populaires, heures de pointe, langues clients — dashboard temps réel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">+22%</span>
+      <span class="stat-lbl">Panier<br>moyen</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">73%</span>
+      <span class="stat-lbl">Temps de cmd<br>réduit</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">60%</span>
+      <span class="stat-lbl">Économie<br>impression</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">48h</span>
+      <span class="stat-lbl">Mise en<br>service</span>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="recto-cta">
+    <div class="cta-text">
+      <strong>Démo gratuite sur site</strong>
+      <span>Installation en 48h · Formation incluse · Support FR/AR 7j/7</span>
+    </div>
+    <div class="cta-badge">
+      🎁 Imprimante<br>thermique<br>OFFERTE*
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="recto-contact">
+    <div class="contact-info">
+      <div class="contact-item">🌐 <strong>demo.dima-solutions.ma</strong></div>
+      <div class="contact-item">✉ <strong>contact@dimasolutions.ma</strong></div>
+    </div>
+    <div class="wa-badge">📱 WhatsApp</div>
+  </div>
+
+</div><!-- /recto -->
+
+
+<p class="print-hint">▼ Flyer A5 — VERSO (العربية)</p>
+
+<!-- ══════════ FLYER VERSO ══════════ -->
+<div class="flyer verso">
+
+  <!-- ORNAMENT TOP -->
+  <div class="verso-ornament">
+    <div class="verso-brand">
+      <div class="verso-logo-text">DIMA <span>Solutions</span></div>
+      <div style="font-size:9px; color:rgba(255,255,255,0.4); font-family:'DM Sans',sans-serif; text-align:left;">AI Tech • المغرب</div>
+    </div>
+    <div class="verso-tagline-ar">
+      <span class="ar-just">فقط</span>
+      <span class="ar-for">من أجلك أنت !</span>
+    </div>
+    <p class="verso-sub-ar">قائمة طعام رقمية ذكية · متعددة اللغات · لحظية</p>
+  </div>
+
+  <!-- MAIN -->
+  <div class="verso-main">
+
+    <div class="verso-section-label">مزايا الحل</div>
+
+    <div class="ar-benefit">
+      <div class="ar-benefit-num">١</div>
+      <div class="ar-benefit-content">
+        <strong>قائمة رقمية متعددة اللغات</strong>
+        <span>العربية، الفرنسية، الإنجليزية، الإسبانية، الألمانية — كشف تلقائي للغة الهاتف</span>
+      </div>
+    </div>
+
+    <div class="ar-benefit">
+      <div class="ar-benefit-num">٢</div>
+      <div class="ar-benefit-content">
+        <strong>تحديث فوري للأسعار والأطباق</strong>
+        <span>غيّر السعر أو أوقف طبقاً في 3 ثوانٍ من هاتفك — دون إعادة طباعة</span>
+      </div>
+    </div>
+
+    <div class="ar-benefit">
+      <div class="ar-benefit-num">٣</div>
+      <div class="ar-benefit-content">
+        <strong>طلب ودفع مباشرة من الطاولة</strong>
+        <span>بدون تطبيق · دفع CMI مدمج · تقليل الأخطاء بنسبة 80%</span>
+      </div>
+    </div>
+
+    <div class="ar-benefit">
+      <div class="ar-benefit-num">٤</div>
+      <div class="ar-benefit-content">
+        <strong>طباعة حرارية فورية</strong>
+        <span>تذكرة المطبخ + إيصال الزبون · يعمل بدون إنترنت · مثالي للرياض</span>
+      </div>
+    </div>
+
+    <div class="ar-benefit">
+      <div class="ar-benefit-num">٥</div>
+      <div class="ar-benefit-content">
+        <strong>لوحة تحليلات ذكية</strong>
+        <span>الأطباق الأكثر طلباً · ساعات الذروة · لغات الزبائن — كل شيء في وقته الحقيقي</span>
+      </div>
+    </div>
+
+    <!-- WORKFLOW -->
+    <div class="verso-section-label" style="margin-top:14px;">كيف يعمل؟</div>
+    <div class="verso-steps">
+      <div class="step-ar">
+        <div class="step-ar-num">١</div>
+        <span>الزبون يمسح رمز QR على الطاولة</span>
+        <span class="step-arrow">←</span>
+        <span style="font-size:10px;color:#6C3CE1;font-weight:700;">فوري</span>
+      </div>
+      <div class="step-ar">
+        <div class="step-ar-num">٢</div>
+        <span>القائمة تُفتح بلغة هاتفه تلقائياً</span>
+      </div>
+      <div class="step-ar">
+        <div class="step-ar-num">٣</div>
+        <span>يختار الأطباق ويدفع مباشرةً</span>
+      </div>
+      <div class="step-ar">
+        <div class="step-ar-num">٤</div>
+        <span>الطلب يصل للمطبخ + تُطبع التذكرة</span>
+        <span class="step-arrow">←</span>
+        <span style="font-size:10px;color:#10B981;font-weight:700;">✓ آلي</span>
+      </div>
+    </div>
+
+    <!-- PRICE -->
+    <div class="verso-price">
+      <div class="price-label">عرض الإطلاق — مراكش</div>
+      <div class="price-row">
+        <span class="price-amount">Sur devis</span>
+        <span class="price-unit">درهم/شهر</span>
+      </div>
+      <div class="price-sub">+ إعداد أولي: 3 500 درهم · تدريب مجاني · دعم واتساب FR/AR 7 أيام/7</div>
+      <div class="price-bonus">🎁 طابعة حرارية مهداة عند التوقيع قبل نهاية الشهر</div>
+    </div>
+
+  </div><!-- /verso-main -->
+
+  <!-- CTA BOTTOM -->
+  <div class="verso-cta">
+    <div class="verso-cta-title">عرض تجريبي مجاني · بدون التزام</div>
+    <div class="verso-cta-sub">نأتي إليك · التركيب في 48 ساعة · التدريب مشمول</div>
+    <div class="verso-cta-btns">
+      <div class="cta-btn-white">📅 احجز عرضاً<br>demo.dima-solutions.ma</div>
+      <div class="cta-btn-wa">💬 واتساب<br>+212 6XX-XXXXXX</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="verso-footer">
+    <div class="vf-url">demo.dima-solutions.ma</div>
+    <div class="vf-dot"></div>
+    <div class="vf-email">contact@dimasolutions.ma</div>
+  </div>
+
+</div><!-- /verso -->
+
+<p class="print-hint" style="margin-bottom:20px;">* Offre valable pour les 10 premiers établissements de Marrakech signant avant fin du mois</p>
+
+</body>
+</html>

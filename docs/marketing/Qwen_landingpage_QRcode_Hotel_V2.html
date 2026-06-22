@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIMATLAS — QR Menu & Room Service pour Hôtels | Marrakech</title>
+    <meta name="description" content="QR Menu multilingue, dashboard cuisine temps réel, folio de séjour unifié. La solution HoReCa qui booste votre panier moyen de +22%.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f5576c;
+            --success: #48bb78;
+            --dark: #2d3748;
+        }
+        body { font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95) !important;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: 700; font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; display: flex; align-items: center;
+            position: relative; overflow: hidden; padding: 100px 0 60px;
+        }
+        .hero h1 {
+            font-size: 3.2rem; font-weight: 700;
+            color: white; margin-bottom: 1.5rem;
+        }
+        .hero .lead {
+            font-size: 1.25rem; color: rgba(255,255,255,0.95);
+            margin-bottom: 2rem;
+        }
+        .badge-beta {
+            background: #ffd700; color: #333;
+            padding: 0.5rem 1.5rem; border-radius: 50px;
+            font-weight: 600; display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        /* Stats bar */
+        .stats-bar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 3rem 0; color: white;
+        }
+        .stat-item { text-align: center; padding: 1rem; }
+        .stat-num {
+            font-size: 3rem; font-weight: 700;
+            line-height: 1; margin-bottom: 0.5rem;
+        }
+        .stat-label { font-size: 1rem; opacity: 0.95; }
+        
+        /* Features */
+        .feature-card {
+            background: white; padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s; height: 100%;
+            border: 2px solid transparent;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+        }
+        .feature-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 2rem; margin-bottom: 1.5rem;
+        }
+        
+        /* Zones */
+        .zones-section { background: #f7fafc; padding: 5rem 0; }
+        .zone-badge {
+            display: inline-block; background: white;
+            padding: 1rem 1.5rem; margin: 0.5rem;
+            border-radius: 50px; font-weight: 600;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        .zone-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        /* Benefits */
+        .benefits-section { padding: 5rem 0; }
+        .benefit-card {
+            background: white; padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+            height: 100%;
+        }
+        .benefit-card h4 {
+            color: var(--primary); margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .benefit-list { list-style: none; padding: 0; }
+        .benefit-list li {
+            padding: 0.6rem 0 0.6rem 2rem;
+            position: relative; border-bottom: 1px solid #f0f0f0;
+        }
+        .benefit-list li:before {
+            content: "✓"; position: absolute; left: 0;
+            color: var(--success); font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .benefit-list li:last-child { border-bottom: none; }
+        
+        /* KDS Demo */
+        .kds-demo {
+            background: var(--dark); color: white;
+            padding: 3rem; border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .kds-column {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem; border-radius: 10px;
+            min-height: 300px;
+        }
+        .kds-column h5 {
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+        .kds-ticket {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem; border-radius: 8px;
+            margin-bottom: 0.8rem; cursor: pointer;
+            transition: all 0.2s;
+            border-left: 4px solid;
+        }
+        .kds-ticket:hover { transform: translateX(5px); }
+        .kds-ticket.pending { border-left-color: #fbbf24; }
+        .kds-ticket.cooking { border-left-color: #f59e0b; }
+        .kds-ticket.ready { border-left-color: #10b981; }
+        
+        /* Offer */
+        .offer-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 5rem 0; color: white;
+        }
+        .offer-card {
+            background: white; color: var(--dark);
+            border-radius: 30px; padding: 3rem;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.2);
+        }
+        .price-tag {
+            font-size: 3.5rem; font-weight: 700;
+            color: var(--accent); line-height: 1;
+        }
+        .price-tag small {
+            font-size: 1.3rem; color: #999;
+            display: block; text-decoration: line-through;
+        }
+        
+        /* Buttons */
+        .btn-primary-custom {
+            background: white; color: var(--primary);
+            padding: 1rem 2.5rem; border-radius: 50px;
+            font-weight: 600; border: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            color: var(--primary);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-section {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1; transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .stat-num { font-size: 2rem; }
+            .price-tag { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-qrcode me-2"></i>DIMATLAS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#fonctionnalites">Fonctionnalités</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#kds">KDS Live</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tarifs">Tarifs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-3">
+                        <a class="btn btn-primary rounded-pill px-4" href="#contact">Démo Gratuite</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="badge-beta">🎁 OFFRE BÊTA MARRAKECH</div>
+                    <h1>Vos clients commandent.<br>Votre cuisine exécute.<br><span style="color:#ffd700">Votre équipe conseille.</span></h1>
+                    <p class="lead">
+                        QR Menu multilingue · Dashboard cuisine temps réel · Folio de séjour unifié.<br>
+                        La solution HoReCa qui libère votre équipe et booste votre panier moyen.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#contact" class="btn btn-primary-custom">
+                            <i class="fas fa-rocket me-2"></i>Démo Gratuite 30 min
+                        </a>
+                        <a href="#kds" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                            <i class="fas fa-play me-2"></i>Voir KDS Live
+                        </a>
+                    </div>
+                    <div class="mt-5 text-white-50">
+                        <small><i class="fas fa-check-circle me-2"></i>Installation 48h</small>
+                        <small class="ms-4"><i class="fas fa-check-circle me-2"></i>Matériel inclus</small>
+                        <small class="ms-4"><i class="fas fa-check-circle me-2"></i>7 langues</small>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block text-center">
+                    <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 20px; backdrop-filter: blur(10px);">
+                        <i class="fas fa-qrcode display-1 text-warning mb-3"></i>
+                        <h4 class="text-white">Scannez. Commandez. C'est servi.</h4>
+                        <p class="text-white-50">Aucune appli à installer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-md stat-item fade-in-section">
+                    <div class="stat-num">+22%</div>
+                    <div class="stat-label">Panier moyen</div>
+                </div>
+                <div class="col-6 col-md stat-item fade-in-section">
+                    <div class="stat-num">-73%</div>
+                    <div class="stat-label">Temps commande</div>
+                </div>
+                <div class="col-6 col-md stat-item fade-in-section">
+                    <div class="stat-num">60%</div>
+                    <div class="stat-label">Économie papier</div>
+                </div>
+                <div class="col-6 col-md stat-item fade-in-section">
+                    <div class="stat-num">48h</div>
+                    <div class="stat-label">Mise en service</div>
+                </div>
+                <div class="col-12 col-md stat-item fade-in-section">
+                    <div class="stat-num">7</div>
+                    <div class="stat-label">Langues incluses</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fonctionnalités -->
+    <section id="fonctionnalites" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-5 fade-in-section">
+                <h2 class="display-5 fw-bold mb-3">Tout pour un hôtel digital</h2>
+                <p class="lead text-muted">Une plateforme unifiée : salle, cuisine, chambre, analytiques. Zéro intégration complexe.</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 fade-in-section">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
+                        <h4>QR Menu Multilingue</h4>
+                        <p class="text-muted">Le client scanne, le menu s'affiche dans sa langue (FR/AR/EN/ES). Photos, allergènes, descriptions. Aucune appli à installer. RTL natif pour l'arabe.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-section">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                        <h4>Dashboard Cuisine (KDS)</h4>
+                        <p class="text-muted">La commande arrive instantanément en cuisine. 3 colonnes : Attente · Préparation · Prêt. Chronomètre couleur, alertes, priorités. Zéro bon perdu.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-section">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-receipt"></i></div>
+                        <h4>Folio de Séjour Unifié</h4>
+                        <p class="text-muted">Un compte par chambre : room service, restaurant, spa, bar, navettes. Tout s'ajoute automatiquement. Règlement unique au check-out. Reçu PDF.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-section">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                        <h4>Service 30% plus rapide</h4>
+                        <p class="text-muted">Rotation des tables accélérée. Plus d'attente serveur. Le client commande à son rythme. La cuisine voit tout en temps réel via WebSocket.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-section">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
+                        <h4>Paiement en 1 tap</h4>
+                        <p class="text-muted">CMI, Stripe, espèces. Paiement sécurisé directement depuis le menu. Transaction liée à la table/chambre. Ticket digital par email.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 fade-in-section">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h4>Analytiques & KPIs</h4>
+                        <p class="text-muted">CA par service, plats stars, rotation tables, temps de service moyen. Export Excel. Données clients exploitables pour le marketing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zones -->
+    <section class="zones-section">
+        <div class="container text-center">
+            <h2 class="display-5 fw-bold mb-3 fade-in-section">Un QR code pour chaque zone</h2>
+            <p class="lead text-muted mb-5 fade-in-section">Même back-office, même solution. Déployez partout dans votre établissement.</p>
+            
+            <div class="fade-in-section">
+                <span class="zone-badge">🍽️ Table restaurant</span>
+                <span class="zone-badge">🛏️ Chambre (room service)</span>
+                <span class="zone-badge">🍸 Bar</span>
+                <span class="zone-badge">🏊 Piscine</span>
+                <span class="zone-badge">💆 Spa / Hammam</span>
+                <span class="zone-badge">☕ Lobby / Terrasse</span>
+                <span class="zone-badge">🍕 Snack bord de piscine</span>
+                <span class="zone-badge">🥂 Room service VIP</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- KDS Live Demo -->
+    <section id="kds" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-5 fade-in-section">
+                <h2 class="display-5 fw-bold mb-3">Dashboard Cuisine — Live Demo</h2>
+                <p class="lead text-muted">Votre cuisine voit tout, en temps réel. Cliquez sur un ticket pour le faire avancer.</p>
+            </div>
+            
+            <div class="kds-demo fade-in-section">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="kds-column">
+                            <h5>⏳ En attente <span class="badge bg-warning">3</span></h5>
+                            <div class="kds-ticket pending">
+                                <strong>Chambre 201</strong><br>
+                                <small>14:32 · 2 plats</small><br>
+                                <small class="text-warning">Tagine agneau × 2</small>
+                            </div>
+                            <div class="kds-ticket pending">
+                                <strong>Table 7</strong><br>
+                                <small>14:35 · 1 plat</small><br>
+                                <small class="text-warning">⚠️ Sans coriandre</small>
+                            </div>
+                            <div class="kds-ticket pending">
+                                <strong>Piscine</strong><br>
+                                <small>14:38 · 3 boissons</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="kds-column">
+                            <h5>🔥 En préparation <span class="badge bg-orange">2</span></h5>
+                            <div class="kds-ticket cooking">
+                                <strong>Chambre 205</strong><br>
+                                <small>14:28 · ⏱️ 7 min</small><br>
+                                <small>Couscous royal × 2</small>
+                            </div>
+                            <div class="kds-ticket cooking">
+                                <strong>Table 3</strong><br>
+                                <small>14:30 · ⏱️ 5 min</small><br>
+                                <small>Pastilla poulet</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="kds-column">
+                            <h5>✅ Prêts à servir <span class="badge bg-success">1</span></h5>
+                            <div class="kds-ticket ready">
+                                <strong>Chambre 202</strong><br>
+                                <small>14:25 · Petit-déjeuner</small><br>
+                                <small class="text-success">→ Appeler room service</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <small class="text-white-50">
+                        <i class="fas fa-info-circle me-2"></i>
+                        WebSocket · Temps réel · Alertes sonores · Chronomètre couleur
+                    </small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bénéfices -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="text-center mb-5 fade-in-section">
+                <h2 class="display-5 fw-bold mb-3">Tout le monde y gagne</h2>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 fade-in-section">
+                    <div class="benefit-card">
+                        <h4><i class="fas fa-hotel me-2"></i>Votre hôtel</h4>
+                        <ul class="benefit-list">
+                            <li>+22% de panier moyen constaté</li>
+                            <li>Commandes 73% plus rapides</li>
+                            <li>60% d'économie d'impression papier</li>
+                            <li>Équipe libérée pour le relationnel</li>
+                            <li>Données clients exploitables</li>
+                            <li>Multi-espaces depuis un seul back-office</li>
+                            <li>Mise à jour prix et menu en 3 secondes</li>
+                            <li>Rotation tables accélérée</li>
+                            <li>Zéro erreur de transmission cuisine</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 fade-in-section">
+                    <div class="benefit-card">
+                        <h4><i class="fas fa-user me-2"></i>Vos clients</h4>
+                        <ul class="benefit-list">
+                            <li>Menu dans leur langue, immédiatement</li>
+                            <li>Commande sans attendre un serveur</li>
+                            <li>Allergènes & infos nutritionnelles clairs</li>
+                            <li>Paiement en 1 tap (CMI/Stripe)</li>
+                            <li>Zéro frustration, expérience premium</li>
+                            <li>Suivi de commande en temps réel</li>
+                            <li>Ajout automatique au folio chambre</li>
+                            <li>Commande au rythme du client</li>
+                            <li>Photos HD des plats</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offer -->
+    <section id="tarifs" class="offer-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="offer-card text-center fade-in-section">
+                        <div class="badge bg-warning text-dark mb-3 px-4 py-2">OFFRE BÊTA LIMITÉE — 1ER HÔTEL MARRAKECH</div>
+                        <h2 class="mb-4">Devenez notre hôtel partenaire</h2>
+                        
+                        <div class="price-tag mb-4">
+                            Sur devis<span>réponse sous 24h</span>
+                        </div>
+                        
+                        <div class="row text-start g-3 mb-4">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Setup & installation OFFERTS</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Tablettes d'accueil incluses</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Imprimantes thermiques</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>QR codes plastifiés personnalisés</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Formation équipe complète</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Support 7j/7 FR/AR</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Personnalisation workflow</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Sans engagement 3 mois</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="btn btn-lg btn-primary rounded-pill px-5">
+                            <i class="fas fa-gift me-2"></i>Profiter de l'offre bêta
+                        </a>
+                        <p class="text-muted small mt-3">Offre limitée aux 10 premiers établissements de Marrakech</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-5 bg-light my-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="bg-white p-5 rounded-4 shadow fade-in-section">
+                        <div class="text-center mb-5">
+                            <h2 class="fw-bold mb-3">Démo gratuite dans votre hôtel</h2>
+                            <p class="text-muted">Nous venons avec le matériel. En 30 minutes, vous voyez le système sur vos propres tables.</p>
+                        </div>
+                        
+                        <form id="contactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nom complet *</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email *</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Nom de l'hôtel</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Nombre de chambres</label>
+                                    <select class="form-select">
+                                        <option>Moins de 20</option>
+                                        <option>20-50</option>
+                                        <option>50-100</option>
+                                        <option>Plus de 100</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Zones à équiper</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="zone1">
+                                        <label class="form-check-label" for="zone1">Restaurant</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="zone2">
+                                        <label class="form-check-label" for="zone2">Chambres (room service)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="zone3">
+                                        <label class="form-check-label" for="zone3">Bar / Piscine / Spa</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5">
+                                        <i class="fas fa-paper-plane me-2"></i>Demander ma démo
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h4 class="mb-3"><i class="fas fa-qrcode me-2"></i>DIMATLAS Solutions</h4>
+                    <p class="text-white-50">QR Menu · Room Service · Dashboard Cuisine · Folio Unifié. La solution HoReCa qui libère votre équipe.</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i>+212 6XX XX XX XX</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i>contact@dimasolutions.ma</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>Marrakech, Maroc</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-3">Solution</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#fonctionnalites" class="text-white-50 text-decoration-none">Fonctionnalités</a></li>
+                        <li><a href="#kds" class="text-white-50 text-decoration-none">KDS Live Demo</a></li>
+                        <li><a href="#tarifs" class="text-white-50 text-decoration-none">Tarifs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>&copy; 2026 DIMA Solutions AI Tech · Maroc 🇲🇦</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+
+        // Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('✅ Demande envoyée ! Nous vous recontactons sous 24h.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
