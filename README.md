@@ -20,10 +20,15 @@ dimatlas_portal/
 ├── portal/                 # app principale : pages, blocs, snippets, seed
 ├── search/                 # vue de recherche Wagtail
 ├── nginx/                  # conf reverse-proxy + certificats TLS
+├── docs/                   # supports marketing (landing pages, flyers, pitchs)
 ├── docker-compose.yml      # stack de production (db + web + nginx)
+├── docker-compose.override.yml  # override dev, chargé automatiquement
 ├── Dockerfile
 └── manage.py
 ```
+
+Documents projet : [ROADMAP.md](ROADMAP.md) · [TODO.md](TODO.md) ·
+[CLAUDE.md](CLAUDE.md) (consignes pour les assistants IA).
 
 ### Modèles de pages (`portal/models.py`)
 
@@ -70,12 +75,22 @@ et **Nginx** (terminaison TLS + service de `/media/`).
 
 ```bash
 cp .env.example .env        # renseigner SECRET_KEY, DB_PASSWORD, ALLOWED_HOSTS…
-docker compose up -d --build
-docker compose exec web python manage.py createsuperuser
-docker compose exec web python manage.py seed_portal
+docker compose -f docker-compose.yml up -d --build
+docker compose -f docker-compose.yml exec web python manage.py createsuperuser
+docker compose -f docker-compose.yml exec web python manage.py seed_portal
 ```
 
 Déposer le certificat TLS (`fullchain.pem` + `privkey.pem`) dans `nginx/certs/`.
+Les migrations et `collectstatic` sont exécutés au démarrage du conteneur `web`.
+
+> ⚠️ Sans `-f docker-compose.yml`, Docker charge aussi `docker-compose.override.yml`
+> (mode **dev** : HTTP sur `:8000`, cookies non sécurisés, nginx désactivé).
+
+### Test local de la stack Docker
+
+```bash
+docker compose up -d --build   # override dev auto-chargé → http://localhost:8000/
+```
 
 ### Variables d'environnement (`.env`)
 
@@ -102,3 +117,15 @@ python manage.py seed_portal           # (re)génère l'arborescence de pages
 python manage.py collectstatic         # statiques (prod)
 python manage.py update_index          # réindexation de la recherche Wagtail
 ```
+
+## Supports marketing (`docs/`)
+
+Pages HTML autonomes (hors Django), à ouvrir directement dans un navigateur :
+
+- `docs/landingpage/` — landing pages (QR Code Pro, hôtel, restaurant)
+- `docs/flyer/` — flyers A4/A5 (HTML + PNG/PDF)
+- `docs/marketing/` — flyers, pitchs, e-mail de prospection, médias de démo
+
+## Dépôt
+
+`git@github.com:Siabdel25/dimatlas_wagtail_portal.git` (branche `main`).
